@@ -14,8 +14,8 @@ protocol SwiftDicData {
 	var appDelegate: UIApplicationDelegate { get }
 	var managedContext: NSManagedObjectContext { get }
 	
-	func wordsFromIndex(index: Int) -> [String]
-	func detailOfWord(word: String) -> SwiftDic
+	func wordsFromSection(section: Int) -> [String]
+	func detailOfWord(word: String) -> SwiftDic?
 
 	func saveSwiftDic(swiftDic: SwiftDic)
 	func editSwiftDic(word: String, edited: (SwiftDic) -> (SwiftDic))
@@ -31,12 +31,12 @@ extension SwiftDicData {
 		return (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 	}
 
-	func wordsFromIndex(index: Int) -> [String] {
+	func wordsFromSection(section: Int) -> [String] {
 		var words = [String]()
 
 		let fetchRequest = NSFetchRequest(entityName: "SwiftDic")
 		fetchRequest.entity = NSEntityDescription.entityForName("SwiftDic", inManagedObjectContext: managedContext)
-		fetchRequest.predicate = NSPredicate(format: "index == %f", index)
+		fetchRequest.predicate = NSPredicate(format: "index == %f", section)
 
 		do {
 			if let dics = try managedContext.executeFetchRequest(fetchRequest) as? [SwiftDic] {
@@ -46,7 +46,8 @@ extension SwiftDicData {
 			print("can't get words")
 		}
 
-		return words
+		if words.count == 0 { words = [""] }
+		return words.sort({ $0 > $1 })
 	}
 
 	func detailOfWord(word: String) -> SwiftDic? {
@@ -83,7 +84,7 @@ extension SwiftDicData {
 	}
 
 	func editSwiftDic(word: String, edited: (SwiftDic) -> (SwiftDic)) {
-		let swiftDic = detailOfWord(word)
+		let swiftDic = detailOfWord(word)!
 		let editedSwiftDic = edited(swiftDic)
 		saveSwiftDic(editedSwiftDic)
 	}
