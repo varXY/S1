@@ -14,18 +14,12 @@ class DetailView: UIView {
 	var meaningLabel: UILabel!
 	var exampleLabel: UILabel!
 
-	private let keywordAttributes = [NSForegroundColorAttributeName: UIColor.keywordPurple()]
-	private let buildInAttributes = [NSForegroundColorAttributeName: UIColor.buildInBlue()]
-	private let numberAttributes = [NSForegroundColorAttributeName: UIColor.numberPurple()]
-	private let stringAttributes = [NSForegroundColorAttributeName: UIColor.stringRed()]
-	private let whiteAttributes = [NSForegroundColorAttributeName: UIColor.plainWhite()]
-	private let commnetGreenAttribute = [NSForegroundColorAttributeName: UIColor.commentGreen()]
-
 	init(swiftDic: SwiftDic) {
 		super.init(frame: ScreenBounds)
 		backgroundColor = UIColor.backgroundBlack()
 		layer.cornerRadius = globalRadius
 		clipsToBounds = true
+		
 		setupLabels(swiftDic)
 	}
 
@@ -82,145 +76,6 @@ class DetailView: UIView {
 		scrollView.addSubview(exampleLabel)
 
 		addSubview(scrollView)
-	}
-
-	// MARK: Painting job
-
-	func stringToAttributedString(string: String) -> NSMutableAttributedString {
-		let step_0 = paintKeywordPurple(NSMutableAttributedString(string: string))
-		let step_1 = paintBuildInBlue(step_0)
-		let step_2 = paintNumberPurple(step_1)
-		let step_3 = paintStringRed(step_2)
-		let step_4 = paintWhite(step_3)
-		let step_5 = paintCommentGreen(step_4)
-		return step_5
-	}
-
-	func paintKeywordPurple(text: NSMutableAttributedString) -> NSMutableAttributedString {
-		var ranges = [NSRange]()
-
-		for keyword in System.keywords {
-			ranges += text.mutableString.rangesOfString(keyword)
-		}
-
-		let result = text
-		for range in ranges {
-			result.addAttributes(keywordAttributes, range: range)
-		}
-
-		return result
-	}
-
-	func paintBuildInBlue(text: NSMutableAttributedString) -> NSMutableAttributedString {
-		var ranges = [NSRange]()
-
-		for valueType in System.valueTypes {
-			ranges += text.mutableString.rangesOfString(valueType)
-		}
-
-		let result = text
-		for range in ranges {
-			result.addAttributes(buildInAttributes, range: range)
-		}
-
-		return result
-	}
-
-	func paintNumberPurple(text: NSMutableAttributedString) -> NSMutableAttributedString {
-		
-		var ranges = [NSRange]()
-
-		for number in System.numbers {
-			ranges += text.mutableString.rangesOfString(String(number))
-		}
-
-		let result = text
-		for range in ranges {
-			result.addAttributes(numberAttributes, range: range)
-		}
-
-		return result
-	}
-
-	func paintStringRed(text: NSMutableAttributedString) -> NSMutableAttributedString {
-		let ranges = text.mutableString.rangesOfString("\"")
-
-		var stringRanges = [NSRange]()
-		for i in 0.stride(to: ranges.count, by: 2) {
-			if i != ranges.count - 1 && ranges.count != 1 {
-				stringRanges += [NSRange(ranges[i].location...ranges[i + 1].location)]
-			}
-		}
-
-		let result = text
-		for range in stringRanges {
-			result.addAttributes(stringAttributes, range: range)
-		}
-
-		return result
-	}
-
-	func paintWhite(text: NSMutableAttributedString) -> NSMutableAttributedString {
-		let sentences = text.mutableString.componentsSeparatedByString("\n\n")
-		var lines = [String]()
-		var words = [String]()
-		var whiteWords = [String]()
-
-		for sentence in sentences {
-			lines += sentence.componentsSeparatedByString("\n")
-		}
-
-		for line in lines {
-			words += line.componentsSeparatedByString(" ")
-		}
-
-		words.forEach({
-			let word = $0.removeMarks()
-			if !System.keywords.contains(word) && Int(word) == nil && !word.containsString("\"") && !System.valueTypes.contains(word) {
-				whiteWords.append($0.removeSelf())
-			}
-		})
-
-		let result = text
-		whiteWords.forEach({
-			let range = result.mutableString.rangeOfString($0.checkBrackets())
-			result.addAttributes(whiteAttributes, range: range)
-		})
-
-		return result
-	}
-
-	func paintCommentGreen(text: NSMutableAttributedString) -> NSMutableAttributedString {
-		let sentences = text.mutableString.componentsSeparatedByString("\n\n")
-		var lines = [String]()
-		var words = [String]()
-		var greenWords = [String]()
-
-		for sentence in sentences {
-			lines += sentence.componentsSeparatedByString("\n")
-		}
-
-		for line in lines {
-			words += line.componentsSeparatedByString(" ")
-		}
-
-		for (index, word) in words.enumerate() {
-			if word == "//" {
-				var commnet = word + " " + words[index + 1]
-				if words[index + 1].containsString(".") && index <= words.count - 3 {
-					commnet += " " + words[index + 2]
-				}
-				greenWords.append(commnet)
-			}
-		}
-
-		let result = text
-		greenWords.forEach({
-			let range = result.mutableString.rangeOfString($0)
-			result.addAttributes(commnetGreenAttribute, range: range)
-		})
-
-		return result
 	}
 	
 	required init?(coder aDecoder: NSCoder) {

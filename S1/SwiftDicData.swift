@@ -36,7 +36,7 @@ extension SwiftDicData {
 
 		let fetchRequest = NSFetchRequest(entityName: "SwiftDic")
 		fetchRequest.entity = NSEntityDescription.entityForName("SwiftDic", inManagedObjectContext: managedContext)
-		fetchRequest.predicate = NSPredicate(format: "index == %f", section)
+		fetchRequest.predicate = NSPredicate(format: "index == %f", Double(section))
 
 		do {
 			if let dics = try managedContext.executeFetchRequest(fetchRequest) as? [SwiftDic] {
@@ -59,7 +59,7 @@ extension SwiftDicData {
 
 		do {
 			if let dics = try managedContext.executeFetchRequest(fetchRequest) as? [SwiftDic] {
-				swiftDic = dics[0]
+				swiftDic = dics.count == 0 ? nil : dics[0]
 			}
 		} catch {
 			print("can't get word's detail")
@@ -84,8 +84,28 @@ extension SwiftDicData {
 	}
 
 	func editSwiftDic(word: String, edited: (SwiftDic) -> (SwiftDic)) {
-		let swiftDic = detailOfWord(word)!
-		let editedSwiftDic = edited(swiftDic)
-		saveSwiftDic(editedSwiftDic)
+		let fetchRequest = NSFetchRequest(entityName: "SwiftDic")
+		fetchRequest.entity = NSEntityDescription.entityForName("SwiftDic", inManagedObjectContext: managedContext)
+		fetchRequest.predicate = NSPredicate(format: "word == %@", word)
+
+		do {
+			if let dics = try managedContext.executeFetchRequest(fetchRequest) as? [SwiftDic] {
+				let newDic = edited(dics[0])
+				dics[0].index = newDic.index
+				dics[0].word = newDic.word
+				dics[0].meaning = newDic.meaning
+				dics[0].code = newDic.code
+			}
+		} catch {
+			print("can't get word's detail")
+		}
+
+		do {
+			try managedContext.save()
+			print("dic edited")
+		} catch {
+			print("can't edited dic")
+		}
 	}
+
 }

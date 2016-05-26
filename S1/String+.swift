@@ -81,7 +81,7 @@ extension String {
 	}
 
 	func removeMarks() -> String {
-		let marks = ["(", ")", "[", "]", "!", "?", ",", ".", ":", " "]
+		let marks = ["(", ")", "[", "]", "!", "?", ",", ".", ":", " ", "<", ">"]
 		var result = self
 
 		for chr in characters {

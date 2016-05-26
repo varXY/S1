@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		311812EA1CF6862300D0EA99 /* PaintingMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311812E91CF6862300D0EA99 /* PaintingMethod.swift */; };
 		3136BADB1CF443D10000F0E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3136BADA1CF443D10000F0E0 /* AppDelegate.swift */; };
 		3136BAE31CF443D20000F0E0 /* S1.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3136BAE11CF443D20000F0E0 /* S1.xcdatamodeld */; };
 		3136BAE51CF443D20000F0E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3136BAE41CF443D20000F0E0 /* Assets.xcassets */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		311812E91CF6862300D0EA99 /* PaintingMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaintingMethod.swift; sourceTree = "<group>"; };
 		3136BAD71CF443D10000F0E0 /* S1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = S1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3136BADA1CF443D10000F0E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3136BAE21CF443D20000F0E0 /* S1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = S1.xcdatamodel; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 			children = (
 				316BB8351CF525B1006D6D2A /* SystemWords.swift */,
 				3136BAF51CF447200000F0E0 /* SwiftDicData.swift */,
+				311812E91CF6862300D0EA99 /* PaintingMethod.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -248,6 +251,7 @@
 				316BB8301CF52593006D6D2A /* DetailView.swift in Sources */,
 				316BB8341CF525A1006D6D2A /* Global.swift in Sources */,
 				316BB8321CF52598006D6D2A /* PointerView.swift in Sources */,
+				311812EA1CF6862300D0EA99 /* PaintingMethod.swift in Sources */,
 				3136BAF61CF447200000F0E0 /* SwiftDicData.swift in Sources */,
 				316BB82E1CF5258E006D6D2A /* XYScrollView.swift in Sources */,
 				3136BAF21CF446B20000F0E0 /* SwiftDic.swift in Sources */,

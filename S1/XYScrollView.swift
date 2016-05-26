@@ -21,6 +21,7 @@ import CoreData
 	optional func writeViewWillInputText(index: Int, oldText: String, colorCode: Int)
 	optional func didSelectedStory(storyIndex: Int)
 	func scrollTypeDidChange(type: XYScrollType)
+	func editButtonTapped(dicForEditing: SwiftDic)
 }
 
 class XYScrollView: UIScrollView, SwiftDicData {
@@ -72,7 +73,10 @@ class XYScrollView: UIScrollView, SwiftDicData {
 			return contentView
 		})
 
-
+		let editButton = UIButton(type: .InfoLight)
+		editButton.frame = CGRectMake(ScreenWidth - 40, 10, 30, 30)
+		editButton.addTarget(self, action: #selector(editButtonTapped), forControlEvents: .TouchUpInside)
+		addSubview(editButton)
 
 	}
 
@@ -89,28 +93,29 @@ class XYScrollView: UIScrollView, SwiftDicData {
 
 	func threeDic(topIndex: (Int, Int)) -> [SwiftDic] {
 		var threeDic = [SwiftDic]()
-//		let priIndex = previousIndex(topIndex)
-//		let nexIndex = nextIndex(topIndex)
-		let entity = NSEntityDescription.entityForName("SwiftDic", inManagedObjectContext: managedContext)
-		let test_0 = SwiftDic(entity: entity!, insertIntoManagedObjectContext: nil)
-		test_0.word = "application"
-		test_0.meaning = "1. 应用程序\n2. 应用；运用；使用；用于\n3. 申请；请求"
-		test_0.code = "func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool\n\nlet notificationEnabled = UIApplication.sharedApplication().currentUserNotificationSettings()!.types != UIUserNotificationType.None\n\n// test\n// 2. test"
+		let priIndex = previousIndex(topIndex)
+		let nexIndex = nextIndex(topIndex)
 
-		let test_1 = SwiftDic(entity: entity!, insertIntoManagedObjectContext: nil)
-		test_1.word = "additional"
-		test_1.meaning = "1. 附加的；额外的；外加的\n2. 另外的；追加的；添加的"
-		test_1.code = "var additionalRecipients: [CSPerson]?\n\nvar HTTPAdditionalHeaders: [NSObject : AnyObject]?\n\nfunc additionalContentForURL(_ absoluteURL: NSURL) throws -> AnyObject"
+//		let entity = NSEntityDescription.entityForName("SwiftDic", inManagedObjectContext: managedContext)
+//		let test_0 = SwiftDic(entity: entity!, insertIntoManagedObjectContext: nil)
+//		test_0.word = "application"
+//		test_0.meaning = "1. 应用程序\n2. 应用；运用；使用；用于\n3. 申请；请求"
+//		test_0.code = "func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool\n\nlet notificationEnabled = UIApplication.sharedApplication().currentUserNotificationSettings()!.types != UIUserNotificationType.None\n\n// test\n// 2. test"
+//
+//		let test_1 = SwiftDic(entity: entity!, insertIntoManagedObjectContext: nil)
+//		test_1.word = "additional"
+//		test_1.meaning = "1. 附加的；额外的；外加的\n2. 另外的；追加的；添加的"
+//		test_1.code = "var additionalRecipients: [CSPerson]?\n\nvar HTTPAdditionalHeaders: [NSObject : AnyObject]?\n\nfunc additionalContentForURL(_ absoluteURL: NSURL) throws -> AnyObject"
+//
+//		let test_2 = SwiftDic(entity: entity!, insertIntoManagedObjectContext: nil)
+//		test_2.word = "active"
+//		test_2.meaning = "1. 活跃的；主动的；激活\n2. 忙碌的；积极的；定期进行的；起作用的"
+//		test_2.code = "var active: Bool\n\nfunc applicationDidBecomeActive(application: UIApplication)\n\npublic enum UIApplicationState : Int {\n    case Active\n    case Inactive\n    case Background\n}"
+//
+//		threeDic = [test_0, test_1, test_2]
 
-		let test_2 = SwiftDic(entity: entity!, insertIntoManagedObjectContext: nil)
-		test_2.word = "active"
-		test_2.meaning = "1. 活跃的；主动的；激活\n2. 忙碌的；积极的；定期进行的；起作用的"
-		test_2.code = "var active: Bool\n\nfunc applicationDidBecomeActive(application: UIApplication)\n\npublic enum UIApplicationState : Int {\n    case Active\n    case Inactive\n    case Background\n}"
 
-		threeDic = [test_0, test_1, test_2]
-
-
-//		threeDic = [dicFromIndex(priIndex), dicFromIndex(topIndex), dicFromIndex(nexIndex)]
+		threeDic = [dicFromIndex(priIndex), dicFromIndex(topIndex), dicFromIndex(nexIndex)]
 
 		return threeDic
 	}
@@ -118,7 +123,14 @@ class XYScrollView: UIScrollView, SwiftDicData {
 	func dicFromIndex(index: (Int, Int)) -> SwiftDic {
 		let words = wordsFromSection(index.0)
 		let word = words[index.1]
-		return detailOfWord(word)!
+
+		let entity = NSEntityDescription.entityForName("SwiftDic", inManagedObjectContext: managedContext)
+		let test_0 = SwiftDic(entity: entity!, insertIntoManagedObjectContext: nil)
+		test_0.word = "application"
+		test_0.meaning = "1. 应用程序\n2. 应用；运用；使用；用于\n3. 申请；请求"
+		test_0.code = "func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool\n\nlet notificationEnabled = UIApplication.sharedApplication().currentUserNotificationSettings()!.types != UIUserNotificationType.None\n\n// test\n// 2. test"
+
+		return detailOfWord(word) == nil ? test_0 : detailOfWord(word)!
 	}
 
 	func previousIndex(topIndex: (Int, Int)) -> (Int, Int) {
@@ -135,6 +147,11 @@ class XYScrollView: UIScrollView, SwiftDicData {
 		} else {
 			return (topIndex.0, topIndex.1 + 1)
 		}
+	}
+
+	func editButtonTapped() {
+		let dicForEditing = dicFromIndex(theTopIndex)
+		XYDelegate?.editButtonTapped(dicForEditing)
 	}
 
 

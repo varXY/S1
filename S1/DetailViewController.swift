@@ -16,8 +16,14 @@ class DetailViewController: UIViewController {
 
 	var initTopDetailIndex: (Int, Int)!
 
+	var statusBarHidden = true
+
 	override func prefersStatusBarHidden() -> Bool {
-		return true
+		return statusBarHidden
+	}
+
+	override func preferredStatusBarStyle() -> UIStatusBarStyle {
+		return .Default
 	}
 
 	override func viewDidLoad() {
@@ -33,6 +39,8 @@ class DetailViewController: UIViewController {
 
 	override func viewWillAppear(animated: Bool) {
 		super.viewWillAppear(animated)
+		statusBarHidden = true
+		setNeedsStatusBarAppearanceUpdate()
 		navigationController?.setNavigationBarHidden(true, animated: false)
 	}
 }
@@ -63,5 +71,22 @@ extension DetailViewController: XYScrollViewDelegate {
 		default:
 			break
 		}
+	}
+
+	func editButtonTapped(dicForEditing: SwiftDic) {
+		let newWordVC = NewWordViewController()
+		statusBarHidden = false
+		setNeedsStatusBarAppearanceUpdate()
+		newWordVC.statusBarStyle = .Default
+		newWordVC.dicForEditing = dicForEditing
+		newWordVC.delegate = self
+		presentViewController(NavigationController(rootViewController: newWordVC), animated: true, completion: nil)
+	}
+}
+
+extension DetailViewController: NewWordViewControllerDelegate {
+
+	func doneEditingSwiftDic(dic: SwiftDic) {
+		xyScrollView.changeDetailForContentView(xyScrollView.contentViews[1], dic: dic)
 	}
 }

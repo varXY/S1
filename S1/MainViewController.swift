@@ -40,6 +40,7 @@ class MainViewController: UIViewController, SwiftDicData {
 	override func viewWillAppear(animated: Bool) {
 		super.viewWillAppear(animated)
 		navigationController?.setNavigationBarHidden(false, animated: true)
+		tableView.reloadData()
 	}
 
 	func addButtonTapped() {
@@ -85,13 +86,17 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		var cell: UITableViewCell! = tableView.dequeueReusableCellWithIdentifier("cell")
 		if cell == nil { cell = UITableViewCell(style: .Default, reuseIdentifier: "cell") }
+
+		cell.backgroundColor = UIColor.backgroundBlack()
+		cell.textLabel?.textColor = UIColor.stringRed()
+		cell.textLabel?.font = UIFont.defaultFont(17)
+		cell.selectedBackgroundView = UIView()
+		cell.selectedBackgroundView!.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)
+
 		return cell
 	}
 
 	func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-		cell.backgroundColor = UIColor.backgroundBlack()
-		cell.textLabel?.textColor = UIColor.stringRed()
-		cell.textLabel?.font = UIFont.defaultFont(17)
 		cell.textLabel!.text = wordsFromSection(indexPath.section)[indexPath.row]
 	}
 

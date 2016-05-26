@@ -22,7 +22,6 @@ class NavigationController: UINavigationController {
 			NSFontAttributeName: UIFont.defaultFont(17)
 		]
 		navigationBar.tintColor = UIColor.whiteColor()
-//		navigationBar.translucent = false
 	}
 
 }
