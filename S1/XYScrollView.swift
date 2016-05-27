@@ -15,13 +15,11 @@ import CoreData
 }
 
 @objc protocol XYScrollViewDelegate: class {
-	func xyScrollViewDidBeginScroll(begin: Bool, type: XYScrollType)
 	func xyScrollViewDidScroll(scrollType: XYScrollType, topViewIndex: Int)
 	optional func xyScrollViewWillScroll(scrollType: XYScrollType, topViewIndex: Int)
 	optional func writeViewWillInputText(index: Int, oldText: String, colorCode: Int)
 	optional func didSelectedStory(storyIndex: Int)
 	func scrollTypeDidChange(type: XYScrollType)
-	func editButtonTapped(dicForEditing: SwiftDic)
 }
 
 class XYScrollView: UIScrollView, SwiftDicData {
@@ -73,10 +71,7 @@ class XYScrollView: UIScrollView, SwiftDicData {
 			return contentView
 		})
 
-		let editButton = UIButton(type: .InfoLight)
-		editButton.frame = CGRectMake(ScreenWidth - 40, 10, 30, 30)
-		editButton.addTarget(self, action: #selector(editButtonTapped), forControlEvents: .TouchUpInside)
-		addSubview(editButton)
+		
 
 	}
 
@@ -92,32 +87,8 @@ class XYScrollView: UIScrollView, SwiftDicData {
 	}
 
 	func threeDic(topIndex: (Int, Int)) -> [SwiftDic] {
-		var threeDic = [SwiftDic]()
-		let priIndex = previousIndex(topIndex)
-		let nexIndex = nextIndex(topIndex)
-
-//		let entity = NSEntityDescription.entityForName("SwiftDic", inManagedObjectContext: managedContext)
-//		let test_0 = SwiftDic(entity: entity!, insertIntoManagedObjectContext: nil)
-//		test_0.word = "application"
-//		test_0.meaning = "1. 应用程序\n2. 应用；运用；使用；用于\n3. 申请；请求"
-//		test_0.code = "func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool\n\nlet notificationEnabled = UIApplication.sharedApplication().currentUserNotificationSettings()!.types != UIUserNotificationType.None\n\n// test\n// 2. test"
-//
-//		let test_1 = SwiftDic(entity: entity!, insertIntoManagedObjectContext: nil)
-//		test_1.word = "additional"
-//		test_1.meaning = "1. 附加的；额外的；外加的\n2. 另外的；追加的；添加的"
-//		test_1.code = "var additionalRecipients: [CSPerson]?\n\nvar HTTPAdditionalHeaders: [NSObject : AnyObject]?\n\nfunc additionalContentForURL(_ absoluteURL: NSURL) throws -> AnyObject"
-//
-//		let test_2 = SwiftDic(entity: entity!, insertIntoManagedObjectContext: nil)
-//		test_2.word = "active"
-//		test_2.meaning = "1. 活跃的；主动的；激活\n2. 忙碌的；积极的；定期进行的；起作用的"
-//		test_2.code = "var active: Bool\n\nfunc applicationDidBecomeActive(application: UIApplication)\n\npublic enum UIApplicationState : Int {\n    case Active\n    case Inactive\n    case Background\n}"
-//
-//		threeDic = [test_0, test_1, test_2]
-
-
-		threeDic = [dicFromIndex(priIndex), dicFromIndex(topIndex), dicFromIndex(nexIndex)]
-
-		return threeDic
+		let indexes = [previousIndex(topIndex), topIndex, nextIndex(topIndex)]
+		return indexes.map({ dicFromIndex($0) })
 	}
 
 	func dicFromIndex(index: (Int, Int)) -> SwiftDic {
@@ -149,13 +120,10 @@ class XYScrollView: UIScrollView, SwiftDicData {
 		}
 	}
 
-	func editButtonTapped() {
-		let dicForEditing = dicFromIndex(theTopIndex)
-		XYDelegate?.editButtonTapped(dicForEditing)
-	}
+	
 
 
-	func moveContentViewToTop(scrollType: XYScrollType) {
+	func moveContentViewToTop() {
 		switch scrolledType {
 		case .Up:
 			if doneScroll {
@@ -173,9 +141,11 @@ class XYScrollView: UIScrollView, SwiftDicData {
 						self.sendSubviewToBack(self.contentViews[1])
 						self.contentViews[1].alpha = 0.0
 						self.contentViews[1].frame.origin = self.topOrigin
-						self.changeDetailForContentView(self.contentViews[1], dic: self.threeDic(self.theTopIndex)[0])
 
 						self.contentViews = [self.contentViews[1], self.contentViews[0], self.contentViews[2]]
+						self.contentViews.forEach({
+							self.changeDetailForContentView($0, dic: self.threeDic(self.theTopIndex)[self.contentViews.indexOf($0)!])
+						})
 						self.doneScroll = true
 				})
 			}
@@ -197,9 +167,11 @@ class XYScrollView: UIScrollView, SwiftDicData {
 						self.contentViews[1].transform = CGAffineTransformIdentity
 						self.contentViews[1].alpha = 0.0
 						self.contentViews[1].frame.origin = self.bottomOrigin
-						self.changeDetailForContentView(self.contentViews[1], dic: self.threeDic(self.theTopIndex)[2])
 
 						self.contentViews = [self.contentViews[0], self.contentViews[2], self.contentViews[1]]
+						self.contentViews.forEach({
+							self.changeDetailForContentView($0, dic: self.threeDic(self.theTopIndex)[self.contentViews.indexOf($0)!])
+						})
 						self.doneScroll = true
 				})
 			}
@@ -237,20 +209,6 @@ class XYScrollView: UIScrollView, SwiftDicData {
 extension XYScrollView: UIScrollViewDelegate {
 
 	func scrollViewDidScroll(scrollView: UIScrollView) {
-		if (scrollView.contentOffset.x != 0 || scrollView.contentOffset.y != 0) && !beginScroll {
-			var type = XYScrollType.NotScrollYet
-			if scrollView.contentOffset.x == 0 && scrollView.contentOffset.y < 0 { type = .Up }
-			if scrollView.contentOffset.x == 0 && scrollView.contentOffset.y > 0 { type = .Down	}
-			if scrollView.contentOffset.x < 0 && scrollView.contentOffset.y == 0 { type = .Left }
-			if scrollView.contentOffset.x > 0 && scrollView.contentOffset.y == 0 { type = .Right }
-
-			XYDelegate?.xyScrollViewDidBeginScroll(true, type: type)
-			beginScroll = true
-		} else if scrollView.contentOffset == CGPoint(x: 0, y: 0) {
-			XYDelegate?.xyScrollViewDidBeginScroll(false, type: XYScrollType.NotScrollYet)
-			beginScroll = false
-		}
-
 		if scrollView != self {
 			if scrollView.contentOffset.y > TriggerDistance {
 				if scrolledType != .Down { scrolledType = .Down }
@@ -271,12 +229,14 @@ extension XYScrollView: UIScrollViewDelegate {
 
 	}
 
-	func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+	func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
 		XYDelegate?.xyScrollViewWillScroll?(scrolledType, topViewIndex: topViewIndex)
-		moveContentViewToTop(scrolledType)
+		moveContentViewToTop()
 		XYDelegate?.xyScrollViewDidScroll(scrolledType, topViewIndex: topViewIndex)
 		scrolledType = .NotScrollYet
+	}
 
+	func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
 	}
 
 }

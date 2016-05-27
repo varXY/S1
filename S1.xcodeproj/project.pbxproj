@@ -28,6 +28,7 @@
 		316BB8341CF525A1006D6D2A /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316BB8331CF525A1006D6D2A /* Global.swift */; };
 		316BB8361CF525B1006D6D2A /* SystemWords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316BB8351CF525B1006D6D2A /* SystemWords.swift */; };
 		316BB8381CF54427006D6D2A /* NewWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316BB8371CF54427006D6D2A /* NewWordViewController.swift */; };
+		31CA0BDE1CF7CA9F0015B401 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CA0BDD1CF7CA9F0015B401 /* UIImage+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		316BB8331CF525A1006D6D2A /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		316BB8351CF525B1006D6D2A /* SystemWords.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemWords.swift; sourceTree = "<group>"; };
 		316BB8371CF54427006D6D2A /* NewWordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewWordViewController.swift; sourceTree = "<group>"; };
+		31CA0BDD1CF7CA9F0015B401 /* UIImage+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 				316BB8251CF52510006D6D2A /* String+.swift */,
 				316BB8231CF52508006D6D2A /* UIColor+.swift */,
 				316BB8271CF52517006D6D2A /* UIFont+.swift */,
+				31CA0BDD1CF7CA9F0015B401 /* UIImage+.swift */,
 			);
 			name = Extension;
 			sourceTree = "<group>";
@@ -257,6 +260,7 @@
 				3136BAF21CF446B20000F0E0 /* SwiftDic.swift in Sources */,
 				316BB81F1CF524A3006D6D2A /* DetailViewController.swift in Sources */,
 				316BB8241CF52508006D6D2A /* UIColor+.swift in Sources */,
+				31CA0BDE1CF7CA9F0015B401 /* UIImage+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

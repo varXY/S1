@@ -40,6 +40,7 @@ class MainViewController: UIViewController, SwiftDicData {
 	override func viewWillAppear(animated: Bool) {
 		super.viewWillAppear(animated)
 		navigationController?.setNavigationBarHidden(false, animated: true)
+		navigationController?.setToolbarHidden(true, animated: true)
 		tableView.reloadData()
 	}
 

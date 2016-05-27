@@ -13,6 +13,7 @@ class DetailViewController: UIViewController {
 
 	var pointerView: PointerView!
 	var xyScrollView: XYScrollView!
+	var editButton: UIButton!
 
 	var initTopDetailIndex: (Int, Int)!
 
@@ -29,37 +30,93 @@ class DetailViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		setUpBars()
+
 		pointerView = PointerView()
 		view = pointerView
 
 		xyScrollView = XYScrollView(topDetailIndex: initTopDetailIndex)
 		xyScrollView.XYDelegate = self
 		view.addSubview(xyScrollView)
+
+		editButton = UIButton(type: .InfoLight)
+		editButton.frame = CGRectMake(ScreenWidth - 40, 16, 30, 30)
+		editButton.addTarget(self, action: #selector(editButtonTouchDown), forControlEvents: .TouchDown)
+		editButton.addTarget(self, action: #selector(editButtonTouchUpOutside), forControlEvents: .TouchUpOutside)
+		editButton.addTarget(self, action: #selector(editButtonTapped), forControlEvents: .TouchUpInside)
+		editButton.exclusiveTouch = true
+		view.addSubview(editButton)
 	}
 
 	override func viewWillAppear(animated: Bool) {
 		super.viewWillAppear(animated)
 		statusBarHidden = true
 		setNeedsStatusBarAppearanceUpdate()
-		navigationController?.setNavigationBarHidden(true, animated: false)
+		navigationController?.setToolbarHidden(false, animated: true)
+	}
+
+	func setUpBars() {
+		navigationController?.navigationBarHidden = true
+		navigationController?.toolbarHidden = false
+		navigationController?.toolbar.tintColor = UIColor.plainWhite()
+
+		let backButton = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: #selector(backButtonTapped))
+		let nextButton = UIBarButtonItem(barButtonSystemItem: .FastForward, target: self, action: #selector(nextButtonTapped))
+		let priviousButton = UIBarButtonItem(barButtonSystemItem: .Rewind, target: self, action: #selector(priviousButtonTapped))
+		let space = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
+
+		setToolbarItems([backButton, space, space, space, nextButton, priviousButton], animated: true)
+		let rect = CGRectMake(0, 0, ScreenWidth, 49)
+		navigationController?.toolbar.setBackgroundImage(UIImage.imageWithColor(UIColor.clearColor(), rect: rect), forToolbarPosition: .Any, barMetrics: .Default)
+		navigationController?.toolbar.setShadowImage(UIImage.imageWithColor(UIColor.clearColor(), rect: CGRectMake(0, 0, 10, 10)), forToolbarPosition: .Any)
+	}
+
+	func editButtonTouchDown() {
+		xyScrollView.userInteractionEnabled = false
+	}
+
+	func editButtonTouchUpOutside() {
+		xyScrollView.userInteractionEnabled = true
+	}
+
+	func editButtonTapped() {
+		let newWordVC = NewWordViewController()
+		newWordVC.statusBarStyle = .Default
+		newWordVC.dicForEditing = xyScrollView.dicFromIndex(xyScrollView.theTopIndex)
+		newWordVC.delegate = self
+
+		statusBarHidden = false
+		setNeedsStatusBarAppearanceUpdate()
+		presentViewController(NavigationController(rootViewController: newWordVC), animated: true, completion: nil)
+
+		xyScrollView.userInteractionEnabled = true
+	}
+
+	func backButtonTapped() {
+		navigationController?.popViewControllerAnimated(true)
+	}
+
+	func nextButtonTapped() {
+		xyScrollView.scrolledType = .Down
+		xyScrollView.moveContentViewToTop()
+	}
+
+	func priviousButtonTapped() {
+		xyScrollView.scrolledType = .Up
+		xyScrollView.moveContentViewToTop()
 	}
 }
 
 extension DetailViewController: XYScrollViewDelegate {
 
-	func xyScrollViewDidBeginScroll(begin: Bool, type: XYScrollType) {
-		pointerView.makeOneVisible(begin, type: type)
-	}
-
 	func scrollTypeDidChange(type: XYScrollType) {
 		pointerView.showPointer(type)
+//		editButton.userInteractionEnabled = false
+//		navigationController?.toolbar.userInteractionEnabled = false
 	}
 
 	func xyScrollViewWillScroll(scrollType: XYScrollType, topViewIndex: Int) {
-		if scrollType != .NotScrollYet {
-			pointerView.pointers[scrollType.rawValue].alpha = 0.0
-			pointerView.UDLR_labels[scrollType.rawValue].alpha = 0.0
-		}
+		pointerView.hidePointersAndLabels()
 	}
 
 	func xyScrollViewDidScroll(scrollType: XYScrollType, topViewIndex: Int) {
@@ -71,16 +128,10 @@ extension DetailViewController: XYScrollViewDelegate {
 		default:
 			break
 		}
-	}
 
-	func editButtonTapped(dicForEditing: SwiftDic) {
-		let newWordVC = NewWordViewController()
-		statusBarHidden = false
-		setNeedsStatusBarAppearanceUpdate()
-		newWordVC.statusBarStyle = .Default
-		newWordVC.dicForEditing = dicForEditing
-		newWordVC.delegate = self
-		presentViewController(NavigationController(rootViewController: newWordVC), animated: true, completion: nil)
+//		editButton.userInteractionEnabled = true
+//		navigationController?.toolbar.userInteractionEnabled = true
+
 	}
 }
 

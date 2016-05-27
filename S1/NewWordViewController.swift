@@ -47,7 +47,7 @@ class NewWordViewController: UIViewController, SwiftDicData {
 		let titleLabel = UILabel(frame: CGRectMake(0, 0, ScreenWidth - 60, 44))
 		titleLabel.textColor = UIColor.commentGreen()
 		titleLabel.font = UIFont.defaultFont(17)
-		titleLabel.text = "// 添加新词.swift"
+		titleLabel.text = dicForEditing == nil ? "// 添加新词.swift" : "// 编辑词语.swift"
 		let titleItem = UIBarButtonItem(customView: titleLabel)
 		navigationItem.leftBarButtonItem = titleItem
 
@@ -86,7 +86,7 @@ class NewWordViewController: UIViewController, SwiftDicData {
 			textView.textColor = UIColor.whiteColor()
 			textView.tintColor = UIColor.whiteColor()
 			textView.font = UIFont.defaultFont(17)
-			textView.keyboardType = index != 1 ? .WebSearch : .Default
+			textView.keyboardType = .Default
 			textView.spellCheckingType = .No
 			textView.autocapitalizationType = .None
 			textView.autocorrectionType = .No

@@ -106,27 +106,13 @@ class PointerView: UIView {
 	func showPointer(type: XYScrollType) {
 		switch type {
 		case .Up, .Down, .Left, .Right:
-			move({ self.pointers[type.rawValue].center = self.pointer.toCenters[type.rawValue] })
+			move({
+				self.pointers[type.rawValue].alpha = 1.0
+				self.UDLR_labels[type.rawValue].alpha = 1.0
+				self.pointers[type.rawValue].center = self.pointer.toCenters[type.rawValue]
+			})
 		default:
-			pointers.forEach({ (pointer) in
-				pointer.alpha = 0.0
-				let i = pointers.indexOf({ (imageView) -> Bool in
-					return imageView == pointer
-				})!
-				if i < UDLR_labels.count { UDLR_labels[i].alpha = 0.0 }
-			})
-
-			delay(seconds: 0.4, completion: {
-				self.pointers.forEach({ (pointer) in
-					pointer.alpha = 1.0
-					let i = self.pointers.indexOf({ (imageView) -> Bool in
-						return imageView == pointer
-					})!
-					self.pointers[i].center = self.pointer.originCenters[i]
-					if i < self.UDLR_labels.count { self.UDLR_labels[i].alpha = 1.0 }
-				})
-			})
-
+			hidePointersAndLabels()
 		}
 	}
 
@@ -136,31 +122,18 @@ class PointerView: UIView {
 			}, completion: nil)
 	}
 
-	func makeOneVisible(show: Bool, type: XYScrollType) {
-		if type != .NotScrollYet {
-			pointers[type.rawValue].alpha = show ? 1.0 : 0.0
-			UDLR_labels[type.rawValue].alpha = show ? 1.0 : 0.0
-		} else if !show && type == .NotScrollYet {
-			pointers.forEach({ $0.alpha = 0.0 })
-			UDLR_labels.forEach({ $0.alpha = 0.0 })
-		}
+	func hidePointersAndLabels() {
+		pointers.forEach({
+			if $0.alpha == 1.0 { $0.alpha = 0.0 }
+			let i = pointers.indexOf($0)!
+			if $0.center == self.pointer.toCenters[i] {
+				$0.center = self.pointer.originCenters[i]
+			}
+		})
+		
+		UDLR_labels.forEach({ if $0.alpha == 1.0 { $0.alpha = 0.0 } })
 	}
-
-
-	// MARK: - DetailViewController
-
-	func showNoMore(top: Bool?) {
-		if top == true {
-			UDLR_labels[0].text = "没有了"
-		} else if top == false {
-			UDLR_labels[1].text = "没有了"
-		} else {
-			UDLR_labels[0].text = "前一个"
-			UDLR_labels[1].text = "后一个"
-		}
-	}
-
-
+	
 
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")

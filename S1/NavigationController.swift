@@ -22,6 +22,11 @@ class NavigationController: UINavigationController {
 			NSFontAttributeName: UIFont.defaultFont(17)
 		]
 		navigationBar.tintColor = UIColor.whiteColor()
+//		navigationBar.translucent = false
+//
+//		let rect = CGRectMake(0, 0, self.view.frame.width, 64)
+//		self.navigationBar.setBackgroundImage(UIImage.imageWithColor(UIColor.backgroundBlack(), rect: rect), forBarMetrics: UIBarMetrics.Default)
+//		self.navigationBar.shadowImage = UIImage.imageWithColor(UIColor.clearColor(), rect: CGRectMake(0, 0, 10, 10))
 	}
 
 }

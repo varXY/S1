@@ -47,7 +47,7 @@ extension SwiftDicData {
 		}
 
 		if words.count == 0 { words = [""] }
-		return words.sort({ $0 > $1 })
+		return words.sort({ $0 < $1 })
 	}
 
 	func detailOfWord(word: String) -> SwiftDic? {
