@@ -30,6 +30,7 @@ class XYScrollView: UIScrollView, SwiftDicData {
 	let middleOrigin = CGPoint(x: 0, y: 0)
 	let bottomOrigin = CGPoint(x: 0, y: ScreenHeight)
 
+	var allResults: [[String]]!
 	var theTopIndex: (Int, Int)!
 
 	var beginScroll = false
@@ -47,13 +48,14 @@ class XYScrollView: UIScrollView, SwiftDicData {
 
 	var animateTime: Double = 0.4
 
-	init(topDetailIndex: (Int, Int)) {
+	init(allResult: [[String]], topDetailIndex: (Int, Int)) {
 		super.init(frame: ScreenBounds)
 		backgroundColor = UIColor.clearColor()
 		contentSize = CGSize(width: frame.width, height: 0)
 		alwaysBounceHorizontal = true
 		commonSetUp(self)
 
+		allResults = allResult
 		theTopIndex = topDetailIndex
 
 		let origins_Y = [-ScreenHeight, 0, ScreenHeight]
@@ -92,8 +94,7 @@ class XYScrollView: UIScrollView, SwiftDicData {
 	}
 
 	func dicFromIndex(index: (Int, Int)) -> SwiftDic {
-		let words = wordsFromSection(index.0)
-		let word = words[index.1]
+		let word = allResults[index.0][index.1]
 
 		let entity = NSEntityDescription.entityForName("SwiftDic", inManagedObjectContext: managedContext)
 		let test_0 = SwiftDic(entity: entity!, insertIntoManagedObjectContext: nil)
@@ -106,15 +107,15 @@ class XYScrollView: UIScrollView, SwiftDicData {
 
 	func previousIndex(topIndex: (Int, Int)) -> (Int, Int) {
 		if topIndex.1 == 0 {
-			return topIndex.0 != 0 ? (topIndex.0 - 1, wordsFromSection(topIndex.0 - 1).count - 1) : (26, wordsFromSection(26).count - 1)
+			return topIndex.0 != 0 ? (topIndex.0 - 1, allResults[topIndex.0 - 1].count - 1) : (allResults.count - 1, allResults.last!.count - 1)
 		} else {
 			return (topIndex.0, topIndex.1 - 1)
 		}
 	}
 
 	func nextIndex(topIndex: (Int, Int)) -> (Int, Int) {
-		if topIndex.1 == wordsFromSection(topIndex.0).count - 1 {
-			return topIndex.0 != 26 ? (topIndex.0 + 1, 0) : (0, 0)
+		if topIndex.1 == allResults[topIndex.0].count - 1 {
+			return topIndex.0 != allResults.count - 1 ? (topIndex.0 + 1, 0) : (0, 0)
 		} else {
 			return (topIndex.0, topIndex.1 + 1)
 		}

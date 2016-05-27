@@ -15,6 +15,8 @@ class DetailViewController: UIViewController {
 	var xyScrollView: XYScrollView!
 	var editButton: UIButton!
 
+	var resultsOnTable: [[String]]!
+
 	var initTopDetailIndex: (Int, Int)!
 
 	var statusBarHidden = true
@@ -35,7 +37,7 @@ class DetailViewController: UIViewController {
 		pointerView = PointerView()
 		view = pointerView
 
-		xyScrollView = XYScrollView(topDetailIndex: initTopDetailIndex)
+		xyScrollView = XYScrollView(allResult: resultsOnTable, topDetailIndex: initTopDetailIndex)
 		xyScrollView.XYDelegate = self
 		view.addSubview(xyScrollView)
 
@@ -111,8 +113,6 @@ extension DetailViewController: XYScrollViewDelegate {
 
 	func scrollTypeDidChange(type: XYScrollType) {
 		pointerView.showPointer(type)
-//		editButton.userInteractionEnabled = false
-//		navigationController?.toolbar.userInteractionEnabled = false
 	}
 
 	func xyScrollViewWillScroll(scrollType: XYScrollType, topViewIndex: Int) {
@@ -129,13 +129,13 @@ extension DetailViewController: XYScrollViewDelegate {
 			break
 		}
 
-//		editButton.userInteractionEnabled = true
-//		navigationController?.toolbar.userInteractionEnabled = true
-
 	}
 }
 
 extension DetailViewController: NewWordViewControllerDelegate {
+
+	func didSaveNewWord() {
+	}
 
 	func doneEditingSwiftDic(dic: SwiftDic) {
 		xyScrollView.changeDetailForContentView(xyScrollView.contentViews[1], dic: dic)

@@ -51,11 +51,21 @@ func paintKeywordPurple(text: NSMutableAttributedString) -> NSMutableAttributedS
 	var ranges = [NSRange]()
 
 	for keyword in System.keywords {
-		ranges += text.mutableString.rangesOfString(keyword)
+		let unClearRanges = text.mutableString.rangesOfString(keyword)
+		for range in unClearRanges {
+			if range.location + range.length < (text.mutableString as NSString).length {
+				let nextChr = (text.mutableString as NSString).substringWithRange(NSRange(location: range.location + range.length, length: 1))
+				if nextChr == " " || nextChr == ")" || nextChr == "," || nextChr == "\n" || nextChr == ":" || nextChr == "!" || nextChr == "?" {
+					ranges += [range]
+				}
+			}
+		}
+
 	}
 
 	let result = text
 	for range in ranges {
+		print(result.mutableString.substringWithRange(range))
 		result.addAttributes(keywordAttributes, range: range)
 	}
 
@@ -112,31 +122,35 @@ func paintStringRed(text: NSMutableAttributedString) -> NSMutableAttributedStrin
 }
 
 func paintWhite(text: NSMutableAttributedString) -> NSMutableAttributedString {
-	let sentences = text.mutableString.componentsSeparatedByString("\n\n")
-	var lines = [String]()
-	var words = [String]()
-	var whiteWords = [String]()
-
-	for sentence in sentences {
-		lines += sentence.componentsSeparatedByString("\n")
-	}
-
-	for line in lines {
-		words += line.componentsSeparatedByString(" ")
-	}
-
-	words.forEach({
-		let word = $0.removeMarks()
-		if !System.keywords.contains(word) && Int(word) == nil && !System.valueTypes.contains(word) {
-			whiteWords.append($0.removeSelf())
-		}
-	})
+//	let sentences = text.mutableString.componentsSeparatedByString("\n\n")
+//	var lines = [String]()
+//	var words = [String]()
+//	var whiteWords = [String]()
+//
+//	for sentence in sentences {
+//		lines += sentence.componentsSeparatedByString("\n")
+//	}
+//
+//	for line in lines {
+//		words += line.componentsSeparatedByString(" ")
+//	}
+//
+//	words.forEach({
+//		let word = $0.removeMarks()
+//		if !System.keywords.contains(word) && Int(word) == nil && !System.valueTypes.contains(word) {
+//			whiteWords.append($0.removeSelf())
+//		}
+//	})
 
 	let result = text
-	whiteWords.forEach({
-		let range = result.mutableString.rangeOfString($0.checkBrackets())
-		result.addAttributes(whiteAttributes, range: range)
-	})
+//	whiteWords.forEach({
+//		let ranges = result.mutableString.rangesOfString($0.checkBrackets())
+//		print($0.checkBrackets())
+//		for range in ranges {
+//			result.addAttributes(whiteAttributes, range: range)
+//		}
+//
+//	})
 
 	return result
 }

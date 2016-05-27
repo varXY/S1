@@ -11,6 +11,7 @@ import CoreData
 
 protocol NewWordViewControllerDelegate: class {
 	func doneEditingSwiftDic(dic: SwiftDic)
+	func didSaveNewWord()
 }
 
 class NewWordViewController: UIViewController, SwiftDicData {
@@ -156,14 +157,7 @@ class NewWordViewController: UIViewController, SwiftDicData {
 
 		let word = String((textViews[0].text.characters.dropFirst()).dropLast())
 		let meaning = String((textViews[1].text.characters.dropFirst()).dropLast())
-		let catalog: String! = String(word.characters.first!).uppercaseString
-
-		var newIndex: NSNumber
-		if let index = System.ABC_XYZ.indexOf(catalog) {
-			newIndex = index as NSNumber
-		} else {
-			newIndex = 26 as NSNumber
-		}
+		let newIndex = firstCharacterToIndex(word) as NSNumber
 
 		if dicForEditing != nil {
 			editSwiftDic(dicForEditing.word!, edited: { (dic) -> (SwiftDic) in
@@ -194,6 +188,7 @@ class NewWordViewController: UIViewController, SwiftDicData {
 			dic.meaning = meaning
 			dic.code = textViews[2].text
 			saveSwiftDic(dic)
+			delegate?.didSaveNewWord()
 		}
 
 		dispatch_async(dispatch_get_main_queue()) {

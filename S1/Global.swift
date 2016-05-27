@@ -31,3 +31,21 @@ func delay(seconds seconds: Double, completion: () -> ()) {
 	}
 
 }
+
+func firstCharacterToIndex(word: String) -> Int {
+	if word != "" {
+		let catalog: String! = String(word.characters.first!).uppercaseString
+
+		var newIndex: Int
+		if let index = System.ABC_XYZ.indexOf(catalog) {
+			newIndex = index
+		} else {
+			newIndex = 26
+		}
+
+		return newIndex
+	} else {
+		return 27
+	}
+
+}

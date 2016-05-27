@@ -72,7 +72,7 @@ class DetailView: UIView {
 		exampleLabel.sizeToFit()
 
 		let scrollView = UIScrollView(frame: CGRectMake(10, y, ScreenWidth - 10, exampleLabel.frame.height + 10))
-		scrollView.contentSize = CGSizeMake(exampleLabel.frame.width, 0)
+		scrollView.contentSize = CGSizeMake(exampleLabel.frame.width + 10, 0)
 		scrollView.addSubview(exampleLabel)
 
 		addSubview(scrollView)

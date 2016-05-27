@@ -14,7 +14,7 @@ struct System {
 
 	static let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-	static let keywords = ["var", "let", "func", "import", "class", "struct", "enum", "static", "public", "private", "lazy", "where", "false", "true", "nil", "guard", "case", "return", "try", "#function", "#selector", "override", "typealias", "extension", "self", "throws", "as", "is", "break", "switch", "default", "for", "in", "continue"]
+	static let keywords = ["var", "let", "func", "import", "class", "struct", "enum", "static", "public", "private", "lazy", "where", "false", "true", "nil", "guard", "case", "return", "try", "#function", "#selector", "override", "typealias", "extension", "self", "throws", "as", "is", "break", "switch", "default", "for", "in", "continue", "if", "deinit", "else"]
 
 	static let valueTypes = ["Bool",
 	                          "String", "NSString",
@@ -24,6 +24,10 @@ struct System {
 	                          "NSRange",
 	                          "NSObject", "AnyObject",
 	                          "CGRect"
+	]
+
+	let chrAfterKeyWord = [
+		" ", ")", ",", "\n", ":", "?", "!"
 	]
 }
 
