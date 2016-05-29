@@ -157,6 +157,7 @@ class XYScrollView: UIScrollView, SwiftDicData {
 				doneScroll = false
 				theTopIndex = nextIndex(theTopIndex)
 
+				hideDetailTitle(contentViews[1])
 				bringSubviewToFront(contentViews[2])
 				contentViews[2].alpha = 1.0
 
@@ -197,7 +198,10 @@ class XYScrollView: UIScrollView, SwiftDicData {
 		}
 	}
 
-	func removePartOfStory(contentView: UIScrollView, labelIndex: Int) {
+	func hideDetailTitle(contentView: UIScrollView) {
+		if let detailView = contentView.subviews[0] as? DetailView {
+			detailView.titleLabel.text = ""
+		}
 	}
 
 	required init?(coder aDecoder: NSCoder) {

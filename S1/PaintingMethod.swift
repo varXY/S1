@@ -52,14 +52,24 @@ func paintKeywordPurple(text: NSMutableAttributedString) -> NSMutableAttributedS
 
 	for keyword in System.keywords {
 		let unClearRanges = text.mutableString.rangesOfString(keyword)
-		for range in unClearRanges {
-			if range.location + range.length < (text.mutableString as NSString).length {
-				let nextChr = (text.mutableString as NSString).substringWithRange(NSRange(location: range.location + range.length, length: 1))
-				if nextChr == " " || nextChr == ")" || nextChr == "," || nextChr == "\n" || nextChr == ":" || nextChr == "!" || nextChr == "?" {
-					ranges += [range]
+		unClearRanges.forEach({
+			if $0.location + $0.length < (text.mutableString as NSString).length && $0.location != 0 {
+				let nextChr = (text.mutableString as NSString).substringWithRange(NSRange(location: $0.location + $0.length, length: 1))
+				let preChr = (text.mutableString as NSString).substringWithRange(NSRange(location: $0.location - 1, length: 1))
+				if System.chrAfterKeyWord.contains(nextChr) && !System.ABC_XYZ.contains(preChr.uppercaseString) {
+					ranges += [$0]
 				}
 			}
-		}
+		})
+//		for $0 in unClearRanges {
+//			if $0.location + $0.length < (text.mutableString as NSString).length && $0.location != 0 {
+//				let nextChr = (text.mutableString as NSString).substringWithRange(NSRange(location: $0.location + $0.length, length: 1))
+//				let preChr = (text.mutableString as NSString).substringWithRange(NSRange(location: $0.location - 1, length: 1))
+//				if System.chrAfterKeyWord.contains(nextChr) && !System.ABC_XYZ.contains(preChr.uppercaseString) {
+//						ranges += [$0]
+//				}
+//			}
+//		}
 
 	}
 
@@ -92,7 +102,16 @@ func paintNumberPurple(text: NSMutableAttributedString) -> NSMutableAttributedSt
 	var ranges = [NSRange]()
 
 	for number in System.numbers {
-		ranges += text.mutableString.rangesOfString(String(number))
+		let unClearRanges = text.mutableString.rangesOfString(String(number))
+		unClearRanges.forEach({
+			if $0.location + $0.length < (text.mutableString as NSString).length && $0.location != 0 {
+				let nextChr = (text.mutableString as NSString).substringWithRange(NSRange(location: $0.location + $0.length, length: 1))
+				let preChr = (text.mutableString as NSString).substringWithRange(NSRange(location: $0.location - 1, length: 1))
+				if System.chrAfterNumber.contains(nextChr) && !System.chrBeforeNumber.contains(preChr.uppercaseString) {
+					ranges += [$0]
+				}
+			}
+		})
 	}
 
 	let result = text

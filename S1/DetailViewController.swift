@@ -100,11 +100,13 @@ class DetailViewController: UIViewController {
 
 	func nextButtonTapped() {
 		xyScrollView.scrolledType = .Down
+		xyScrollViewWillScroll(.Down, topViewIndex: 1)
 		xyScrollView.moveContentViewToTop()
 	}
 
 	func priviousButtonTapped() {
 		xyScrollView.scrolledType = .Up
+		xyScrollViewWillScroll(.Up, topViewIndex: 1)
 		xyScrollView.moveContentViewToTop()
 	}
 }

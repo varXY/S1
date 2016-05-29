@@ -100,8 +100,8 @@ class NewWordViewController: UIViewController, SwiftDicData {
 			if dicForEditing != nil {
 				textView.attributedText = stringToAttributedString(initTexts[index])
 
-				if index == 1 {
-					let text = "\"" + initTexts[1] + "\""
+				if index != 2 {
+					let text = "\"" + initTexts[index] + "\""
 					textView.attributedText = stringToAttributedString(text)
 				}
 			}
@@ -113,8 +113,10 @@ class NewWordViewController: UIViewController, SwiftDicData {
 
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
-		let indexPath = NSIndexPath(forRow: 1, inSection: 0)
-		tableView(tableView, didSelectRowAtIndexPath: indexPath)
+		if dicForEditing == nil {
+			let indexPath = NSIndexPath(forRow: 1, inSection: 0)
+			tableView(tableView, didSelectRowAtIndexPath: indexPath)
+		}
 
 		delay(seconds: 0.5) { 
 			self.statusBarStyle = .LightContent
@@ -172,7 +174,7 @@ class NewWordViewController: UIViewController, SwiftDicData {
 		} else {
 			if detailOfWord(word) != nil {
 				let alertController = UIAlertController(title: word + " 已存在", message: "请去 " + word + " 详情页修改\n或在这里创建新词", preferredStyle: .Alert)
-				let action_0 = UIAlertAction(title: "退出", style: .Destructive, handler: { (_) in
+				let action_0 = UIAlertAction(title: "退出", style: .Cancel, handler: { (_) in
 					self.dismissViewControllerAnimated(true, completion: nil)
 				})
 				let action = UIAlertAction(title: "继续编辑", style: .Default, handler: nil)
@@ -198,8 +200,9 @@ class NewWordViewController: UIViewController, SwiftDicData {
 	}
 
 	func attributedTitles(tapped tapped: Bool) -> [NSMutableAttributedString] {
+		let titleName = dicForEditing != nil ? "WordForEditing" : "NewWord"
 		let titles = [
-			stringToAttributedString("struct NewWord {"),
+			stringToAttributedString("struct " + titleName + " {"),
 			stringToAttributedString(tapped ? "  let word = " : "  let word: String!"),
 			stringToAttributedString(tapped ? "  let meaning = " : "  let meaning: String!"),
 			stringToAttributedString(""),

@@ -31,7 +31,7 @@ class DetailView: UIView {
 	func setupLabels(swiftDic: SwiftDic) {
 		titleLabel = UILabel(frame: CGRectMake(10, 0, ScreenWidth - 20, 60))
 		titleLabel.text = swiftDic.word
-		titleLabel.font = UIFont.defaultFont(20)
+		titleLabel.font = UIFont.defaultFont(22)
 		titleLabel.textColor = UIColor.stringRed()
 		addSubview(titleLabel)
 
@@ -44,7 +44,7 @@ class DetailView: UIView {
 		meaningLabel = UILabel(frame: CGRectMake(30, upCommentLabel.frame.origin.y + upCommentLabel.frame.height, ScreenWidth - 40, 80))
 		meaningLabel.numberOfLines = 0
 		meaningLabel.text = swiftDic.meaning
-		meaningLabel.font = UIFont.defaultFont(17)
+		meaningLabel.font = findAdaptiveFontWithName("Menlo-Regular", labelText: swiftDic.meaning!, labelSize: meaningLabel.frame.size, minimumSize: 10)
 		meaningLabel.textColor = UIColor.commentGreen()
 		meaningLabel.sizeToFit()
 		addSubview(meaningLabel)
@@ -68,7 +68,7 @@ class DetailView: UIView {
 		exampleLabel.numberOfLines = 0
 		exampleLabel.textColor = UIColor.plainWhite()
 		exampleLabel.attributedText = stringToAttributedString(swiftDic.code!)
-		exampleLabel.font = UIFont.defaultFont(17)
+		exampleLabel.font = findAdaptiveFontWithName("Menlo-Regular", labelText: swiftDic.code!, labelSize: exampleLabel.frame.size, minimumSize: 10)
 		exampleLabel.sizeToFit()
 
 		let scrollView = UIScrollView(frame: CGRectMake(10, y, ScreenWidth - 10, exampleLabel.frame.height + 10))

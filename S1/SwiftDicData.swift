@@ -13,7 +13,10 @@ import CoreData
 protocol SwiftDicData {
 	var appDelegate: UIApplicationDelegate { get }
 	var managedContext: NSManagedObjectContext { get }
-	
+
+	func allSwiftDics() -> [SwiftDic]
+	func savePreloadedwords(completion: () -> ())
+
 	func wordsFromSection(section: Int) -> [String]
 	func detailOfWord(word: String) -> SwiftDic?
 
@@ -29,6 +32,55 @@ extension SwiftDicData {
 
 	var managedContext: NSManagedObjectContext {
 		return (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+	}
+
+	func allSwiftDics() -> [SwiftDic] {
+		var swiftDics = [SwiftDic]()
+
+		let fetchRequest = NSFetchRequest(entityName: "SwiftDic")
+		fetchRequest.entity = NSEntityDescription.entityForName("SwiftDic", inManagedObjectContext: managedContext)
+
+		do {
+			if let dics = try managedContext.executeFetchRequest(fetchRequest) as? [SwiftDic] {
+				swiftDics = dics
+			}
+		} catch {
+			print("can't get preloaded dics")
+		}
+
+		return swiftDics
+	}
+
+	func savePreloadedwords(completion: () -> ()) {
+		let fetchRequest = NSFetchRequest(entityName: "SwiftDic")
+		fetchRequest.entity = NSEntityDescription.entityForName("SwiftDic", inManagedObjectContext: managedContext)
+
+		do {
+			let oldDics = try managedContext.executeFetchRequest(fetchRequest)
+			if oldDics.count != 0 {
+				oldDics.forEach({ managedContext.deleteObject($0 as! NSManagedObject) })
+			}
+		} catch {
+			print("can't get old storys")
+		}
+
+		let arrays = PreloadedWords().arrays
+		arrays.forEach({
+			let entity = NSEntityDescription.entityForName("SwiftDic", inManagedObjectContext: managedContext)
+			let dic = SwiftDic(entity: entity!, insertIntoManagedObjectContext: managedContext)
+			dic.index = Int($0[0])! as NSNumber
+			dic.word = $0[1]
+			dic.meaning = $0[2]
+			dic.code = $0[3]
+
+			do {
+				try managedContext.save()
+			} catch {
+				print("can't save")
+			}
+		})
+
+		completion()
 	}
 
 	func wordsFromSection(section: Int) -> [String] {

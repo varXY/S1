@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController, SwiftDicData {
+class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 
 	var tableView: UITableView!
 	var searchBar = UISearchBar(frame: CGRectMake(0, 0, 0, 44))
@@ -36,6 +36,32 @@ class MainViewController: UIViewController, SwiftDicData {
 		let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(addButtonTapped))
 		navigationItem.rightBarButtonItem = addButton
 
+//		let dics = allSwiftDics()
+//		var arrays = [[String]]()
+//		dics.forEach({
+//			let array = [String($0.index!), $0.word!, $0.meaning!, $0.code!]
+//			arrays.append(array)
+//		})
+//		print(arrays)
+
+		isPreloaded() ? setUpUI() : savePreloadedwords { self.setUpUI() }
+		savePreloaded(true)
+
+	}
+
+
+
+	override func viewWillAppear(animated: Bool) {
+		super.viewWillAppear(animated)
+		navigationController?.setNavigationBarHidden(false, animated: true)
+		navigationController?.setToolbarHidden(true, animated: true)
+
+		if searchBar.text == "" { getResultsOnTable(searchString: nil) }
+
+		curtainView.removeFromSuperview()
+	}
+
+	func setUpUI() {
 		resultsOnTable = AllResult()
 
 		tableView = UITableView(frame: view.bounds)
@@ -48,25 +74,15 @@ class MainViewController: UIViewController, SwiftDicData {
 		view.addSubview(tableView)
 
 		searchBar.placeholder = "搜索"
-		searchBar.text = nil
-		searchBar.tintColor = UIColor.statementYellow()
+		searchBar.tintColor = UIColor.plainWhite()
 		searchBar.barTintColor = UIColor.backgroundBlack()
+		UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).textColor = UIColor.whiteColor()
+		searchBar.searchBarStyle = .Minimal
 		searchBar.delegate = self
 		tableView.tableHeaderView = searchBar
 		tableView.contentOffset.y = searchBar.frame.height
 
 		curtainView.backgroundColor = UIColor.backgroundBlack()
-
-	}
-
-	override func viewWillAppear(animated: Bool) {
-		super.viewWillAppear(animated)
-		navigationController?.setNavigationBarHidden(false, animated: true)
-		navigationController?.setToolbarHidden(true, animated: true)
-
-		if searchBar.text == "" { getResultsOnTable(searchString: nil) }
-
-		curtainView.removeFromSuperview()
 	}
 
 	func AllResult() -> [[String]] {

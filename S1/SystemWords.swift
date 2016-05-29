@@ -26,9 +26,17 @@ struct System {
 	                          "CGRect"
 	]
 
-	let chrAfterKeyWord = [
+	static let chrAfterKeyWord = [
 		" ", ")", ",", "\n", ":", "?", "!"
 	]
+
+	static let chrAfterNumber = [
+		" ", ")", "\n", ":", ",", "]"
+	]
+
+	static let chrBeforeNumber = [
+		"_", 
+	] + System.ABC_XYZ
 }
 
 

@@ -47,5 +47,58 @@ func firstCharacterToIndex(word: String) -> Int {
 	} else {
 		return 27
 	}
-
 }
+
+func findAdaptiveFontWithName(fontName: String, labelText: String, labelSize: CGSize, minimumSize: CGFloat) -> UIFont {
+	var tempFont = UIFont()
+	var tempMin = minimumSize
+	var tempMax: CGFloat = 256
+	var mid: CGFloat = 0
+	var difference: CGFloat = 0
+
+	while (tempMin <= tempMax) {
+		mid = tempMin + (tempMax - tempMin) / 2
+		tempFont = UIFont(name: fontName, size: mid)!
+		difference = labelSize.height - (labelText as NSString).sizeWithAttributes([NSFontAttributeName: tempFont]).height
+
+		if mid == tempMin || mid == tempMax {
+			if difference < 0 {
+				let size = mid > 17 ? 17 : mid
+				return UIFont(name: fontName, size: size)!
+			}
+
+			let size = mid > 17 ? 17 : mid
+			return UIFont(name: fontName, size: size)!
+		}
+
+		if difference < 0 {
+			tempMax = mid - 1
+		} else if difference > 0 {
+			tempMin = mid + 1
+		} else {
+			let size = mid > 17 ? 17 : mid
+			return UIFont(name: fontName, size: size)!
+		}
+	}
+
+	let size = mid > 17 ? 17 : mid
+	return UIFont(name: fontName, size: size)!
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
