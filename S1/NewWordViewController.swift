@@ -240,7 +240,11 @@ extension NewWordViewController: UITableViewDataSource, UITableViewDelegate {
 		cell.textLabel?.textColor = UIColor.plainWhite()
 		cell.textLabel?.font = UIFont.defaultFont(17)
 
-		let tapped = dicForEditing != nil
+		var tapped = dicForEditing != nil
+		if tapped && indexPath == 4 && dicForEditing.code == "" {
+			tapped = false
+		}
+		
 		cell.textLabel!.attributedText = attributedTitles(tapped: tapped)[indexPath.row]
 
 		cell.selectedBackgroundView = UIView()

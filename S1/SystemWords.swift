@@ -23,19 +23,34 @@ struct System {
 	                          "Double", "Float",
 	                          "NSRange",
 	                          "NSObject", "AnyObject",
-	                          "CGRect"
+	                          "CGRect",
+	                          "NSBundle"
 	]
 
+
+	// MARK: Keyword check
 	static let chrAfterKeyWord = [
 		" ", ")", ",", "\n", ":", "?", "!"
 	]
 
+
+	// MARK: Number check
 	static let chrAfterNumber = [
-		" ", ")", "\n", ":", ",", "]"
+		" ", ")", "\n", ":", ",", "]", ".", "<", ">", "."
+		] + System.numbers.map({ String($0) })
+
+	static let chrShouldNotBeforeNumber = [
+		"_"
+	] + System.ABC_XYZ
+
+
+	// MARK: Value type check
+	static let chrAfterValueType = [
+		" ", ")", ",", "\n", "?", "!", "]"
 	]
 
-	static let chrBeforeNumber = [
-		"_", 
+	static let chrShouldNotBeforeValueType = [
+
 	] + System.ABC_XYZ
 }
 

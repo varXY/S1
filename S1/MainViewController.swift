@@ -16,7 +16,7 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 
 	var resultsOnTable: [[String]]!
 
-	var needToReload = false
+	var isSearching: Bool!
 
 	override func preferredStatusBarStyle() -> UIStatusBarStyle {
 		return .LightContent
@@ -53,10 +53,14 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 
 	override func viewWillAppear(animated: Bool) {
 		super.viewWillAppear(animated)
-		navigationController?.setNavigationBarHidden(false, animated: true)
 		navigationController?.setToolbarHidden(true, animated: true)
 
-		if searchBar.text == "" { getResultsOnTable(searchString: nil) }
+		if isSearching != nil && !isSearching { navigationController?.setNavigationBarHidden(false, animated: true) }
+
+		if searchBar.text == "" {
+			navigationController?.setNavigationBarHidden(false, animated: true)
+			getResultsOnTable(searchString: nil)
+		}
 
 		curtainView.removeFromSuperview()
 	}
@@ -100,8 +104,10 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 	func getResultsOnTable(searchString searchString: String?) {
 		if resultsOnTable != nil { resultsOnTable.removeAll() }
 
-		if searchString == nil || searchString == "" {
+		if searchString == nil {
 			resultsOnTable = AllResult()
+		} else if searchString == "" {
+			resultsOnTable = [[" "]]
 		} else {
 			let index = firstCharacterToIndex(searchString!)
 			let sectionResults = AllResult().filter({ firstCharacterToIndex($0[0]) == index })
@@ -186,7 +192,8 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 
 	func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
 		let cell = tableView.cellForRowAtIndexPath(indexPath)
-		return cell?.textLabel?.text != "无结果" ? indexPath : nil
+		let noResult = cell?.textLabel?.text == "无结果" || cell?.textLabel?.text == " "
+		return noResult ? nil : indexPath
 	}
 
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -208,12 +215,18 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 extension MainViewController: UISearchBarDelegate {
 
 	func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
-		navigationController?.setNavigationBarHidden(true, animated: true)
+		isSearching = true
+		if navigationController?.navigationBarHidden == false {
+			navigationController?.setNavigationBarHidden(true, animated: true)
+		}
+
 		searchBar.setShowsCancelButton(true, animated: true)
+		if searchBar.text == "" { getResultsOnTable(searchString: "") }
 		return true
 	}
 
 	func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+		isSearching = false
 		navigationController?.setNavigationBarHidden(false, animated: true)
 		searchBar.resignFirstResponder()
 		searchBar.setShowsCancelButton(false, animated: true)
@@ -234,7 +247,6 @@ extension MainViewController: UISearchBarDelegate {
 extension MainViewController: NewWordViewControllerDelegate {
 
 	func didSaveNewWord() {
-		needToReload = true
 	}
 
 	func doneEditingSwiftDic(dic: SwiftDic) {

@@ -32,9 +32,9 @@
 		31FE26531CFA65C600EA5D18 /* SingleViewCoreData.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 31FE26501CFA65C600EA5D18 /* SingleViewCoreData.sqlite */; };
 		31FE26541CFA65C600EA5D18 /* SingleViewCoreData.sqlite-shm in Resources */ = {isa = PBXBuildFile; fileRef = 31FE26511CFA65C600EA5D18 /* SingleViewCoreData.sqlite-shm */; };
 		31FE26551CFA65C600EA5D18 /* SingleViewCoreData.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 31FE26521CFA65C600EA5D18 /* SingleViewCoreData.sqlite-wal */; };
-		31FE26591CFA680B00EA5D18 /* SwiftDicData_1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FE26581CFA680B00EA5D18 /* SwiftDicData_1.swift */; };
 		31FE265B1CFA745C00EA5D18 /* PreloadedWords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FE265A1CFA745C00EA5D18 /* PreloadedWords.swift */; };
 		31FE265D1CFA76E300EA5D18 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FE265C1CFA76E300EA5D18 /* UserDefaults.swift */; };
+		31FE265F1CFAC60800EA5D18 /* HudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FE265E1CFAC60800EA5D18 /* HudView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,9 +65,9 @@
 		31FE26501CFA65C600EA5D18 /* SingleViewCoreData.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = SingleViewCoreData.sqlite; sourceTree = "<group>"; };
 		31FE26511CFA65C600EA5D18 /* SingleViewCoreData.sqlite-shm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SingleViewCoreData.sqlite-shm"; sourceTree = "<group>"; };
 		31FE26521CFA65C600EA5D18 /* SingleViewCoreData.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SingleViewCoreData.sqlite-wal"; sourceTree = "<group>"; };
-		31FE26581CFA680B00EA5D18 /* SwiftDicData_1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftDicData_1.swift; sourceTree = "<group>"; };
 		31FE265A1CFA745C00EA5D18 /* PreloadedWords.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreloadedWords.swift; sourceTree = "<group>"; };
 		31FE265C1CFA76E300EA5D18 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		31FE265E1CFAC60800EA5D18 /* HudView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HudView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,7 +134,6 @@
 				316BB8351CF525B1006D6D2A /* SystemWords.swift */,
 				31FE265A1CFA745C00EA5D18 /* PreloadedWords.swift */,
 				3136BAF51CF447200000F0E0 /* SwiftDicData.swift */,
-				31FE26581CFA680B00EA5D18 /* SwiftDicData_1.swift */,
 				311812E91CF6862300D0EA99 /* PaintingMethod.swift */,
 				31FE265C1CFA76E300EA5D18 /* UserDefaults.swift */,
 				3136BAF31CF446C50000F0E0 /* CoreData */,
@@ -185,6 +184,7 @@
 				316BB82D1CF5258E006D6D2A /* XYScrollView.swift */,
 				316BB82F1CF52593006D6D2A /* DetailView.swift */,
 				316BB8311CF52598006D6D2A /* PointerView.swift */,
+				31FE265E1CFAC60800EA5D18 /* HudView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -279,9 +279,9 @@
 				311812EA1CF6862300D0EA99 /* PaintingMethod.swift in Sources */,
 				31FE265D1CFA76E300EA5D18 /* UserDefaults.swift in Sources */,
 				3136BAF61CF447200000F0E0 /* SwiftDicData.swift in Sources */,
-				31FE26591CFA680B00EA5D18 /* SwiftDicData_1.swift in Sources */,
 				316BB82E1CF5258E006D6D2A /* XYScrollView.swift in Sources */,
 				3136BAF21CF446B20000F0E0 /* SwiftDic.swift in Sources */,
+				31FE265F1CFAC60800EA5D18 /* HudView.swift in Sources */,
 				316BB81F1CF524A3006D6D2A /* DetailViewController.swift in Sources */,
 				316BB8241CF52508006D6D2A /* UIColor+.swift in Sources */,
 				31CA0BDE1CF7CA9F0015B401 /* UIImage+.swift in Sources */,

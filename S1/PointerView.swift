@@ -53,7 +53,7 @@ class PointerView: UIView {
 	struct Label {
 		let UD_size = CGSize(width: ScreenWidth - 30 * 2, height: 30)
 		let LR_size = CGSize(width: 30, height: ScreenHeight - 30 * 4)
-		let texts = ["前一个", "后一个", "返\n回", "浏\n览\n模\n式"]
+		let texts = ["前一个", "后一个", "返\n回", "随\n机\n浏\n览"]
 		func label(type: XYScrollType) -> UILabel {
 			let label = UILabel()
 			label.backgroundColor = UIColor.clearColor()
@@ -132,6 +132,10 @@ class PointerView: UIView {
 		})
 		
 		UDLR_labels.forEach({ if $0.alpha == 1.0 { $0.alpha = 0.0 } })
+	}
+
+	func changeRightLabelTextForRandomModel(random: Bool) {
+		UDLR_labels[3].text = random ? "顺\n序\n浏\n览" : "随\n机\n浏\n览"
 	}
 	
 

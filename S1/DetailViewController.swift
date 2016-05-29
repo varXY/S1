@@ -20,6 +20,7 @@ class DetailViewController: UIViewController {
 	var initTopDetailIndex: (Int, Int)!
 
 	var statusBarHidden = true
+	var randomModel = false
 
 	override func prefersStatusBarHidden() -> Bool {
 		return statusBarHidden
@@ -37,12 +38,14 @@ class DetailViewController: UIViewController {
 		pointerView = PointerView()
 		view = pointerView
 
-		xyScrollView = XYScrollView(allResult: resultsOnTable, topDetailIndex: initTopDetailIndex)
+		xyScrollView = XYScrollView(allResult: resultsOnTable, topDetailIndex: initTopDetailIndex, random: randomModel)
 		xyScrollView.XYDelegate = self
 		view.addSubview(xyScrollView)
 
-		editButton = UIButton(type: .InfoLight)
+		editButton = UIButton(type: .System)
 		editButton.frame = CGRectMake(ScreenWidth - 40, 16, 30, 30)
+		editButton.tintColor = UIColor.whiteColor()
+		editButton.setImage(UIImage(named: "EditIcon"), forState: .Normal)
 		editButton.addTarget(self, action: #selector(editButtonTouchDown), forControlEvents: .TouchDown)
 		editButton.addTarget(self, action: #selector(editButtonTouchUpOutside), forControlEvents: .TouchUpOutside)
 		editButton.addTarget(self, action: #selector(editButtonTapped), forControlEvents: .TouchUpInside)
@@ -57,20 +60,44 @@ class DetailViewController: UIViewController {
 		navigationController?.setToolbarHidden(false, animated: true)
 	}
 
+
 	func setUpBars() {
 		navigationController?.navigationBarHidden = true
-		navigationController?.toolbarHidden = false
+//		navigationController?.toolbarHidden = false
 		navigationController?.toolbar.tintColor = UIColor.plainWhite()
 
-		let backButton = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: #selector(backButtonTapped))
-		let nextButton = UIBarButtonItem(barButtonSystemItem: .FastForward, target: self, action: #selector(nextButtonTapped))
-		let priviousButton = UIBarButtonItem(barButtonSystemItem: .Rewind, target: self, action: #selector(priviousButtonTapped))
-		let space = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
+		let buttons = toolbarCustomButtons()
+		buttons[0].addTarget(self, action: #selector(backButtonTapped), forControlEvents: .TouchUpInside)
+		buttons[1].addTarget(self, action: #selector(nextButtonTapped), forControlEvents: .TouchUpInside)
+		buttons[2].addTarget(self, action: #selector(priviousButtonTapped), forControlEvents: .TouchUpInside)
 
-		setToolbarItems([backButton, space, space, space, nextButton, priviousButton], animated: true)
+		let space = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+
+		setToolbarItems([UIBarButtonItem(customView: buttons[0]), space, space, space, UIBarButtonItem(customView: buttons[1]), UIBarButtonItem(customView: buttons[2])], animated: true)
 		let rect = CGRectMake(0, 0, ScreenWidth, 49)
 		navigationController?.toolbar.setBackgroundImage(UIImage.imageWithColor(UIColor.clearColor(), rect: rect), forToolbarPosition: .Any, barMetrics: .Default)
 		navigationController?.toolbar.setShadowImage(UIImage.imageWithColor(UIColor.clearColor(), rect: CGRectMake(0, 0, 10, 10)), forToolbarPosition: .Any)
+	}
+
+	func toolbarCustomButtons() -> [UIButton] {
+		let transforms = [
+			CGAffineTransformMakeRotation(CGFloat(90 * M_PI / 180)),
+			CGAffineTransformMakeRotation(CGFloat(0 * M_PI / 180)),
+			CGAffineTransformMakeRotation(CGFloat(180 * M_PI / 180))
+		]
+
+		let buttons: [UIButton] = transforms.map({
+			let button = UIButton(type: .System)
+			button.frame = CGRectMake(0, 0, 30, 30)
+			button.setImage(UIImage(named: "DirectionIcon")!, forState: .Normal)
+			button.transform = $0
+			button.tintColor = UIColor.whiteColor()
+
+			button.exclusiveTouch = true
+			return button
+		})
+
+		return buttons
 	}
 
 	func editButtonTouchDown() {
@@ -124,9 +151,15 @@ extension DetailViewController: XYScrollViewDelegate {
 	func xyScrollViewDidScroll(scrollType: XYScrollType, topViewIndex: Int) {
 		switch scrollType {
 		case .Left:
+			editButton.alpha = 0.0
 			navigationController?.popViewControllerAnimated(true)
 		case .Right:
-			break
+			randomModel = !randomModel
+			xyScrollView.randomModel = randomModel
+			
+			let hudView = HudView.hudInView(view, animated: true)
+			hudView.text = randomModel ? "随机模式" : "顺序模式"
+			pointerView.changeRightLabelTextForRandomModel(randomModel)
 		default:
 			break
 		}

@@ -37,6 +37,15 @@ class XYScrollView: UIScrollView, SwiftDicData {
 
 	var doneScroll = true
 	var topViewIndex = 1
+	var randomModel = false {
+		didSet {
+			changeDetailForContentView(contentViews[0], dic: threeDic(theTopIndex)[0])
+			changeDetailForContentView(contentViews[2], dic: threeDic(theTopIndex)[2])
+		}
+	}
+
+	var randomNextIndex = (0, 0)
+	var randomPreviousIndex = (0, 0)
 
 	var scrolledType: XYScrollType = .NotScrollYet {
 		didSet {
@@ -48,7 +57,7 @@ class XYScrollView: UIScrollView, SwiftDicData {
 
 	var animateTime: Double = 0.4
 
-	init(allResult: [[String]], topDetailIndex: (Int, Int)) {
+	init(allResult: [[String]], topDetailIndex: (Int, Int), random: Bool) {
 		super.init(frame: ScreenBounds)
 		backgroundColor = UIColor.clearColor()
 		contentSize = CGSize(width: frame.width, height: 0)
@@ -57,6 +66,7 @@ class XYScrollView: UIScrollView, SwiftDicData {
 
 		allResults = allResult
 		theTopIndex = topDetailIndex
+		randomModel = random
 
 		let origins_Y = [-ScreenHeight, 0, ScreenHeight]
 		let dics = threeDic(theTopIndex)
@@ -89,7 +99,7 @@ class XYScrollView: UIScrollView, SwiftDicData {
 	}
 
 	func threeDic(topIndex: (Int, Int)) -> [SwiftDic] {
-		let indexes = [previousIndex(topIndex), topIndex, nextIndex(topIndex)]
+		let indexes = !randomModel ? [previousIndex(topIndex), topIndex, nextIndex(topIndex)] : randomThreeIndex(topIndex)
 		return indexes.map({ dicFromIndex($0) })
 	}
 
@@ -98,9 +108,9 @@ class XYScrollView: UIScrollView, SwiftDicData {
 
 		let entity = NSEntityDescription.entityForName("SwiftDic", inManagedObjectContext: managedContext)
 		let test_0 = SwiftDic(entity: entity!, insertIntoManagedObjectContext: nil)
-		test_0.word = "application"
-		test_0.meaning = "1. 应用程序\n2. 应用；运用；使用；用于\n3. 申请；请求"
-		test_0.code = "func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool\n\nlet notificationEnabled = UIApplication.sharedApplication().currentUserNotificationSettings()!.types != UIUserNotificationType.None\n\n// test\n// 2. test"
+		test_0.word = "nil"
+		test_0.meaning = "nil"
+		test_0.code = "nil"
 
 		return detailOfWord(word) == nil ? test_0 : detailOfWord(word)!
 	}
@@ -121,6 +131,23 @@ class XYScrollView: UIScrollView, SwiftDicData {
 		}
 	}
 
+	func randomThreeIndex(topIndex: (Int, Int)) -> [(Int, Int)] {
+		var results = [(Int, Int)]()
+
+		repeat {
+			let i_0 = random() % allResults.count
+			let i_1 = random() % allResults[i_0].count
+			if i_0 != topIndex.0 && i_1 != topIndex.1 {
+				results.append((i_0, i_1))
+			}
+		} while results.count < 3
+
+		randomPreviousIndex = results[0]
+		randomNextIndex = results[2]
+
+		return results
+	}
+
 	
 
 
@@ -129,7 +156,7 @@ class XYScrollView: UIScrollView, SwiftDicData {
 		case .Up:
 			if doneScroll {
 				doneScroll = false
-				theTopIndex = previousIndex(theTopIndex)
+				theTopIndex = randomModel ? randomPreviousIndex : previousIndex(theTopIndex)
 
 				contentViews[0].frame.origin = middleOrigin
 				contentViews[0].transform = CGAffineTransformMakeScale(0.9, 0.9)
@@ -144,9 +171,9 @@ class XYScrollView: UIScrollView, SwiftDicData {
 						self.contentViews[1].frame.origin = self.topOrigin
 
 						self.contentViews = [self.contentViews[1], self.contentViews[0], self.contentViews[2]]
-						self.contentViews.forEach({
-							self.changeDetailForContentView($0, dic: self.threeDic(self.theTopIndex)[self.contentViews.indexOf($0)!])
-						})
+						self.changeDetailForContentView(self.contentViews[0], dic: self.threeDic(self.theTopIndex)[0])
+						self.changeDetailForContentView(self.contentViews[2], dic: self.threeDic(self.theTopIndex)[2])
+
 						self.doneScroll = true
 				})
 			}
@@ -155,7 +182,7 @@ class XYScrollView: UIScrollView, SwiftDicData {
 		case .Down:
 			if doneScroll {
 				doneScroll = false
-				theTopIndex = nextIndex(theTopIndex)
+				theTopIndex = randomModel ? randomNextIndex : nextIndex(theTopIndex)
 
 				hideDetailTitle(contentViews[1])
 				bringSubviewToFront(contentViews[2])
@@ -171,9 +198,9 @@ class XYScrollView: UIScrollView, SwiftDicData {
 						self.contentViews[1].frame.origin = self.bottomOrigin
 
 						self.contentViews = [self.contentViews[0], self.contentViews[2], self.contentViews[1]]
-						self.contentViews.forEach({
-							self.changeDetailForContentView($0, dic: self.threeDic(self.theTopIndex)[self.contentViews.indexOf($0)!])
-						})
+						self.changeDetailForContentView(self.contentViews[0], dic: self.threeDic(self.theTopIndex)[0])
+						self.changeDetailForContentView(self.contentViews[2], dic: self.threeDic(self.theTopIndex)[2])
+
 						self.doneScroll = true
 				})
 			}
