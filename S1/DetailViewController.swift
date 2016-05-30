@@ -43,7 +43,7 @@ class DetailViewController: UIViewController {
 		view.addSubview(xyScrollView)
 
 		editButton = UIButton(type: .System)
-		editButton.frame = CGRectMake(ScreenWidth - 40, 16, 30, 30)
+		editButton.frame = CGRectMake(ScreenWidth - 42, 12, 30, 30)
 		editButton.tintColor = UIColor.whiteColor()
 		editButton.setImage(UIImage(named: "EditIcon"), forState: .Normal)
 		editButton.addTarget(self, action: #selector(editButtonTouchDown), forControlEvents: .TouchDown)

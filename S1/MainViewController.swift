@@ -36,14 +36,7 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 		let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(addButtonTapped))
 		navigationItem.rightBarButtonItem = addButton
 
-//		let dics = allSwiftDics()
-//		var arrays = [[String]]()
-//		dics.forEach({
-//			let array = [String($0.index!), $0.word!, $0.meaning!, $0.code!]
-//			arrays.append(array)
-//		})
-//		print(arrays)
-
+//		savePreloadedwords { self.setUpUI() }
 		isPreloaded() ? setUpUI() : savePreloadedwords { self.setUpUI() }
 		savePreloaded(true)
 
@@ -64,6 +57,20 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 
 		curtainView.removeFromSuperview()
 	}
+
+//	override func viewDidAppear(animated: Bool) {
+//		super.viewDidAppear(animated)
+//
+//		let dics = allSwiftDics()
+//		for dic in dics {
+//			delay(seconds: 0.8 * Double(dics.indexOf(dic)!), completion: {
+//				let array = [String(dic.index!), dic.word!, dic.meaning!, dic.code!]
+//				print(array, separator: "", terminator: ", ")
+//			})
+//
+//		}
+//
+//	}
 
 	func setUpUI() {
 		resultsOnTable = AllResult()
