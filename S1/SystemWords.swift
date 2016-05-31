@@ -14,21 +14,78 @@ struct System {
 
 	static let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-	static let keywords = ["var", "let", "func", "import", "class", "struct", "enum", "static", "public", "private", "lazy", "where", "false", "true", "nil", "guard", "case", "return", "try", "#function", "#selector", "override", "typealias", "extension", "self", "throws", "as", "is", "break", "switch", "default", "for", "in", "continue", "if", "deinit", "else",
-	                       "catch", "dynamic", "dynamicType", "protocol",
-	                       "didSet", "willSet", "get", "set", "init"
-	                       ]
+	static let keywords = [
 
-	static let valueTypes = ["Bool",
-	                          "String", "NSString",
-	                          "Int", "UInt",
-	                          "Array", "Set",
-	                          "Double", "Float",
-	                          "NSRange", "NSError", "NSDate",
-	                          "NSObject", "AnyObject",
-	                          "CGRect",
-	                          "NSBundle", "UnsafeMutablePointer", "Void",
-	                          "UIColor",
+		"as",
+
+		"break",
+
+		"class", "case", "continue",
+
+		"deinit", "default", "do", "dynamic", "dynamicType", "didSet",
+
+		"enum", "extension", "else",
+
+		"false", "func", "fallthrough", "for",
+
+		"get", "guard",
+
+		"import", "init", "if", "in", "is", "infix", "inout",
+
+		"lazy", "let", "left",
+
+		"mutating",
+
+		"new", "none", "nonmutating", "nil",
+
+		"operator", "optional", "override",
+
+		"protocol", "postfix", "precedence", "prefix", "public", "private",
+
+		"return", "rightset",
+
+		"static", "struct", "subscript", "switch", "super", "self", "Self",
+
+		"typealias", "try", "Type", "true",
+
+		"unowned", "unowned(safe)", "unowned(unsafe)",
+
+		"var",
+
+		"where", "while", "weak", "willSet",
+
+		"#column", "#file", "#function", "#line", "#selector",
+
+	]
+
+	static let valueTypes = [
+
+		"Array", "AnyObject",
+
+		"Bool",
+
+		"CGRect", "CGSize", "CGPoint", "CGAffineTransform",
+
+		"Double",
+
+		"Float",
+
+		"Int",
+
+		"NSString", "NSNumber", "NSDate", "NSData", "NSError", "NSRange", "NSObject", "NSBundle", "NSTimeInterval", "NSURL",
+
+		"Set", "String",
+		
+		"Void",
+
+
+
+		"UIControl", "UIResponder", "UIWindow", "UIScreen", "UIColor", "UIEvent", "UIBezierPath", "UIFont",
+
+		"UIView", "UITableView", "UIScrollView", "UIButton", "UILabel", "UITextField", "UITextView", "UIWebView",
+
+		"UIViewController", "UINavigationController",
+
 	]
 
 
@@ -57,5 +114,45 @@ struct System {
 
 	] + System.ABC_XYZ
 }
+
+/*
+
+### Kit
+
+AVFoundation, AddressBook
+
+CoreData, Contacts
+
+Foundation
+
+MessageUI, MapKit
+
+StoreKit
+
+UIKit
+
+
+
+### Other
+
+alpha
+
+bounds
+
+CG, CA
+
+frame
+
+NS, navigationBar
+
+opaque
+
+statusBar
+
+tintColor, toolbar
+
+UI
+
+*/
 
 

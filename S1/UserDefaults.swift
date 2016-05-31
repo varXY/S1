@@ -26,7 +26,10 @@ extension UserDefaults {
 	}
 
 	func isPreloaded() -> Bool {
-		guard let preloaded = userDefaults.valueForKey(UDKey.preloaded) as? Bool else { return false }
+		guard let preloaded = userDefaults.valueForKey(UDKey.preloaded) as? Bool else {
+			savePreloaded(false)
+			return false
+		}
 		return preloaded
 	}
 

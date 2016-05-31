@@ -18,6 +18,9 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 
 	var isSearching: Bool!
 
+//	var dics: [SwiftDic]!
+//	var dicIndex = 0
+
 	override func preferredStatusBarStyle() -> UIStatusBarStyle {
 		return .LightContent
 	}
@@ -36,12 +39,17 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 		let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(addButtonTapped))
 		navigationItem.rightBarButtonItem = addButton
 
-//		savePreloadedwords { self.setUpUI() }
-		isPreloaded() ? setUpUI() : savePreloadedwords { self.setUpUI() }
-		savePreloaded(true)
+		print(isPreloaded())
+//		let isNotFirstTime = isPreloaded() ? true : true
+		let isNotFirstTime = isPreloaded()
+		if !isNotFirstTime {
+			savePreloadedwords { self.setUpUI() }
+			savePreloaded(true)
+		} else {
+			setUpUI()
+		}
 
 	}
-
 
 
 	override func viewWillAppear(animated: Bool) {
@@ -61,15 +69,20 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 //	override func viewDidAppear(animated: Bool) {
 //		super.viewDidAppear(animated)
 //
-//		let dics = allSwiftDics()
-//		for dic in dics {
-//			delay(seconds: 0.8 * Double(dics.indexOf(dic)!), completion: {
-//				let array = [String(dic.index!), dic.word!, dic.meaning!, dic.code!]
-//				print(array, separator: "", terminator: ", ")
-//			})
+//		dics = allSwiftDics()
+//		let timer = NSTimer(timeInterval: 0.8, target: self, selector: #selector(printDics), userInfo: nil, repeats: true)
+//		NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
 //
+//	}
+//
+//	func printDics() {
+//		if dicIndex < dics.count {
+//			let array = [String(dics[dicIndex].index!), dics[dicIndex].word!, dics[dicIndex].meaning!, dics[dicIndex].code!]
+//			print(array, separator: "", terminator: ", ")
+//			dicIndex += 1
+//		} else {
+//			print("...Done...")
 //		}
-//
 //	}
 
 	func setUpUI() {
@@ -147,7 +160,6 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 		} else {
 			return nil
 		}
-
 	}
 
 	func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
