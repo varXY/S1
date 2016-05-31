@@ -22,6 +22,8 @@ protocol SwiftDicData {
 
 	func saveSwiftDic(swiftDic: SwiftDic)
 	func editSwiftDic(word: String, edited: (SwiftDic) -> (SwiftDic))
+
+	func deleteSwiftDic(word: String)
 }
 
 extension SwiftDicData {
@@ -157,6 +159,27 @@ extension SwiftDicData {
 			print("dic edited")
 		} catch {
 			print("can't edited dic")
+		}
+	}
+
+	func deleteSwiftDic(word: String) {
+		let fetchRequest = NSFetchRequest(entityName: "SwiftDic")
+		fetchRequest.entity = NSEntityDescription.entityForName("SwiftDic", inManagedObjectContext: managedContext)
+		fetchRequest.predicate = NSPredicate(format: "word == %@", word)
+
+		do {
+			if let dics = try managedContext.executeFetchRequest(fetchRequest) as? [NSManagedObject] {
+				managedContext.deleteObject(dics[0])
+			}
+		} catch {
+			print("can't get word for deleting")
+		}
+
+		do {
+			try managedContext.save()
+			print("dic deleted")
+		} catch {
+			print("can't delete dic")
 		}
 	}
 

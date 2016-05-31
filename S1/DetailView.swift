@@ -19,7 +19,6 @@ class DetailView: UIView {
 		backgroundColor = UIColor.backgroundBlack()
 		layer.cornerRadius = globalRadius
 		clipsToBounds = true
-		
 		setupLabels(swiftDic)
 	}
 
@@ -31,7 +30,7 @@ class DetailView: UIView {
 	func setupLabels(swiftDic: SwiftDic) {
 		titleLabel = UILabel(frame: CGRectMake(10, 0, ScreenWidth - 20, 60))
 		titleLabel.text = swiftDic.word
-		titleLabel.font = UIFont.defaultFont(22)
+		titleLabel.font = UIFont.defaultFont(20)
 		titleLabel.textColor = UIColor.stringRed()
 		addSubview(titleLabel)
 
@@ -60,7 +59,6 @@ class DetailView: UIView {
 		exampleCommentLabel.font = UIFont.defaultFont(17)
 		exampleCommentLabel.textColor = UIColor.commentGreen()
 		addSubview(exampleCommentLabel)
-
 
 		let y = exampleCommentLabel.frame.origin.y + exampleCommentLabel.frame.height + 10
 

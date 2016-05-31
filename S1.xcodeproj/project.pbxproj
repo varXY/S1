@@ -29,6 +29,7 @@
 		316BB8361CF525B1006D6D2A /* SystemWords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316BB8351CF525B1006D6D2A /* SystemWords.swift */; };
 		316BB8381CF54427006D6D2A /* NewWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316BB8371CF54427006D6D2A /* NewWordViewController.swift */; };
 		31CA0BDE1CF7CA9F0015B401 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CA0BDD1CF7CA9F0015B401 /* UIImage+.swift */; };
+		31E980B51CFD0BF600770760 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 31E980B41CFD0BF600770760 /* InfoPlist.strings */; };
 		31FE26531CFA65C600EA5D18 /* SingleViewCoreData.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 31FE26501CFA65C600EA5D18 /* SingleViewCoreData.sqlite */; };
 		31FE26541CFA65C600EA5D18 /* SingleViewCoreData.sqlite-shm in Resources */ = {isa = PBXBuildFile; fileRef = 31FE26511CFA65C600EA5D18 /* SingleViewCoreData.sqlite-shm */; };
 		31FE26551CFA65C600EA5D18 /* SingleViewCoreData.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 31FE26521CFA65C600EA5D18 /* SingleViewCoreData.sqlite-wal */; };
@@ -62,6 +63,7 @@
 		316BB8351CF525B1006D6D2A /* SystemWords.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemWords.swift; sourceTree = "<group>"; };
 		316BB8371CF54427006D6D2A /* NewWordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewWordViewController.swift; sourceTree = "<group>"; };
 		31CA0BDD1CF7CA9F0015B401 /* UIImage+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
+		31E980B41CFD0BF600770760 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
 		31FE26501CFA65C600EA5D18 /* SingleViewCoreData.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = SingleViewCoreData.sqlite; sourceTree = "<group>"; };
 		31FE26511CFA65C600EA5D18 /* SingleViewCoreData.sqlite-shm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SingleViewCoreData.sqlite-shm"; sourceTree = "<group>"; };
 		31FE26521CFA65C600EA5D18 /* SingleViewCoreData.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SingleViewCoreData.sqlite-wal"; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				3136BAE91CF443D20000F0E0 /* Info.plist */,
+				31E980B41CFD0BF600770760 /* InfoPlist.strings */,
 			);
 			name = "Supporting File";
 			sourceTree = "<group>";
@@ -248,6 +251,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3136BAE81CF443D20000F0E0 /* LaunchScreen.storyboard in Resources */,
+				31E980B51CFD0BF600770760 /* InfoPlist.strings in Resources */,
 				31FE26531CFA65C600EA5D18 /* SingleViewCoreData.sqlite in Resources */,
 				31FE26551CFA65C600EA5D18 /* SingleViewCoreData.sqlite-wal in Resources */,
 				316BB82B1CF52536006D6D2A /* Menlo.ttc in Resources */,

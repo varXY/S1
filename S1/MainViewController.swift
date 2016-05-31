@@ -132,12 +132,6 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 		presentViewController(navi, animated: true, completion: nil)
 	}
 
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-		print(#function)
-	}
-
-
 }
 
 extension MainViewController: UITableViewDataSource, UITableViewDelegate {
@@ -215,6 +209,29 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 
 	func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
 		return resultsOnTable.map({ System.ABC_XYZ[firstCharacterToIndex($0[0])] })
+	}
+
+	func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+		return isSearching == nil ? true : !isSearching
+	}
+
+	func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+		let alertController = UIAlertController(title: "提示", message: "删除后无法恢复，确定删除？", preferredStyle: .Alert)
+		let cancelAction = UIAlertAction(title: "取消", style: .Cancel) { (_) in
+			tableView.setEditing(false, animated: true)
+		}
+		let okAction = UIAlertAction(title: "确定", style: .Default) { (_) in
+			let cell = tableView.cellForRowAtIndexPath(indexPath)!
+			self.deleteSwiftDic(cell.textLabel!.text!)
+			self.resultsOnTable = self.AllResult()
+			let indexPaths = [indexPath]
+			tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+		}
+
+		alertController.addAction(cancelAction)
+		alertController.addAction(okAction)
+		presentViewController(alertController, animated: true, completion: nil)
+
 	}
 
 }

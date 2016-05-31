@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  S1
+
+  Created by 文川术 on 5/31/16.
+  Copyright © 2016 xiaoyao. All rights reserved.
+*/
+
+CFBundleDisplayName = "Swift词典";

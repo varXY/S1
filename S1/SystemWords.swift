@@ -16,7 +16,7 @@ struct System {
 
 	static let keywords = ["var", "let", "func", "import", "class", "struct", "enum", "static", "public", "private", "lazy", "where", "false", "true", "nil", "guard", "case", "return", "try", "#function", "#selector", "override", "typealias", "extension", "self", "throws", "as", "is", "break", "switch", "default", "for", "in", "continue", "if", "deinit", "else",
 	                       "catch", "dynamic", "dynamicType", "protocol",
-	                       "didSet", "willSet", "get", "set",
+	                       "didSet", "willSet", "get", "set", "init"
 	                       ]
 
 	static let valueTypes = ["Bool",
