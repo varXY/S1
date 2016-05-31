@@ -265,10 +265,7 @@ extension XYScrollView: UIScrollViewDelegate {
 		XYDelegate?.xyScrollViewWillScroll?(scrolledType, topViewIndex: topViewIndex)
 		moveContentViewToTop()
 		XYDelegate?.xyScrollViewDidScroll(scrolledType, topViewIndex: topViewIndex)
-		scrolledType = .NotScrollYet
-	}
-
-	func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+//		scrolledType = .NotScrollYet
 	}
 
 }
