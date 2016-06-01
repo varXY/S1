@@ -9,7 +9,7 @@
 import Foundation
 
 struct UDKey {
-	static let preloaded = "Preloaded"
+	static let preloaded = "SwiftDicPreloaded"
 }
 
 protocol UserDefaults {

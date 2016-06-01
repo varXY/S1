@@ -1,0 +1,630 @@
+as_1. 用于类型判断和转换\n2. as!用于强制转换，as?用于可为空转换###
+
+
+break_
+
+class_
+
+case_
+
+continue_
+
+deinit_
+
+default_
+
+do_
+
+dynamic_
+
+dynamicType_
+
+didSet
+
+enum_
+
+extension_
+
+else
+
+false_
+
+func_
+
+fallthrough_
+
+for
+
+get_
+
+guard
+
+### import
+导入框架头文件关键词
+---
+import UIKit
+
+class viewController: UIViewController {
+	var string: String!
+}
+
+// 要想使用UIViewController和String类型，需要导入UIKit和Foundation, UIKit包含Foundation_@
+
+### init
+构造方法关键词，用于对象初始化的方法，初始化是类，结构体和枚举类型实例化的准备阶段
+---
+class Car {
+
+	var speed: Double
+
+	init() {
+		speed = 70.0
+	}
+
+}
+
+let car = Car()
+print(car.speed)
+// 输出：70.0
+// 当对象初始化时，构造方法自动调用，该方法可以带参数也可以不带_@
+
+### if
+if-else判断语句关键词，后跟判断条件
+---
+var rating = 4
+if rating < 3 {
+	print("不好看的电影")
+} else if rating < 5 && rating >= 3 {
+	print("还不错的电影")
+} else {
+	print("非常棒的电影")
+}
+
+// 输出：还不错的电影
+
+
+### in
+1. for-in循环关键词
+2. 闭包表达式关键词
+---
+
+###is
+类型判断关键词
+---
+
+### inout
+用于修饰函数参数，使该方法可以修改函数外变量的值
+---
+func changeValue(inout a: Int, inout b: Int) {
+	let temp = a
+	a = b
+	b = temp
+}
+
+var a = 0
+var b = 1
+changeValue(&a, b: &b)
+print(a) // 输出：1
+print(b) // 输出：0
+
+### lazy
+懒加载关键词，被标示的储存属性只有在被用到时加载，不在对象初始化时加载
+---
+class BigData {
+	var title = "short title"
+	lazy var content = "this content is very very big"
+}
+
+let data = BigData()
+// 此次data的content属性还没加载
+let content = data.content
+// 在被用到时，content才加载，懒加载的作用是提高内存使用效率
+
+### let
+声明常量关键词，常量一旦声明，无法改变，和声明变量关键词var对应
+---
+let homeland = "China"
+// 把不需要改变的量声明为常量
+
+let score = 99
+score += 1
+// 对score的+=运算无法进行，系统会报错
+
+### mutating
+1. 修饰结构体（struct）或枚举（enum）类型里方法的关键词，让该方法可以修改该类型中的变量
+2. 也可以用于协议（protocol）内方法的定义和使用
+---
+struct Person {
+	var age = 20
+
+	mutating func grow() {
+		age += 1
+	}
+}
+
+let someone = Person()
+someone.grow()
+print(someone.age)
+// 输出：21
+
+### nonmutating
+1. 修饰结构体（struct）或枚举（enum）类型里方法的关键词，让该方法无法修改该类型中的变量。如果不修饰，默认是nonmutating
+2. 也可以用于协议（protocol）内方法的定义和使用
+---
+struct Person {
+	var mom = "Lovely"
+
+	nonmutating func changeMom() {
+		mom = "Beautiful"
+	}
+}
+
+// 无法这样写，系统会报错
+
+### nil
+对象值为空的情况
+---
+let empty: Int! = nil
+var maybeEmpty: Int?
+maybeEmpty = empty
+
+print(maybeEmpty)
+// 输出：nil
+
+### optional
+在协议中定义可选方法，可实现也可不实现的方法
+---
+@Objc protocol someType {
+	func mustHave()
+	optional func youDontNeedTo()
+}
+
+// 当实现协议someType时，mustHave()是必须实现的方法，youDontNeedTo()则可实现也可不实现
+// 想要使用optional, 定义协议时必须用@Objc标示
+
+### override
+重载，用于子类重写父类的属性或方法
+---
+class OldMan {
+	var firstName: String
+
+	func goHome() {
+	}
+}
+
+class YoungMan: OldMan {
+	override var firstName: String {
+		get {
+			return super.firstName
+		}
+
+		set {
+		}
+	}
+
+	override func goHome() {
+		// do something different here
+	}
+}
+
+### protocol
+定义协议关键字，Protocol(协议)用于统一方法和属性的名称，而不实现任何功能。协议能够被类，枚举，结构体实现，满足协议要求的类，枚举，结构体被称为协议的遵循者。
+---
+protocol CanSaveData {
+	var content: String { get }
+	func save()
+}
+
+struct Notes: CanSaveData {
+	var content: String {
+		return "content"
+		// Notes必须含有content这个变量，才能实现CanSaveData协议
+	}
+
+	func save() {
+		// 要实现CanSaveData协议，Notes必须有save()方法
+	}
+}
+
+### public
+访问修饰符，被修饰的属性或方法是公开的，可以在任何地方访问和使用
+---
+struct PublicKnowledge {
+	public let earthCount = 1
+
+	public func whoIsObama() -> String {
+		return "president of the united states"
+	}
+}
+
+let count = PublicKnowledge().earthCount
+let answer = PublicKnowledge().whoIsObama()
+// public修饰的属性或方法，可以任意访问
+
+### private
+访问修饰符，被修饰的属性或方法只能在当前的Swift源文件里可以访问
+---
+struct Secret {
+	private let salary = 0
+
+	private func howToMakeMyselfHappy() {
+
+	}
+}
+
+let secret = Secret()
+let steal = secret.salary
+let learn = secret.howToMakeMyselfHappy()
+// 如果在不同的文件里写调用代码，后两行无法运行，系统报错
+
+### return
+返回关键词，表示一段代码运行结束并跳出，return后可跟返回值也可以单独return
+---
+func getLength(string: AnyObject) -> Int? {
+	guard let text = string as? NSString else { return nil }
+	return text.length
+}
+
+func printNumber(anyObject: AnyObject) {
+	guard let number = anyObject as? Int else { return }
+	// 如果anyObject不是Int类型，则返回，不执行下面的代码
+	print(number)
+}
+
+### static
+在结构体或枚举类型中，修饰静态属性，静态属性指与具体实例无关，所有实例都共享和一样的属性
+---
+struct RichPeople {
+	static let millionaire = 1000000
+	static let billionaire = 1000000000
+}
+
+let me = RichPeople.millionare
+// 静态属性可以不创建实例，直接调用
+// 像百万富翁这样不会改变的定义，适合做成静态属性
+
+
+### struct
+定义结构体关键字，结构体是Swift里一种基本数据结构单位，功能全面，算是一种轻量级的类（class）
+---
+struct Resolution {
+	var width = 1242
+	var height = 2208
+	var PPI = 72
+}
+// 结构体的声明和使用大体上和类相似，但没有继承特性，无法作为一个对象被重复引用。
+
+### subscript
+下标，一种快捷的访问对象属性的方式，使用方法和数组或字典的使用方法类似
+---
+class TestClass {
+	var testArray = Dictionary<Int, String>()
+	subscript(index: Int) -> String {
+		set {
+			testArray[index] = newValue
+		}
+	}
+}
+
+var test = TestClass()
+test[2] = "hello"
+print(test.testArray)
+// 输出：[2, "hello"]
+
+### switch
+switch-case判断语句组成部分，后跟要判断的对象
+---
+let randomNumber = random() // 任意随机数
+let luckNumber = 888
+
+switch randomNumber {
+case luckNumber:
+	print("中奖了！")
+default:
+	print("概率太低，中不了")
+}
+
+### super
+在子类中，调用父类方法时使用的关键词
+---
+override func viewDidLoad() {
+	super.viewDidLoad()
+	// 重写父类方法后，又调用父类方法，这样既可以执行父类的代码，也可以在这里写子类独有的代码
+	}
+}
+
+### self
+在对象内部，用于指代对象自身
+---
+class BankAccount {
+	var number: Int
+
+	init(number: Int) {
+		self.number = number
+		// 前一个number指BankAccount类的属性，后一个number是构造方法的参数
+	}
+}
+
+Self
+在对象外部，用于指代对象自身
+---
+extension UIContentContainer where Self: UIViewController {
+	// 仅当实现对象是UIViewController时，UIContentContainer的扩展
+}
+
+### typealias
+定义类型别名的关键词，通过取一个别名，方便管理和使用
+---
+typealias 数字 = Int
+let number: 数字 = 1
+print(number)
+// 输出：1。给Int类型取了个中文别名：数字。当然实际编程不建议这样中英混用
+
+typealias simpleFuncion = () -> ()
+let doNothing: simpleFuncion = {}
+// 也可以给闭包取别名
+
+### try
+用于执行一些可能会抛出异常的操作。
+try!是强制操作，不处理异常，try？的返回结果是Optional
+通常配合do-catch语句运行可能会抛出异常的方法
+---
+do {
+	if let dicts = try managedContext.executeFetchRequest(fetchRequest) as? [AnyObject] {
+		// 当executeFetchRequest正常执行，在这里进行接下来的操作
+	}
+} catch {
+	// 如果出现异常，则执行这里面的代码
+	print("something wrong")
+}
+
+### true
+布尔类型值的一种情况，另一种是false
+---
+let a: Bool = true
+let b: Bool = false
+print(a == !b)
+// 输出：true. !运算符对布尔类型进行取反运算
+
+### unowned
+避免循环引用关键词，当用unowned设置一个对象，它不能为可选类型，必须在构造方法里初始化。与之对应的weak可以是可选类型，也可以为nil
+---
+protocol ModelObjectDelegate: class {
+}
+
+class ModelObject {
+	// 可选类型默认初始值为nil
+	unowned var delegate: ModelObjectDelegate
+
+	init(delegate:ModelObjectDelegate) {
+		self.delegate = delegate
+	}
+}
+
+### var
+定义变量关键词，初始化后的值可以改变的量为变量
+---
+var a: Int? = 10
+a = 100
+print(a) // 输出：100
+a = nil
+print(a) // 输出：nil
+
+### where
+类型或条件判断关键词
+---
+extension UIContentContainer where Self: UIViewController {
+	// 判断实现UIContentContainer的对象的类型是否为UIViewController
+}
+
+let yetAnotherPoint = (1, -1)
+switch yetAnotherPoint {
+case let (x, y) where x == y:
+	print("(\(x), \(y)) is on the line x == y")
+case let (x, y) where x == -y:
+	print("(\(x), \(y)) is on the line x == -y")
+}
+// 输出： "(1, -1) is on the line x == -y"
+
+### while
+do-while、while循环语句关键词，while后面跟循环的条件
+---
+var i = 0
+do {
+	i += 1
+} while i < 100
+print(i) // 输出：100
+
+while i < 100 {
+	i += 1 // 输出：100
+}
+// do-while和while循环语句的区别是：前者在循环开始前判断条件，后者在循环结束后判断条件决定是否开始下一次循环
+
+### weak
+声明弱引用关键词，用于避免循环引用导致的内存泄露。被声明的对象是可选类型，也可以为nil
+---
+@objc protocol RequestHandler {
+	optional func requestFinished()
+}
+class Request {
+	weak var delegate: RequestHandler!;
+
+	func gotResponse() {
+		delegate?.requestFinished?()
+	}
+}
+// 把delegate用weak标示，可以确保当Request不再被使用时，可顺利从内存中销毁
+
+### willSet
+给属性添加观察者。当属性值将要改变时，触发willSet里的代码
+---
+var age = 20 {
+	willSet {
+		print("I'm no longer" + String(oldValue))
+	}
+}
+
+age = 21
+// 输出："I'm no longer 20"
+
+### #column
+所在列数的字面表达式，是Int类型
+---
+print(#column)
+// 输出：1。说明上面一行代码的开头在文件的第一列
+
+### #file
+所在文件名的字面表达式，是String类型
+---
+print(#file)
+// 输出：/user/开发常见词汇.swift
+// 输出的将是文件位置和文件名
+
+### #function
+所在声明的名字，String类型
+在函数中会返回当前函数的名字，在方法中会返回当前方法的名字，在属性的存取器中会返回属性的名字
+---
+func thisIsASimpleFunction() {
+	print(#function)
+}
+
+thisIsASimpleFunction()
+// 输出：thisIsASimpleFunction()
+
+### #line
+所在的行数的字面表达式，Int类型
+---
+print(#line)
+// 输出：6。说明上面一行在文件的第六行
+
+### #selector
+调用方法的关键词，通常在给按钮添加点击事件时使用
+---
+let button = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(buttonTapped))
+// 其中buttonTapped是对象（self）中的无参方法
+// Swift2.2后，这样调用可以自动对方法进行检查，确保不出错
+
+Array_
+
+AnyObject
+
+Bool_
+
+CGRect_
+
+CGSize_
+
+CGPoint_
+
+CGAffineTransform
+
+Double_
+
+Float_
+
+Int_
+
+NSNumber_
+
+NSDate_
+
+NSData_
+
+NSError_
+
+NSRange_
+
+NSObject_
+
+NSBundle_
+
+NSTimeInterval_
+
+NSURL_
+
+Set_
+
+String_
+
+Void_
+
+UIControl_
+
+UIResponder_
+
+UIWindow_
+
+UIScreen_
+
+UIColor_
+
+UIEvent_
+
+UIBezierPath_
+
+UIFont_
+
+UIView_
+
+UITableView_
+
+UIScrollView_
+
+UIButton_
+
+UILabel_
+
+UITextField_
+
+UITextView_
+
+UIWebView_
+
+UIViewController_
+
+UINavigationController_
+
+AVFoundation_
+
+AddressBook_
+
+CoreData_
+
+Contacts
+
+Foundation
+
+MessageUI_
+
+MapKit
+
+StoreKit_
+
+UIKit
+
+alpha
+
+bounds
+
+CG_
+
+CA
+
+frame
+
+NS_
+
+navigationBar
+
+opaque
+
+statusBar
+
+tintColor_
+
+toolbar
+
+UI
+
+
+

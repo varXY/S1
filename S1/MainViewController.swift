@@ -42,12 +42,20 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 		print(isPreloaded())
 //		let isNotFirstTime = isPreloaded() ? true : true
 		let isNotFirstTime = isPreloaded()
-		if !isNotFirstTime {
+		if isNotFirstTime == false {
 			savePreloadedwords { self.setUpUI() }
 			savePreloaded(true)
 		} else {
 			setUpUI()
 		}
+
+//		let modelURL = NSBundle.mainBundle().URLForResource("S_words", withExtension: "txt")!
+//		do {
+//			let text = try NSString(contentsOfURL: modelURL, encoding: NSUTF8StringEncoding)
+//			print(text)
+//		} catch {
+//			print("error")
+//		}
 
 	}
 
