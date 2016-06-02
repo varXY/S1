@@ -504,35 +504,193 @@ let button = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #s
 // 其中buttonTapped是对象（self）中的无参方法
 // Swift2.2后，这样调用可以自动对方法进行检查，确保不出错
 
-Array_
+### Array
+数组，集合类型，用来按顺序存储相同类型数据
+---
+var intList: [Int] = [10, 11, 12]
+var array: Array
+var emptyArray = []
+var intList_1 = Array<Int>()
+// 数组的声明形式很宽泛
 
-AnyObject
+var list = ["hello", "world"]
+print(list[0] + list[1])
+// 输出："hello world"
+// 数组的数据是有顺序位置的，通过位置编号访问和修改元素
 
-Bool_
+### AnyObject
+指代任意数据类型，可为空
+---
+let Anything: [AnyObject] = [3, "String", 3.5, true, [2, 3]]
+if let string = Anything[1] as? String {
+	// AnyObject是用来指代其他类型，调用得先进行类型转换
+}
 
-CGRect_
+var a: AnyObject = 3
+a = "String"
+print(a)
+// 指代的类型可以变更
 
-CGSize_
 
-CGPoint_
+### Bool
+布尔类型，值只能为true或false
+Bool?是可选类型，值可为nil
+---
+let raining = false
+raining ? print("带雨伞") : print("不带雨伞")
+// 输出：不带雨伞
 
-CGAffineTransform
+let number = 3
+let equal: Bool = number == 3
+print(equal)
+// 输出：true
+// 比较运算符==输出一个布尔类型结果
 
-Double_
+### CGRect
+包含控件位置和大小信息的结构体，控件的frame、bounds属性是CGRect类型
+---
+let button = UIButton()
+button.frame = CGRect(x: 10, y: 10, width: 100, height: 100)
+let differentRect: CGRect = CGRectMake(0, 0, 100, 100)
+button.bounds = differentRect
 
-Float_
+// 控件的frame和bounds属性包含了控件的x、y坐标，宽和高信息。
 
-Int_
+### CGSize
+包含控件大小信息的结构体，有宽和高两个属性。
+---
+let view = UIView()
+view.frame.size = CGSize(width: 200, height: 200)
+let newSize: CGSize = CGSize(width: 300, height: 300)
+view.frame.size = newSize
+view.frame.size.width = 400
+view.frame.size.height = 800
 
-NSNumber_
+// UIView的frame属性类型是CGRect，CGRect里的size属性类型是CGSize
 
-NSDate_
+### CGPoint
+包含控件位置信息的结构体，有x和y两个属性
+代表控件最左上角一点的x坐标和y坐标
+---
+let label = UILabel()
+label.frame.origin = CGPoint(x: 20, y: 20)
+label.frame.origin.x = 30
+label.frame.origin.y = 60
 
-NSData_
+// UIView的frame属性类型是CGRect，CGRect里的origin属性类型是CGPoint
 
-NSError_
+### CGAffineTransform
+字面意思仿射转换，包含控件缩放、旋转、平移等转换信息的结构体
+---
+let view = UIView()
+view.transform = CGAffineTransformMakeScale(0.8, 0.8)
+// 让view缩小为原大小的0.8
 
-NSRange_
+view.transform = CGAffineTransformMakeRotation(CGFloat(180 * M_PI / 180))
+// 让view旋转180度
+
+view.transform = CGAffineTransformMakeTranslation(100, 100)
+// 让view向右和向下移动100个像素
+
+// UIView的transform属性是CGAffineTransform类型
+
+### Double
+64位的浮点数字类型，浮点指有小数点
+当需要存储很大或者精度很高的浮点数时，使用此类型
+---
+let int: Int = 12
+let double: Double = 12
+print(int) // 输出：12
+print(double) // 输出：12.0
+
+let double = -2342348347.234230948203948
+
+### Float
+32位的浮点数字类型，浮点指有小数点，当存储大小和精度要求不高用此类型
+常用的CGFloat, 可以算是Float同时也是Double类型的别名，它能很好兼容64位系统
+---
+let float: Float = 13421
+var value: CGFloat = 3423.34342342342342
+value = CGFloat(float)
+print(value)
+// 输出：13421.0
+
+### Int
+整形，指没有小数点的整数类型
+按照位数衍生的有Int8, Int16, Int32, Int64. 分别对应不同的最大长度
+Int可以是正数和负数，UInt只能是正数
+---
+let int: Int = 100000
+let int64: Int64 = -2342342342342534234223
+let positive: UInt = 123456
+
+print(Int8.max) // 输出：127
+print(UInt8.max) // 输出：255
+
+### NSNumber
+用来存储数字值的类型，可以存储char a signed or unsigned char, short int, int, long int, long long int, float, or double or as a BOOL
+---
+import Foundation
+import CoreData
+
+extension SwiftDict {
+
+@NSManaged var index: NSNumber?
+@NSManaged var word: String?
+
+}
+// CoreData里默认数字类型是NSNumber
+// NSNumber的兼容性好，对于任何类型的数字对象都能用它来声明
+
+### NSDate
+提供和处理日期和时间的类
+---
+let today = NSDate()
+let yesterday = NSDate(timeIntervalSinceNow: -86400)
+print(today) // 输出：2016-06-01 02:22:27 +0000
+print(yesterday) // 输出：2016-05-31 02:22:27 +0000
+
+// NSDate的默认是UTC全球时间
+
+let formatter = NSDateFormatter()
+formatter.dateFormat = "yyyy-MM-dd, HH:mm:ss"
+let localDate = formatter.stringFromDate(today)
+print(localDate) // 输出：2016-06-01, 10:22:27
+
+// 想要输出本地时间，要用到NSDateFormatter
+
+
+
+### NSData
+二进制数据流类型，创建后不可修改，在文件操作，网络，以及核心图形图像中使用较广泛
+NSMutableData可以修改
+---
+let string = "你好你好你好"
+let data: NSData = string.dataUsingEncoding(NSUTF8StringEncoding)!
+let newString = String.init(data: data, encoding: NSUTF8StringEncoding)!
+print(newString)
+
+// 输出："你好你好你好"
+
+### NSError
+基础框架提供的用于处理异常和错误的类
+---
+func saveContext () {
+	if managedObjectContext.hasChanges {
+		do {
+			try managedObjectContext.save()
+		} catch {
+			let nserror = error as NSError
+			NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
+			abort()
+		}
+	}
+}
+// 与do-catch语句配合使用，当抛出错误，创建NSError对象获取错误信息
+
+### NSRange
+用于表示范围的结构体，有两个属性：起始点（location）和长度（length）
+---
 
 NSObject_
 

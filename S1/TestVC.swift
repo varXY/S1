@@ -36,11 +36,7 @@ class TestVC: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		var a: Int? = 10
-		a = 100
-		print(a) // 输出：100
-		a = nil
-		print(a) // 输出：nil
+//		let serror = NSError
 
 	}
 
