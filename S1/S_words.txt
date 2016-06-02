@@ -690,43 +690,253 @@ func saveContext () {
 
 ### NSRange
 用于表示范围的结构体，有两个属性：起始点（location）和长度（length）
+Swift新增Range，和NSRange相识，但不可通用
 ---
+let nsString: NSString = "this is a short text"
+let nsRange: NSRange = nsString.rangeOfString("short")
+print(nsRange)
+// 输出：(10,5)
 
-NSObject_
+let text = "this is a long text"
+let range = text.rangeOfString("long")!
+print(range)
+// 输出：10..<14
 
-NSBundle_
+### NSObject
+基础类，大部分OC开始有的类继承于NSObject
+---
+public class UIResponder : NSObject {
+}
 
-NSTimeInterval_
+public class UIView : UIResponder  {
+}
 
-NSURL_
+public class UIViewController : UIResponder  {
+}
 
-Set_
+// 以上的类都继承于一个基础类NSObject
 
-String_
+### NSBundle
+用于获取和使用文件路径的类
+NSBundle内含有：info.plist，可执行文件，图像、图标、音频等资源文件
+---
+let mainBundle = NSBundle.mainBundle()
+let FilePath = mainBundle.pathForResource("Personal", ofType: "jpg")
+// 获取Personal.jpg的路径
 
-Void_
+let info = mainBundle.infoDictionary
+//获得info.plist配置项词典对象实例
+let bundleId: AnyObject? = mainBundle.objectForInfoDictionaryKey("CFBundleName")
+// 获得应用程序的Bundle名
 
-UIControl_
+### NSTimeInterval
+时间间隔，以秒为基本单位，是Double类型数字
+---
+let today = NSDate()
+let timeInterval: NSTimeInterval = 86400
+let yesterday = NSDate(timeInterval: -timeInterval, sinceDate: today)
+let tomorrow = NSDate(timeInterval: timeInterval, sinceDate: today)
 
-UIResponder_
+// 一天有86400秒，今天减86400秒是昨天，今天加86400秒是明天
 
-UIWindow_
+### NSURL
+资源地址，用于网络链接或者本地资源路径
+---
+let url = NSURL(string: "http://www.google.com")!
+UIApplication.sharedApplication().openURL(url)
+// 创建和打开网址
 
-UIScreen_
+let urls: [NSURL] = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+// 获取本地Document路径
 
-UIColor_
+### Set
+无序集合类型。Array与之对应，是有序集合类型。
+如果Set里出现了多个相同的值，运行时只保留一个
+---
+var anySet: Set = [1, 2, 3, "4", "5"]
+var stringSet: Set<String> = ["4", "5"]
 
-UIEvent_
+var duplicateSet: Set = [1, 1, 3, 3, 5, 5]
+print(duplicateSet)
 
-UIBezierPath_
+// 输出：[3, 1, 5]
 
-UIFont_
+### String
+字符串类型，字符的序列，同时代表字符（Character）的合集
+---
+let text = "hello world"
+let sentence = "这里是一段文字 123456 +-*/ :)"
+// String类型的内容必须写在双引号里
 
-UIView_
+print(String(sentence.characters.last!))
+// 输出：)
 
-UITableView_
+### Void
+指代空的元组
+常用于返回值为空的函数，可以用()代替，或省略
+---
+func empty(a: Void) -> Void {
+}
+// 一个没有参数，也没返回值的函数，可以简写成：
 
-UIScrollView_
+func empty() -> () {
+}
+
+func empty() {
+}
+
+### UIControl
+UIButton, UISwitch的父类，实现了target-action模式
+---
+let button = UIButton()
+button.frame = CGRectMake(0, 0, 100, 100)
+button.addTarget(self, action: #selector(buttonTapped), forControlEvents: .TouchUpInside)
+
+// 给button添加目标后，点击按钮，将会触发self里的buttonTapped方法
+
+### UIResponder
+视图类（UIView）和视图控制器类（UIViewController）的父类，让其子类可以相应用户触发事件
+---
+public func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
+public func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?)
+public func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?)
+public func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?)
+
+// 以上都是UIResponder中的方法，当用户的手指接触屏幕、滑动手指、离开屏幕时这些方法会被调用
+
+### UIWindow
+管理屏幕显示内容的UIView子类，一个app默认一个window
+---
+func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+	window = UIWindow(frame: UIScreen.mainScreen().bounds)
+	window?.backgroundColor = UIColor.blackColor()
+
+	let VC = viewController()
+	window?.rootViewController = UINavigationController(rootViewController: VC)
+	window?.makeKeyAndVisible()
+
+	return true
+}
+// 当不用storyboard时，就要给AppDelegate里的window赋值，设置其rootViewController
+
+### UIScreen
+提供手机屏幕硬件方面信息的类，如分辨率、亮度
+---
+print(UIScreen.mainScreen().bounds.size)
+// 输出：(320.0, 480.0) —— iPhone 4/4s
+// 输出：(320.0, 568.0) —— iPhone 5/5s
+// 输出：(375.0, 667.0) —— iPhone 6/6s
+// 输出：(414.0, 736.0) —— iPhone 6 plus/6s plus
+// 输出：(768.0, 1024.0) —— iPad
+
+UIColor
+UIKit中颜色管理类
+注意iOS设备使用的是sRGB显示颜色
+---
+let red = UIColor.redColor() // 获取红色
+view.backgroundColor = UIColor.blueColor() // 设置view的背景颜色为蓝色
+
+extension UIColor {
+
+	class func backgroundBlack() -> UIColor {
+		return UIColor(red: 40/255, green: 42/255, blue: 55/255, alpha: 1.0)
+	}
+
+}
+view.backgroundColor = UIColor.backgroundBlack()
+// 创建和使用自定义颜色
+
+### UIEvent
+UIKit中用来响应事件的类。
+iOS中有大体上有三类事件：屏幕感应事件、传感器感应事件、遥控事件（如耳机）
+---
+public enum UIEventType : Int {
+	case Touches
+	case Motion
+	case RemoteControl
+	@available(iOS 9.0, *)
+	case Presses
+}
+// 系统提供的UIEvent类型
+
+override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+	print(event?.type)
+}
+// 通常在UIView中实现这个方法后，当点击屏幕就会打印出event的类型
+
+### UIBezierPath
+贝塞尔曲线，用来划线和自定义形状
+---
+import UIKit
+
+class BezierView: UIView {
+	override func drawRect(rect: CGRect) {
+		super.drawRect(rect);
+		var myBezier = UIBezierPath()
+		myBezier.moveToPoint(CGPoint(x: 100, y: 100))
+		myBezier.addLineToPoint(CGPoint(x: 200, y: 100))
+		UIColor.orangeColor().setStroke()
+		myBezier.stroke()
+	}
+}
+// 画一条线
+
+### UIFont
+UIKit中字体管理类
+---
+let label = UILabel()
+label.font = UIFont.systemFontOfSize(20)
+// 设置label的字体为系统自带字体，字号20
+
+extension UIFont {
+
+	class func myFont(size: CGFloat) -> UIFont {
+		return UIFont(name: "Menlo-Regular", size: size)!
+	}
+}
+label.font = UIFont.myFont(17)
+// 创建和使用自定义字体，先得把字体文件加入工程
+
+### UIView
+UIKit中的基础视图类，大部分显示控件都是它的子类，如UILabel，UITableView, UIWebView
+代表屏幕上一片特定区域，渲染和管理这篇区域上的内容
+---
+let view = UIView() // 创建一个UIView
+view.frame = CGRectMake(0, 0, 300, 500) // 设置位置和大小
+view.backgroundColor = UIColor.grayColor() // 设置背景颜色
+view.alpha = 0.8 // 设置透明度 0 ~ 1
+view.userInteractionEnabled = false // 设置能否与用户交互
+
+### UITableView
+UIKit提供的视图类，用于显示按一列数行排放的信息，用户需要上下滑动进行查看
+每一行称作一个cell,是UITableViewCell类
+---
+class tableViewController: UITableViewController {
+	// UIKit提供UITableView视图控制器，方便开发
+
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		tableView = UITableView(frame: view.bounds)
+		tableView.dataSource = self
+		tableView.delegate = self
+		tableView.backgroundColor = UIColor.clearColor()
+		tableView.separatorStyle = .None
+		// 常见UITableView设置
+	}
+}
+
+### UIScrollView
+UIKit提供的视图类，用于显示大于屏幕尺寸的内容，允许用户自由滑动查看内容
+---
+let scrollView = UIScrollView(frame: view.bounds)
+scrollView.contentSize = CGSize(width: 1000, height: 1000)
+// 设置contentSize大于frame.size，可以加载跟多内容
+scrollView.directionalLockEnabled = true
+scrollView.pagingEnabled = false
+scrollView.scrollsToTop = false
+scrollView.delegate = self
+scrollView.decelerationRate = UIScrollViewDecelerationRateFast
+// 常见scrollVIew设置
 
 UIButton_
 

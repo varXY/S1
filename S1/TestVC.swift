@@ -29,19 +29,16 @@ struct Secret {
 }
 
 
-class TestVC: UIViewController {
-
-
+class tableViewController: UITableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
-//		let serror = NSError
-
-	}
-
-	func getLength(string: AnyObject) -> Int? {
-		guard let text = string as? NSString else { return nil }
-		return text.length
+		tableView = UITableView(frame: view.bounds)
+		tableView.dataSource = self
+		tableView.delegate = self
+		tableView.backgroundColor = UIColor.clearColor()
+		tableView.separatorStyle = .None
+		tableView.sectionIndexColor = UIColor.whiteColor()
+		tableView.sectionIndexBackgroundColor = UIColor.clearColor()
 	}
 }
