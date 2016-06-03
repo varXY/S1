@@ -58,15 +58,6 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 //			print("error")
 //		}
 
-		let view1 = UIView(frame: CGRectMake(20, 20, 280, 250))
-		view1.bounds = CGRectMake(-20, -20, 280, 250)
-
-		let view2 = UIView(frame: CGRectMake(10, 10, 100, 100))
-		view1.addSubview(view2)
-
-		print(view1.bounds)
-		print(view2.bounds)
-
 	}
 
 
