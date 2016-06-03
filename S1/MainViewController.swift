@@ -39,9 +39,10 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 		let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(addButtonTapped))
 		navigationItem.rightBarButtonItem = addButton
 
-		print(isPreloaded())
+
 //		let isNotFirstTime = isPreloaded() ? true : true
 		let isNotFirstTime = isPreloaded()
+		print(isNotFirstTime)
 		if isNotFirstTime == false {
 			savePreloadedwords { self.setUpUI() }
 			savePreloaded(true)
@@ -56,6 +57,15 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 //		} catch {
 //			print("error")
 //		}
+
+		let view1 = UIView(frame: CGRectMake(20, 20, 280, 250))
+		view1.bounds = CGRectMake(-20, -20, 280, 250)
+
+		let view2 = UIView(frame: CGRectMake(10, 10, 100, 100))
+		view1.addSubview(view2)
+
+		print(view1.bounds)
+		print(view2.bounds)
 
 	}
 

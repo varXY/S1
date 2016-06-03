@@ -6,39 +6,24 @@
 //  Copyright © 2016 xiaoyao. All rights reserved.
 //
 
+
 import UIKit
 
-typealias simpleFuncion = () -> ()
-
-extension UIContentContainer where Self: UIViewController {
-
-}
-
-prefix operator  ^ {}
-
-prefix func ^ (vector: Double) -> Double {
-	return pow(2, vector)
-}
-
-struct Secret {
-	private let salary = 0
-
-	private func howToMakeMyselfHappy() {
-
-	}
-}
-
-
-class tableViewController: UITableViewController {
+class viewController: UIViewController {
 
 	override func viewDidLoad() {
-		super.viewDidLoad()
-		tableView = UITableView(frame: view.bounds)
-		tableView.dataSource = self
-		tableView.delegate = self
-		tableView.backgroundColor = UIColor.clearColor()
-		tableView.separatorStyle = .None
-		tableView.sectionIndexColor = UIColor.whiteColor()
-		tableView.sectionIndexBackgroundColor = UIColor.clearColor()
+		 super.viewDidLoad()
+
+		let view1 = UIView(frame: CGRectMake(20, 20, 280, 250))
+		view1.bounds = CGRectMake(-20, -20, 280, 250)
+
+		let view2 = UIView(frame: CGRectMake(0, 0, 100, 100))
+		view1.addSubview(view2)
+
+		print(view1.bounds)
+		print(view2.bounds)
+
 	}
+
 }
+

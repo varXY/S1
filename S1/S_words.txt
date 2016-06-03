@@ -938,47 +938,279 @@ scrollView.delegate = self
 scrollView.decelerationRate = UIScrollViewDecelerationRateFast
 // 常见scrollVIew设置
 
-UIButton_
+### UIButton
+UIKit提供的按钮类，用来响应用户的点击、拖拽等操作
+---
+let button = UIButton()
+button.addTarget(self, action: #selector(buttonTouched), forControlEvents: .TouchDown)
+button.addTarget(self, action: #selector(buttonTouchUpOutside), forControlEvents: .TouchUpOutside)
+button.addTarget(self, action: #selector(buttonTapped), forControlEvents: .TouchUpInside)
+// 分别当用户按下按钮、按下移动在按钮外松开手指、在按钮内松开手指时，给按钮添加将要触发的方法
 
-UILabel_
+view.addSubview(button)
 
-UITextField_
+### UILabel
+UIKit提供用来显示只读内容的类，可以显示一行或多行的文字
+---
+let label = UILabel()
+label.text = "你好\n这是换行后的你好" // 内容，\n表示换行
+label.numberOfLines = 0 // 当显示多行文字时，需要设置行数，0代表不限行数
+label.font = UIFont.systemFontOfSize(20) // 字体
+label.textColor = UIColor.blueColor() // 文字颜色
+view.addSubview(label) // 添加进已显示的视图后，才能显示
 
-UITextView_
+// label常见设置
 
-UIWebView_
+### UITextField
+UIKit提供用来输入、编辑、显示一行文字内容的类
+常用于用户名、密码输入框等
+---
+class viewController: UIViewController, UITextFieldDelegate {
 
-UIViewController_
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 300, height: 50))
+		textField.delegate = self // viewController必须实现协议UITextFieldDelegate
+		view.addSubview(textField)
+	}
 
-UINavigationController_
+	func textFieldDidBeginEditing(textField: UITextField) {
+		// 当textField开始编辑，这个方法将被调用。这只是UITextFieldDelegate中众多方法之一
+	}
 
-AVFoundation_
+}
 
-AddressBook_
+### UITextView
+UIKit提供用来输入、编辑、显示多行文字内容的类，当内容很多时，用户可以上下滑动查看
+---
+let textView = UITextView()
+textView.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight)
+textView.contentSize = CGSize(width: ScreenWidth, height: ScreenHeight * 3)
+// 设置textView的位置和大小，以及显示内容区域的大小，ScreenWidth、ScreenHeight是自定义变量
 
-CoreData_
+textView.textContainerInset = UIEdgeInsets(top: 5, left: 5, bottom: 10, right: 5)
+textView.text = "可以是大段大段的内容"
+textView.tintColor = UIColor.redColor()
+textView.font = UIFont.systemFontOfSize(18)
+textView.editable = false // 设置文字内容能否被编辑
+view.addSubview(textView)
 
-Contacts
+### UIWebView
+UIKit提供用于加载和显示网页内容的类
+---
+let webView = UIWebView(frame: view.bounds)
+let url = NSURL(string: "http://www.stackoverflow.com")!
+webView.loadRequest(NSURLRequest(URL: url))
+view.addSubview(webView)
 
-Foundation
+// 创建一个webView，并让其加载显示stackoverflow.com的内容
 
-MessageUI_
+### UIViewController
+视图控制器，UIKit提供用来管理视图的类，是管理视图同时也是管理App的框架
+---
+class viewController: UIViewController {
 
-MapKit
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		view.backgroundColor = UIColor.whiteColor()
+		// 对视图和App数据的操作，大多都在viewController的生命周期中进行
+	}
 
-StoreKit_
+	func showAnotherViewController() {
+		presentViewController(viewController(), animated: true, completion: nil)
+		// viewController的呈现方法之一
+	}
 
-UIKit
+}
 
-alpha
+### UINavigationController
+导航控制器，UIKit提供用来管理视图控制器的类
+可以用来显示标题、放置导航按钮、管理工具栏等
+---
+let viewController = UIViewController()
+let navigationController = UINavigationController(rootViewController: viewController)
+// 声明一个UINavigationController
 
-bounds
+navigationController.pushViewController(viewController, animated: true)
+// 用UINavigationController推出另一个视图控制器
 
-CG_
+navigationController.popViewControllerAnimated(true)
+// 用UINavigationController来从一个视图控制器退出
 
-CA
+### AVFoundation
+系统提供用来管理音视频文件的框架
+---
+import AVFoundation
+
+struct BackgroundSound {
+	let sound: AVAudioPlayer // AVFoundation里用来管理音频文件的类
+
+	init() {
+		let soundPath = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("sound", ofType: "m4a")!)
+		sound = try! AVAudioPlayer(contentsOfURL: soundPath)
+	}
+
+	func playSound(sound: AVAudioPlayer) {
+		sound.stop()
+		sound.currentTime = 0
+		sound.volume = 0.65
+		sound.prepareToPlay()
+		sound.play()
+		// 常用播放选项
+	}
+}
+
+### CoreData
+系统提供的数据持久化存储框架
+它提供了对象-关系映射(ORM)的功能，即能够将对象转化成数据，也能够将保存在数据库中的数据还原成对象。
+---
+let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+let managedContext = appDelegate.managedObjectContext
+
+let fetchRequest = NSFetchRequest(entityName: "MyStory")
+fetchRequest.entity = NSEntityDescription.entityForName("MyStory", inManagedObjectContext: managedContext)
+
+do {
+	if let result = try managedContext.executeFetchRequest(fetchRequest) as? [AnyObject] {
+		// 在这里可以获取到数据，也可以对数据进行编辑、删除等操作
+	}
+} catch {
+	print("can't get data")
+}
+
+### Contacts
+系统提供和通讯录进行交互的框架，可以获取联系人的信息，还有地名等信息
+---
+import MapKit
+import Contacts
+
+func useAppleMap(lonAndLat: [Double], locationName: String) {
+	let coor = CLLocationCoordinate2D(latitude: lonAndLat.0, longitude: lonAndLat.1)
+	let placemark = MKPlacemark(coordinate: coor, addressDictionary: [CNPostalAddressStreetKey: locationName])
+	// Contacts里用来创建地名的key
+	// iOS 8及之前AddressBook的用法：addressDictionary: [kABPersonAddressStreetKey as String: locationName])
+	let toLocation = MKMapItem(placemark: placemark)
+
+	MKMapItem.openMapsWithItems([toLocation], launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
+}
+
+### Foundation
+iOS开发的基础框架
+---
+import Foundation
+
+let string = "/var/controller_driver/secret_photo.png" as NSString
+let components = string.pathComponents as NSArray
+let fileName = components.lastObject as NSString
+
+// 复杂底层交互的框架，提供带NS开头的类型，其他框架如UIKit中已包含该框架
+
+### MessageUI
+系统提供用来实现发邮件、短信等功能的框架
+---
+import MessageUI
+
+protocol MailSending: UserDefaults {
+	func sendSupportEmail()
+} // 一个实现发邮件功能的协议
+
+extension MailSending where Self: UIViewController {
+	func sendSupportEmail() {
+		let controller = MFMailComposeViewController()
+		controller.mailComposeDelegate = self
+		controller.setSubject("邮件主题")
+		controller.setMessageBody("邮件内容", isHTML: false)
+		controller.setToRecipients(["pmlcfwcs@foxmail.com"])
+		presentViewController(controller, animated: true, completion: nil)
+	}
+}
+
+extension UIViewController: MFMailComposeViewControllerDelegate {
+	public func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+		controller.dismissViewControllerAnimated(true, completion: nil)
+	}
+}
+
+### MapKit
+系统提供使用地图功能的框架
+---
+import MapKit
+
+func useBaiduMap(userLocation: [Double], toLocation: [Double]) {
+	let coor0 = CLLocationCoordinate2D(latitude: userLocation[0], longitude: userLocation[1])
+	let coor1 = CLLocationCoordinate2D(latitude: toLocation[0], longitude: toLocation[1])
+
+	let string = String(format: "baidumap://map/direction?origin=%@,%@&destination=%@,%@&mode=driving", "\(coor0.latitude)", "\(coor0.longitude)", "\(coor1.latitude)", "\(coor1.longitude)")
+	UIApplication.sharedApplication().openURL(NSURL(string: string)!)
+}
+// 创建坐标，然后跳转百度导航的方法。使用系统系统自带地图，参见Contacts单词的例子
+
+### StoreKit
+系统提供的内购功能的框架
+---
+import StoreKit
+
+public class IAPHelper: NSObject  {
+	private var productsRequest: SKProductsRequest?
+
+	public func purchaseProduct(product: SKProduct) {
+		let payment = SKPayment(product: product)
+		SKPaymentQueue.defaultQueue().addPayment(payment)
+	}
+
+	public class func canMakePayments() -> Bool {
+		return SKPaymentQueue.canMakePayments()
+	}
+}
+// StoreKit中一些常见类
+
+
+### UIKit
+系统提供的用于用户界面构建的框架
+UI开头的类型都属于该框架，UIKit包含CoreGraphics，使用CG开头的类型，导入UIKit就可以
+---
+import UIKit
+
+class viewController: UIViewController {
+
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		view = UIView(frame: CGRect(x: 0, y: 0, width: 375, height: 667))
+		view.backgroundColor = UIColor.blackColor()
+	}
+
+}
+// UIKit的常见使用场景
+
+### alpha
+视图的透明属性，值在0~1之间的CGFloat类型数字
+---
+let view = UIView()
+view.backgroundColor = UIColor.redColor()
+view.alpha = 1.0 // 不透明
+view.alpha = 0.5 // 半透明
+view.alpha = 0.0 // 透明
+
+### bounds
+视图在自身坐标系中的位置和大小，该视图bounds的坐标通常为(0, 0)
+通过修改view的bounds属性可以修改本地坐标系统的原点位置，影响到的是它子view的位置和大小
+---
+let view1 = UIView(frame: CGRectMake(20, 20, 280, 250))
+view1.bounds = CGRectMake(-20, -20, 280, 250)
+
+let view2 = UIView(frame: CGRectMake(10, 10, 100, 100)) // frame是在父坐标系的坐标和大小
+view1.addSubview(view2)
+
+print(view1.bounds) // 输出：(-20.0, -20.0, 280.0, 250.0)
+print(view2.bounds) // 输出：(0.0, 0.0, 100.0, 100.0)
+// 每个view的默认bounds都为(0, 0)
+
+### CG
+
+### CA
 
 frame
+视图在父视图坐标系中的位置和大小
 
 NS_
 
