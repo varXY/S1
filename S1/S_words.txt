@@ -1,4 +1,19 @@
-as_1. 用于类型判断和转换\n2. as!用于强制转换，as?用于可为空转换###
+### as
+1. 用于类型判断和转换
+2. as!用于强制转换，as?用于可为空转换
+---
+let text = "这是一个String类型"
+let length = (text as NSString).length
+// 把string类型转换成NSString类型
+
+let string = text as! String
+// 强制转换，如果无法转换，程序出错
+
+if let optionalString = text as? NSString {
+	// 可选转换，如果无法转换，则跳过
+}
+
+
 
 
 break_

@@ -20,7 +20,7 @@ struct System {
 
 		"break",
 
-		"class", "case", "continue",
+		"class", "case", "continue", "catch",
 
 		"deinit", "default", "do", "dynamic", "dynamicType", "didSet",
 
@@ -44,7 +44,7 @@ struct System {
 
 		"return", "rightset",
 
-		"static", "struct", "subscript", "switch", "super", "self", "Self",
+		"static", "struct", "subscript", "switch", "super", "self", "Self", "set",
 
 		"typealias", "try", "Type", "true",
 
@@ -55,6 +55,8 @@ struct System {
 		"where", "while", "weak", "willSet",
 
 		"#column", "#file", "#function", "#line", "#selector",
+
+		"@objc"
 
 	]
 
@@ -74,11 +76,11 @@ struct System {
 
 		"NSString", "NSNumber", "NSDate", "NSData", "NSError", "NSRange", "NSObject", "NSBundle", "NSTimeInterval", "NSURL", "NSArray",
 
+		"print", 
+
 		"Set", "String",
 		
 		"Void",
-
-		"@objc",
 
 
 

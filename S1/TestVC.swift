@@ -13,11 +13,6 @@ class viewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		UIView.animateWithDuration(0.5, animations: { 
-			self.view.alpha = 1.0
-			}) { (completed) in
-				// 这是一个有参数没有返回值的闭包
-		}
 	}
 
 }
