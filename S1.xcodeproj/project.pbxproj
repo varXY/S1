@@ -139,8 +139,8 @@
 			isa = PBXGroup;
 			children = (
 				316BB8351CF525B1006D6D2A /* SystemWords.swift */,
-				316BAE5A1CFE5A21004ADC94 /* S_words.txt */,
 				31FE265A1CFA745C00EA5D18 /* PreloadedWords.swift */,
+				316BAE5A1CFE5A21004ADC94 /* S_words.txt */,
 				3136BAF51CF447200000F0E0 /* SwiftDicData.swift */,
 				311812E91CF6862300D0EA99 /* PaintingMethod.swift */,
 				31FE265C1CFA76E300EA5D18 /* UserDefaults.swift */,

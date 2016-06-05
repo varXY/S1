@@ -50,14 +50,6 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 			setUpUI()
 		}
 
-//		let modelURL = NSBundle.mainBundle().URLForResource("S_words", withExtension: "txt")!
-//		do {
-//			let text = try NSString(contentsOfURL: modelURL, encoding: NSUTF8StringEncoding)
-//			print(text)
-//		} catch {
-//			print("error")
-//		}
-
 	}
 
 

@@ -60,10 +60,8 @@ class DetailViewController: UIViewController {
 		navigationController?.setToolbarHidden(false, animated: true)
 	}
 
-
 	func setUpBars() {
 		navigationController?.navigationBarHidden = true
-//		navigationController?.toolbarHidden = false
 		navigationController?.toolbar.tintColor = UIColor.plainWhite()
 
 		let buttons = toolbarCustomButtons()
@@ -146,9 +144,7 @@ extension DetailViewController: XYScrollViewDelegate {
 
 	func xyScrollViewWillScroll(scrollType: XYScrollType, topViewIndex: Int) {
 		pointerView.hidePointersAndLabels()
-	}
 
-	func xyScrollViewDidScroll(scrollType: XYScrollType, topViewIndex: Int) {
 		switch scrollType {
 		case .Left:
 			editButton.alpha = 0.0
@@ -156,14 +152,16 @@ extension DetailViewController: XYScrollViewDelegate {
 		case .Right:
 			randomModel = !randomModel
 			xyScrollView.randomModel = randomModel
-			
+
 			let hudView = HudView.hudInView(view, animated: true)
 			hudView.text = randomModel ? "随机模式" : "顺序模式"
 			pointerView.changeRightLabelTextForRandomModel(randomModel)
 		default:
 			break
 		}
+	}
 
+	func xyScrollViewDidScroll(scrollType: XYScrollType, topViewIndex: Int) {
 	}
 }
 

@@ -203,10 +203,10 @@ class NewWordViewController: UIViewController, SwiftDicData {
 		let titleName = dicForEditing != nil ? "WordForEditing" : "NewWord"
 		let titles = [
 			stringToAttributedString("struct " + titleName + " {"),
-			stringToAttributedString(tapped ? "  let word = " : "  let word: String!"),
-			stringToAttributedString(tapped ? "  let meaning = " : "  let meaning: String!"),
+			stringToAttributedString(tapped ? "  var word = " : "  var word: String!"),
+			stringToAttributedString(tapped ? "  var meaning = " : "  var meaning: String!"),
 			stringToAttributedString(""),
-			stringToAttributedString(tapped ? "  let example = " : "  let example: AnyObject?"),
+			stringToAttributedString(tapped ? "  var example = " : "  var example: AnyObject?"),
 			stringToAttributedString(""),
 			stringToAttributedString("}")
 		]

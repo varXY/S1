@@ -70,13 +70,15 @@ struct System {
 
 		"Float",
 
-		"Int",
+		"Int", "Int8", "Int16", "Int32", "Int64", "UInt",
 
-		"NSString", "NSNumber", "NSDate", "NSData", "NSError", "NSRange", "NSObject", "NSBundle", "NSTimeInterval", "NSURL",
+		"NSString", "NSNumber", "NSDate", "NSData", "NSError", "NSRange", "NSObject", "NSBundle", "NSTimeInterval", "NSURL", "NSArray",
 
 		"Set", "String",
 		
 		"Void",
+
+		"@objc",
 
 
 
@@ -91,7 +93,7 @@ struct System {
 
 	// MARK: Keyword check
 	static let chrAfterKeyWord = [
-		" ", ")", ",", "\n", ":", "?", "!", "."
+		" ", ")", ",", "\n", ":", "?", "!", ".", "("
 	]
 
 

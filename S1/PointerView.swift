@@ -29,7 +29,7 @@ struct Pointer {
 	func pointerLabel(type: XYScrollType) -> UILabel {
 		let pointer = UILabel()
 		pointer.frame.size = CGSize(width: length, height: length)
-		pointer.center = originCenters[type.rawValue]
+		pointer.center = toCenters[type.rawValue]
 		pointer.textColor = UIColor.stringRed()
 		pointer.text = textPointer[type.rawValue]
 		pointer.textAlignment = .Center
@@ -86,6 +86,7 @@ class PointerView: UIView {
 	}
 
 	let pointer = Pointer()
+	var canHide = true
 
 	init() {
 		super.init(frame: ScreenBounds)
@@ -106,13 +107,29 @@ class PointerView: UIView {
 	func showPointer(type: XYScrollType) {
 		switch type {
 		case .Up, .Down, .Left, .Right:
-			move({
+//			canHide = false
+			moveAndDone({
 				self.pointers[type.rawValue].alpha = 1.0
 				self.UDLR_labels[type.rawValue].alpha = 1.0
-				self.pointers[type.rawValue].center = self.pointer.toCenters[type.rawValue]
+//				self.pointers[type.rawValue].center = self.pointer.toCenters[type.rawValue]
+				}, done: {
+//					self.canHide = true
 			})
+//			move({
+//				self.pointers[type.rawValue].alpha = 1.0
+//				self.UDLR_labels[type.rawValue].alpha = 1.0
+//				self.pointers[type.rawValue].center = self.pointer.toCenters[type.rawValue]
+//			})
 		default:
 			hidePointersAndLabels()
+		}
+	}
+
+	func moveAndDone(move: () -> (), done: () -> ()) {
+		UIView.performSystemAnimation(.Delete, onViews: [], options: [], animations: { 
+			move()
+			}) { (compelete) in
+				done()
 		}
 	}
 
@@ -123,15 +140,15 @@ class PointerView: UIView {
 	}
 
 	func hidePointersAndLabels() {
-		pointers.forEach({
-			if $0.alpha == 1.0 { $0.alpha = 0.0 }
-			let i = pointers.indexOf($0)!
-			if $0.center == self.pointer.toCenters[i] {
-				$0.center = self.pointer.originCenters[i]
-			}
-		})
-		
-		UDLR_labels.forEach({ if $0.alpha == 1.0 { $0.alpha = 0.0 } })
+			pointers.forEach({
+				if $0.alpha == 1.0 { $0.alpha = 0.0 }
+//				let i = pointers.indexOf($0)!
+//				if $0.center == self.pointer.toCenters[i] {
+//					$0.center = self.pointer.originCenters[i]
+//				}
+			})
+
+			UDLR_labels.forEach({ if $0.alpha == 1.0 { $0.alpha = 0.0 } })
 	}
 
 	func changeRightLabelTextForRandomModel(random: Bool) {

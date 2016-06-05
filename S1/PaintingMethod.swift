@@ -39,12 +39,11 @@ let commnetGreenAttribute = [
 
 func stringToAttributedString(string: String) -> NSMutableAttributedString {
 	let step_0 = paintKeywordPurple(NSMutableAttributedString(string: string, attributes: initAttributes))
-	let step_1 = paintBuildInBlue(step_0)
-	let step_2 = paintNumberPurple(step_1)
-	let step_3 = paintWhite(step_2)
-	let step_4 = paintStringRed(step_3)
-	let step_5 = paintCommentGreen(step_4)
-	return step_5
+	let step_1 = paintNumberPurple(step_0)
+	let step_2 = paintBuildInBlue(step_1)
+	let step_3 = paintStringRed(step_2)
+	let step_4 = paintCommentGreen(step_3)
+	return step_4
 }
 
 func paintKeywordPurple(text: NSMutableAttributedString) -> NSMutableAttributedString {
@@ -66,30 +65,6 @@ func paintKeywordPurple(text: NSMutableAttributedString) -> NSMutableAttributedS
 	let result = text
 	for range in ranges {
 		result.addAttributes(keywordAttributes, range: range)
-	}
-
-	return result
-}
-
-func paintBuildInBlue(text: NSMutableAttributedString) -> NSMutableAttributedString {
-	var ranges = [NSRange]()
-
-	System.valueTypes.forEach { (valueType) in
-		let unClearRanges = text.mutableString.rangesOfString(valueType)
-		unClearRanges.forEach({
-			let last = $0.location + $0.length == (text.mutableString as NSString).length
-			let first = $0.location == 0
-			let nextChr = last ? " " : (text.mutableString as NSString).substringWithRange(NSRange(location: $0.location + $0.length, length: 1))
-			let preChr = first ? " " : (text.mutableString as NSString).substringWithRange(NSRange(location: $0.location - 1, length: 1))
-			if System.chrAfterValueType.contains(nextChr) && !System.chrShouldNotBeforeValueType.contains(preChr.uppercaseString) {
-				ranges += [$0]
-			}
-		})
-	}
-
-	let result = text
-	for range in ranges {
-		result.addAttributes(buildInAttributes, range: range)
 	}
 
 	return result
@@ -120,6 +95,30 @@ func paintNumberPurple(text: NSMutableAttributedString) -> NSMutableAttributedSt
 	return result
 }
 
+func paintBuildInBlue(text: NSMutableAttributedString) -> NSMutableAttributedString {
+	var ranges = [NSRange]()
+
+	System.valueTypes.forEach { (valueType) in
+		let unClearRanges = text.mutableString.rangesOfString(valueType)
+		unClearRanges.forEach({
+			let last = $0.location + $0.length == (text.mutableString as NSString).length
+			let first = $0.location == 0
+			let nextChr = last ? " " : (text.mutableString as NSString).substringWithRange(NSRange(location: $0.location + $0.length, length: 1))
+			let preChr = first ? " " : (text.mutableString as NSString).substringWithRange(NSRange(location: $0.location - 1, length: 1))
+			if System.chrAfterValueType.contains(nextChr) && !System.chrShouldNotBeforeValueType.contains(preChr.uppercaseString) {
+				ranges += [$0]
+			}
+		})
+	}
+
+	let result = text
+	for range in ranges {
+		result.addAttributes(buildInAttributes, range: range)
+	}
+
+	return result
+}
+
 func paintStringRed(text: NSMutableAttributedString) -> NSMutableAttributedString {
 	let ranges = text.mutableString.rangesOfString("\"")
 
@@ -138,40 +137,6 @@ func paintStringRed(text: NSMutableAttributedString) -> NSMutableAttributedStrin
 	return result
 }
 
-func paintWhite(text: NSMutableAttributedString) -> NSMutableAttributedString {
-//	let sentences = text.mutableString.componentsSeparatedByString("\n\n")
-//	var lines = [String]()
-//	var words = [String]()
-//	var whiteWords = [String]()
-//
-//	for sentence in sentences {
-//		lines += sentence.componentsSeparatedByString("\n")
-//	}
-//
-//	for line in lines {
-//		words += line.componentsSeparatedByString(" ")
-//	}
-//
-//	words.forEach({
-//		let word = $0.removeMarks()
-//		if !System.keywords.contains(word) && Int(word) == nil && !System.valueTypes.contains(word) {
-//			whiteWords.append($0.removeSelf())
-//		}
-//	})
-
-	let result = text
-//	whiteWords.forEach({
-//		let ranges = result.mutableString.rangesOfString($0.checkBrackets())
-//		print($0.checkBrackets())
-//		for range in ranges {
-//			result.addAttributes(whiteAttributes, range: range)
-//		}
-//
-//	})
-
-	return result
-}
-
 func paintCommentGreen(text: NSMutableAttributedString) -> NSMutableAttributedString {
 	let sentences = text.mutableString.componentsSeparatedByString("\n\n")
 	var lines = [String]()
@@ -183,10 +148,12 @@ func paintCommentGreen(text: NSMutableAttributedString) -> NSMutableAttributedSt
 
 	for line in lines {
 		if let _ = line.rangeOfString("//") {
-			let range: NSRange = (line as NSString).rangeOfString("//")
-			let greenRange = NSRange(range.location...(line.characters.count - 1))
-			let subString = (line as NSString).substringWithRange(greenRange)
-			greenLines.append(subString)
+			if line.rangeOfString("://") == nil {
+				let range: NSRange = (line as NSString).rangeOfString("//")
+				let greenRange = NSRange(range.location...(line.characters.count - 1))
+				let subString = (line as NSString).substringWithRange(greenRange)
+				greenLines.append(subString)
+			}
 		}
 	}
 

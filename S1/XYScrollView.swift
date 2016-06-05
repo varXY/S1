@@ -72,13 +72,14 @@ class XYScrollView: UIScrollView, SwiftDicData {
 		let dics = threeDic(theTopIndex)
 
 		contentViews = origins_Y.map({
+			let index = origins_Y.indexOf($0)!
 			let contentView = UIScrollView(frame: bounds)
 			contentView.frame.origin.y = $0
 			contentView.contentSize = CGSize(width: 0, height: frame.height)
 			commonSetUp(contentView)
 			contentView.alwaysBounceVertical = true
 
-			contentView.addSubview(DetailView(swiftDic: dics[origins_Y.indexOf($0)!]))
+			contentView.addSubview(DetailView(swiftDic: dics[index]))
 			addSubview(contentView)
 			return contentView
 		})
@@ -86,6 +87,12 @@ class XYScrollView: UIScrollView, SwiftDicData {
 		
 
 	}
+
+//	func loadOtherTwo() {
+//		let dics = threeDic(theTopIndex)
+//		contentViews[0].addSubview(DetailView(swiftDic: dics[0]))
+//		contentViews[2].addSubview(DetailView(swiftDic: dics[2]))
+//	}
 
 	func commonSetUp(scrollView: UIScrollView) {
 		scrollView.layer.cornerRadius = globalRadius
@@ -264,7 +271,7 @@ extension XYScrollView: UIScrollViewDelegate {
 	func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
 		XYDelegate?.xyScrollViewWillScroll?(scrolledType, topViewIndex: topViewIndex)
 		moveContentViewToTop()
-		XYDelegate?.xyScrollViewDidScroll(scrolledType, topViewIndex: topViewIndex)
+//		XYDelegate?.xyScrollViewDidScroll(scrolledType, topViewIndex: topViewIndex)
 //		scrolledType = .NotScrollYet
 	}
 
