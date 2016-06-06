@@ -9,23 +9,25 @@
 
 import UIKit
 
+
 class viewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
 	}
 
 }
 
-class square {
-	var width = 0
-	var round: Int {
-		get {
-			return width * 4
+class testClass {
+	var testArray = Dictionary<Int, String>()
+	subscript(index: Int) -> String {
+		set {
+			testArray[index] = newValue
 		}
 
-		set {
-			width = newValue / 4
+		get {
+			return ""
 		}
 	}
 }

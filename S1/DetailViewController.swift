@@ -162,6 +162,8 @@ extension DetailViewController: XYScrollViewDelegate {
 	}
 
 	func xyScrollViewDidScroll(scrollType: XYScrollType, topViewIndex: Int) {
+//		if scrollType == .Right {
+//		}
 	}
 }
 

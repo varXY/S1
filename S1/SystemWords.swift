@@ -32,7 +32,7 @@ struct System {
 
 		"import", "init", "if", "in", "is", "infix", "inout",
 
-		"lazy", "let", "left",
+		"lazy", "let",
 
 		"mutating",
 
@@ -66,7 +66,7 @@ struct System {
 
 		"Bool",
 
-		"CGRect", "CGSize", "CGPoint", "CGAffineTransform",
+		"CGRect", "CGSize", "CGPoint", "CGAffineTransform", "CGFloat",
 
 		"Double",
 

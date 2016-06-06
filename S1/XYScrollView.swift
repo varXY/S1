@@ -180,7 +180,6 @@ class XYScrollView: UIScrollView, SwiftDicData {
 						self.contentViews = [self.contentViews[1], self.contentViews[0], self.contentViews[2]]
 						self.changeDetailForContentView(self.contentViews[0], dic: self.threeDic(self.theTopIndex)[0])
 						self.changeDetailForContentView(self.contentViews[2], dic: self.threeDic(self.theTopIndex)[2])
-
 						self.doneScroll = true
 				})
 			}
@@ -207,7 +206,6 @@ class XYScrollView: UIScrollView, SwiftDicData {
 						self.contentViews = [self.contentViews[0], self.contentViews[2], self.contentViews[1]]
 						self.changeDetailForContentView(self.contentViews[0], dic: self.threeDic(self.theTopIndex)[0])
 						self.changeDetailForContentView(self.contentViews[2], dic: self.threeDic(self.theTopIndex)[2])
-
 						self.doneScroll = true
 				})
 			}
@@ -271,6 +269,7 @@ extension XYScrollView: UIScrollViewDelegate {
 	func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
 		XYDelegate?.xyScrollViewWillScroll?(scrolledType, topViewIndex: topViewIndex)
 		moveContentViewToTop()
+//		delay(seconds: 0.3) { self.XYDelegate?.xyScrollViewDidScroll(self.scrolledType, topViewIndex: 1) }
 //		XYDelegate?.xyScrollViewDidScroll(scrolledType, topViewIndex: topViewIndex)
 //		scrolledType = .NotScrollYet
 	}
