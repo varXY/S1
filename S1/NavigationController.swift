@@ -16,16 +16,16 @@ class NavigationController: UINavigationController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		navigationBar.barTintColor = UIColor.backgroundBlack()
+		navigationBar.barTintColor = UIColor(red: 42/255, green: 44/255, blue: 56/255, alpha: 1.0)
 		navigationBar.titleTextAttributes = [
 			NSForegroundColorAttributeName: UIColor.commentGreen(),
 			NSFontAttributeName: UIFont.defaultFont(17)
 		]
 		navigationBar.tintColor = UIColor.whiteColor()
-//		navigationBar.translucent = false
+		navigationBar.translucent = true
 //
-//		let rect = CGRectMake(0, 0, self.view.frame.width, 64)
-//		self.navigationBar.setBackgroundImage(UIImage.imageWithColor(UIColor.backgroundBlack(), rect: rect), forBarMetrics: UIBarMetrics.Default)
+		let rect = CGRectMake(0, 0, self.view.frame.width, 64)
+		self.navigationBar.setBackgroundImage(UIImage.imageWithColor(UIColor(red: 42/255, green: 44/255, blue: 56/255, alpha: 1.0), rect: rect), forBarMetrics: UIBarMetrics.Default)
 //		self.navigationBar.shadowImage = UIImage.imageWithColor(UIColor.clearColor(), rect: CGRectMake(0, 0, 10, 10))
 	}
 

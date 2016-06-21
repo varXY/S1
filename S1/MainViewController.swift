@@ -28,7 +28,7 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = UIColor.backgroundBlack()
-
+        
 		let titleLabel = UILabel(frame: CGRectMake(0, 0, ScreenWidth - 60, 44))
 		titleLabel.textColor = UIColor.commentGreen()
 		titleLabel.font = UIFont.defaultFont(17)
@@ -93,14 +93,16 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 		tableView.dataSource = self
 		tableView.delegate = self
 		tableView.backgroundColor = UIColor.clearColor()
-		tableView.separatorStyle = .None
-		tableView.sectionIndexColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)
+//		tableView.separatorStyle = .None
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 15)
+        tableView.separatorColor = UIColor(red: 67/255, green: 69/255, blue: 81/255, alpha: 1.0)
+		tableView.sectionIndexColor = UIColor(red: 150/255, green: 153/255, blue: 172/255, alpha: 1.0)
 		tableView.sectionIndexBackgroundColor = UIColor.clearColor()
 		view.addSubview(tableView)
 
 		searchBar.placeholder = "搜索"
 		searchBar.tintColor = UIColor.plainWhite()
-		searchBar.barTintColor = UIColor.backgroundBlack()
+		searchBar.barTintColor = UIColor.backgroundBlack_light()
 		UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).textColor = UIColor.whiteColor()
 		searchBar.searchBarStyle = .Minimal
 		searchBar.delegate = self
@@ -165,7 +167,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 
 	func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let label = UILabel(frame: CGRectMake(0, 0, 20, ScreenWidth))
-		label.backgroundColor = UIColor.backgroundBlack()
+		label.backgroundColor = UIColor.backgroundBlack_light()
 		label.textColor = UIColor.statementYellow()
 		label.font = UIFont.defaultFont(17)
 
@@ -195,7 +197,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 		cell.textLabel?.textColor = UIColor.stringRed()
 		cell.textLabel?.font = UIFont.defaultFont(17)
 		cell.selectedBackgroundView = UIView()
-		cell.selectedBackgroundView!.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)
+		cell.selectedBackgroundView!.backgroundColor = UIColor(red: 51/255, green: 59/255, blue: 79/255, alpha: 1.0)
 
 		return cell
 	}

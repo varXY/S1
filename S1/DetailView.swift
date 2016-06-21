@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class DetailView: UIView {
 
@@ -20,15 +21,19 @@ class DetailView: UIView {
 		layer.cornerRadius = globalRadius
 		clipsToBounds = true
 		setupLabels(swiftDic)
+        
+        let speechButton = UIButton(frame: titleLabel.frame)
+        speechButton.addTarget(self, action: #selector(speech), forControlEvents: .TouchUpInside)
+        addSubview(speechButton)
 	}
 
 	func reloadDetail(swiftDic: SwiftDic) {
-		subviews.forEach({ $0.removeFromSuperview() })
+        subviews.forEach({ if !$0.isKindOfClass(UIButton) { $0.removeFromSuperview() } })
 		setupLabels(swiftDic)
 	}
 
 	func setupLabels(swiftDic: SwiftDic) {
-		titleLabel = UILabel(frame: CGRectMake(10, 0, ScreenWidth - 20, 60))
+		titleLabel = UILabel(frame: CGRectMake(10, 0, ScreenWidth - 50, 60))
 		titleLabel.text = swiftDic.word
 		titleLabel.font = UIFont.defaultFont(20)
 		titleLabel.textColor = UIColor.stringRed()
@@ -75,6 +80,14 @@ class DetailView: UIView {
 
 		addSubview(scrollView)
 	}
+    
+    func speech() {
+        let synthesizer = AVSpeechSynthesizer()
+        let utterance = AVSpeechUtterance(string: titleLabel.text!)
+//        utterance.rate = 0.5
+        utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+        synthesizer.speakUtterance(utterance)
+    }
 	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
