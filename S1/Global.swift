@@ -29,24 +29,19 @@ func delay(seconds seconds: Double, completion: () -> ()) {
 	dispatch_after(popTime, dispatch_get_main_queue()) {
 		completion()
 	}
-
 }
 
 func firstCharacterToIndex(word: String) -> Int {
-	if word != "" {
-		let catalog: String! = String(word.characters.first!).uppercaseString
-
-		var newIndex: Int
-		if let index = System.ABC_XYZ.indexOf(catalog) {
-			newIndex = index
-		} else {
-			newIndex = 26
-		}
-
-		return newIndex
-	} else {
-		return 27
-	}
+    if word == "" { return 27 }
+    let catalog: String! = String(word.characters.first!).uppercaseString
+    var newIndex: Int
+    if let index = System.ABC_XYZ.indexOf(catalog) {
+        newIndex = index
+    } else {
+        newIndex = 26
+    }
+    
+    return newIndex
 }
 
 func findAdaptiveFontWithName(fontName: String, labelText: String, labelSize: CGSize, minimumSize: CGFloat) -> UIFont {

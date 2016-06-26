@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class DetailViewController: UIViewController {
 
 	var pointerView: PointerView!
@@ -150,12 +149,7 @@ extension DetailViewController: XYScrollViewDelegate {
 			editButton.alpha = 0.0
 			navigationController?.popViewControllerAnimated(true)
 		case .Right:
-			randomModel = !randomModel
-			xyScrollView.randomModel = randomModel
-
-			let hudView = HudView.hudInView(view, animated: true)
-			hudView.text = randomModel ? "随机模式" : "顺序模式"
-			pointerView.changeRightLabelTextForRandomModel(randomModel)
+            delay(seconds: 0.5, completion: { self.changeModelAndShowHudView() })
 		default:
 			break
 		}
@@ -165,6 +159,14 @@ extension DetailViewController: XYScrollViewDelegate {
 //		if scrollType == .Right {
 //		}
 	}
+    
+    func changeModelAndShowHudView() {
+        randomModel = !randomModel
+        xyScrollView.randomModel = randomModel
+        let hudView = HudView.hudInView(view, animated: true)
+        hudView.text = randomModel ? "随机模式" : "顺序模式"
+        pointerView.changeRightLabelTextForRandomModel(randomModel)
+    }
 }
 
 extension DetailViewController: NewWordViewControllerDelegate {

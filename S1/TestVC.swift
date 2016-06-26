@@ -10,25 +10,5 @@
 import UIKit
 
 
-class viewController: UIViewController {
 
-	override func viewDidLoad() {
-		super.viewDidLoad()
-
-	}
-
-}
-
-class testClass {
-	var testArray = Dictionary<Int, String>()
-	subscript(index: Int) -> String {
-		set {
-			testArray[index] = newValue
-		}
-
-		get {
-			return ""
-		}
-	}
-}
 
