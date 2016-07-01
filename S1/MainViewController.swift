@@ -69,11 +69,9 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 
 //	override func viewDidAppear(animated: Bool) {
 //		super.viewDidAppear(animated)
-//
 //		dics = allSwiftDics()
 //		let timer = NSTimer(timeInterval: 0.8, target: self, selector: #selector(printDics), userInfo: nil, repeats: true)
 //		NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
-//
 //	}
 //
 //	func printDics() {
@@ -105,7 +103,9 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 		searchBar.barTintColor = UIColor.backgroundBlack_light()
 		UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).textColor = UIColor.whiteColor()
 		searchBar.searchBarStyle = .Minimal
+        searchBar.autoresizingMask = .FlexibleWidth
 		searchBar.delegate = self
+        
 		tableView.tableHeaderView = searchBar
 		tableView.contentOffset.y = searchBar.frame.height
 
