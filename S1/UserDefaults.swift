@@ -11,6 +11,7 @@ import Foundation
 struct UDKey {
 	static let preloaded = "SwiftDicPreloaded"
     static let purchesed = "Purchesed"
+    static let checked = "Checked"
 }
 
 protocol UserDefaults {
@@ -21,6 +22,8 @@ protocol UserDefaults {
     
     func isPurchesed() -> Bool
     func donePurchese()
+    
+    func checkNewUser()
 }
 
 extension UserDefaults {
@@ -50,6 +53,15 @@ extension UserDefaults {
     func donePurchese() {
         userDefaults.setValue(true, forKey: UDKey.purchesed)
         userDefaults.synchronize()
+    }
+    
+    func checkNewUser() {
+        if userDefaults.valueForKey(UDKey.checked) == nil {
+            if isPreloaded() == true {
+                donePurchese()
+            }
+            userDefaults.setBool(true, forKey: UDKey.checked)
+        }
     }
     
 }

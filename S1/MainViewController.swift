@@ -38,7 +38,8 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 
 		let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(addButtonTapped))
 		navigationItem.rightBarButtonItem = addButton
-
+        
+        checkNewUser()
 
 //		let isNotFirstTime = isPreloaded() ? true : true
 		let isNotFirstTime = isPreloaded()
