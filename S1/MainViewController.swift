@@ -52,7 +52,6 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 
 	}
 
-
 	override func viewWillAppear(animated: Bool) {
 		super.viewWillAppear(animated)
 		navigationController?.setToolbarHidden(true, animated: true)
@@ -91,7 +90,6 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 		tableView.dataSource = self
 		tableView.delegate = self
 		tableView.backgroundColor = UIColor.clearColor()
-//		tableView.separatorStyle = .None
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 15)
         tableView.separatorColor = UIColor(red: 67/255, green: 69/255, blue: 81/255, alpha: 1.0)
 		tableView.sectionIndexColor = UIColor(red: 150/255, green: 153/255, blue: 172/255, alpha: 1.0)
@@ -142,10 +140,14 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 	}
 
 	func addButtonTapped() {
-		let newWordVC = NewWordViewController()
-		newWordVC.delegate = self
-		let navi = NavigationController(rootViewController: NewWordViewController())
-		presentViewController(navi, animated: true, completion: nil)
+        if isPurchesed() {
+            let newWordVC = NewWordViewController()
+            newWordVC.delegate = self
+            let navi = NavigationController(rootViewController: NewWordViewController())
+            presentViewController(navi, animated: true, completion: nil)
+        } else {
+            presentViewController(NavigationController(rootViewController: BuyViewController()), animated: true, completion: nil)
+        }
 	}
 
 }
@@ -237,16 +239,22 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 		}
 		let okAction = UIAlertAction(title: "确定", style: .Default) { (_) in
 			let cell = tableView.cellForRowAtIndexPath(indexPath)!
-			self.deleteSwiftDic(cell.textLabel!.text!)
-			self.resultsOnTable = self.AllResult()
-			let indexPaths = [indexPath]
-			tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+            self.deleteSwiftDic(cell.textLabel!.text!)
+            let oldResults = self.resultsOnTable
+            self.resultsOnTable = self.AllResult()
+            
+            if self.resultsOnTable.count != oldResults.count {
+                let indexSet = NSIndexSet(index: indexPath.section)
+                tableView.deleteSections(indexSet, withRowAnimation: .Automatic)
+            } else {
+                let indexPaths = [indexPath]
+                tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+            }
 		}
 
 		alertController.addAction(cancelAction)
 		alertController.addAction(okAction)
 		presentViewController(alertController, animated: true, completion: nil)
-
 	}
 
 }

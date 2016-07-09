@@ -7,13 +7,18 @@
 //
 
 import UIKit
-import AVFoundation
 
-class DetailView: UIView {
+protocol DetailViewDelegate: class{
+    func shouldSpeakText(text: String)
+}
+
+class DetailView: UIView, UserDefaults {
 
 	var titleLabel: UILabel!
 	var meaningLabel: UILabel!
 	var exampleLabel: UILabel!
+    
+    weak var delegate: DetailViewDelegate?
 
 	init(swiftDic: SwiftDic) {
 		super.init(frame: ScreenBounds)
@@ -23,7 +28,7 @@ class DetailView: UIView {
 		setupLabels(swiftDic)
         
         let speechButton = UIButton(frame: titleLabel.frame)
-        speechButton.addTarget(self, action: #selector(speech), forControlEvents: .TouchUpInside)
+        speechButton.addTarget(self, action: #selector(speak), forControlEvents: .TouchUpInside)
         addSubview(speechButton)
 	}
 
@@ -81,12 +86,8 @@ class DetailView: UIView {
 		addSubview(scrollView)
 	}
     
-    func speech() {
-        let synthesizer = AVSpeechSynthesizer()
-        let utterance = AVSpeechUtterance(string: titleLabel.text!)
-//        utterance.rate = 0.5
-        utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
-        synthesizer.speakUtterance(utterance)
+    func speak() {
+        delegate?.shouldSpeakText(titleLabel.text!)
     }
 	
 	required init?(coder aDecoder: NSCoder) {

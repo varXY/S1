@@ -38,6 +38,10 @@
 		31FE265B1CFA745C00EA5D18 /* PreloadedWords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FE265A1CFA745C00EA5D18 /* PreloadedWords.swift */; };
 		31FE265D1CFA76E300EA5D18 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FE265C1CFA76E300EA5D18 /* UserDefaults.swift */; };
 		31FE265F1CFAC60800EA5D18 /* HudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FE265E1CFAC60800EA5D18 /* HudView.swift */; };
+		A80B37781D3070AA00AC0219 /* BuyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A80B37771D3070AA00AC0219 /* BuyViewController.swift */; };
+		A80B377A1D3080FC00AC0219 /* SupportProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A80B37791D3080FC00AC0219 /* SupportProducts.swift */; };
+		A80B377C1D30810300AC0219 /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A80B377B1D30810300AC0219 /* IAPHelper.swift */; };
+		A80B377F1D3081DB00AC0219 /* Purchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A80B377E1D3081DB00AC0219 /* Purchase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +78,10 @@
 		31FE265A1CFA745C00EA5D18 /* PreloadedWords.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreloadedWords.swift; sourceTree = "<group>"; };
 		31FE265C1CFA76E300EA5D18 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		31FE265E1CFAC60800EA5D18 /* HudView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HudView.swift; sourceTree = "<group>"; };
+		A80B37771D3070AA00AC0219 /* BuyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuyViewController.swift; sourceTree = "<group>"; };
+		A80B37791D3080FC00AC0219 /* SupportProducts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportProducts.swift; sourceTree = "<group>"; };
+		A80B377B1D30810300AC0219 /* IAPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
+		A80B377E1D3081DB00AC0219 /* Purchase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Purchase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,10 +120,12 @@
 				316BB81C1CF5249A006D6D2A /* MainViewController.swift */,
 				316BB81E1CF524A3006D6D2A /* DetailViewController.swift */,
 				316BB8371CF54427006D6D2A /* NewWordViewController.swift */,
+				A80B37771D3070AA00AC0219 /* BuyViewController.swift */,
 				316BAE5C1CFE6A80004ADC94 /* TestVC.swift */,
 				316BB82C1CF52579006D6D2A /* View */,
 				3136BAF41CF446E80000F0E0 /* Model */,
 				316BB8221CF524F9006D6D2A /* Extension */,
+				A80B377D1D30810A00AC0219 /* Purchese */,
 				316BB8201CF524B6006D6D2A /* Resources */,
 				316BB8211CF524D8006D6D2A /* Supporting File */,
 			);
@@ -196,6 +206,16 @@
 				31FE265E1CFAC60800EA5D18 /* HudView.swift */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		A80B377D1D30810A00AC0219 /* Purchese */ = {
+			isa = PBXGroup;
+			children = (
+				A80B377E1D3081DB00AC0219 /* Purchase.swift */,
+				A80B37791D3080FC00AC0219 /* SupportProducts.swift */,
+				A80B377B1D30810300AC0219 /* IAPHelper.swift */,
+			);
+			name = Purchese;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -285,12 +305,16 @@
 				3136BAE31CF443D20000F0E0 /* S1.xcdatamodeld in Sources */,
 				3136BADB1CF443D10000F0E0 /* AppDelegate.swift in Sources */,
 				316BB8301CF52593006D6D2A /* DetailView.swift in Sources */,
+				A80B377F1D3081DB00AC0219 /* Purchase.swift in Sources */,
 				316BB8341CF525A1006D6D2A /* Global.swift in Sources */,
 				316BB8321CF52598006D6D2A /* PointerView.swift in Sources */,
 				31FE265B1CFA745C00EA5D18 /* PreloadedWords.swift in Sources */,
+				A80B377C1D30810300AC0219 /* IAPHelper.swift in Sources */,
+				A80B377A1D3080FC00AC0219 /* SupportProducts.swift in Sources */,
 				311812EA1CF6862300D0EA99 /* PaintingMethod.swift in Sources */,
 				31FE265D1CFA76E300EA5D18 /* UserDefaults.swift in Sources */,
 				3136BAF61CF447200000F0E0 /* SwiftDicData.swift in Sources */,
+				A80B37781D3070AA00AC0219 /* BuyViewController.swift in Sources */,
 				316BB82E1CF5258E006D6D2A /* XYScrollView.swift in Sources */,
 				3136BAF21CF446B20000F0E0 /* SwiftDic.swift in Sources */,
 				31FE265F1CFAC60800EA5D18 /* HudView.swift in Sources */,

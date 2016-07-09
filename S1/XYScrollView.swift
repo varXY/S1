@@ -20,6 +20,7 @@ import CoreData
 	optional func writeViewWillInputText(index: Int, oldText: String, colorCode: Int)
 	optional func didSelectedStory(storyIndex: Int)
 	func scrollTypeDidChange(type: XYScrollType)
+    func speakText(text: String)
 }
 
 class XYScrollView: UIScrollView, SwiftDicData {
@@ -35,7 +36,7 @@ class XYScrollView: UIScrollView, SwiftDicData {
 
 	var beginScroll = false
 
-	var doneScroll = true
+    var doneScroll = true
 	var topViewIndex = 1
 	var randomModel = false {
 		didSet {
@@ -78,8 +79,10 @@ class XYScrollView: UIScrollView, SwiftDicData {
 			contentView.contentSize = CGSize(width: 0, height: frame.height)
 			commonSetUp(contentView)
 			contentView.alwaysBounceVertical = true
-
-			contentView.addSubview(DetailView(swiftDic: dics[index]))
+            
+            let detailView = DetailView(swiftDic: dics[index])
+            detailView.delegate = self
+			contentView.addSubview(detailView)
 			addSubview(contentView)
 			return contentView
 		})
@@ -274,6 +277,13 @@ extension XYScrollView: UIScrollViewDelegate {
 //		scrolledType = .NotScrollYet
 	}
 
+}
+
+extension XYScrollView: DetailViewDelegate {
+    
+    func shouldSpeakText(text: String) {
+        XYDelegate?.speakText(text)
+    }
 }
 
 

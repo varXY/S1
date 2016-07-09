@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import AVFoundation
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, UserDefaults {
 
 	var pointerView: PointerView!
 	var xyScrollView: XYScrollView!
@@ -20,6 +21,8 @@ class DetailViewController: UIViewController {
 
 	var statusBarHidden = true
 	var randomModel = false
+    
+    
 
 	override func prefersStatusBarHidden() -> Bool {
 		return statusBarHidden
@@ -40,7 +43,7 @@ class DetailViewController: UIViewController {
 		xyScrollView = XYScrollView(allResult: resultsOnTable, topDetailIndex: initTopDetailIndex, random: randomModel)
 		xyScrollView.XYDelegate = self
 		view.addSubview(xyScrollView)
-
+        
 		editButton = UIButton(type: .System)
 		editButton.frame = CGRectMake(ScreenWidth - 42, 12, 30, 30)
 		editButton.tintColor = UIColor.whiteColor()
@@ -106,16 +109,18 @@ class DetailViewController: UIViewController {
 	}
 
 	func editButtonTapped() {
-		let newWordVC = NewWordViewController()
-		newWordVC.statusBarStyle = .Default
-		newWordVC.dicForEditing = xyScrollView.dicFromIndex(xyScrollView.theTopIndex)
-		newWordVC.delegate = self
-
-		statusBarHidden = false
-		setNeedsStatusBarAppearanceUpdate()
-		presentViewController(NavigationController(rootViewController: newWordVC), animated: true, completion: nil)
-
-		xyScrollView.userInteractionEnabled = true
+        if isPurchesed() {
+            let newWordVC = NewWordViewController()
+            newWordVC.statusBarStyle = .Default
+            newWordVC.dicForEditing = xyScrollView.dicFromIndex(xyScrollView.theTopIndex)
+            newWordVC.delegate = self
+            presentViewController(NavigationController(rootViewController: newWordVC), animated: true, completion: nil)
+        } else {
+            presentViewController(NavigationController(rootViewController: BuyViewController()), animated: true, completion: nil)
+        }
+        
+        xyScrollView.userInteractionEnabled = true
+		
 	}
 
 	func backButtonTapped() {
@@ -156,8 +161,6 @@ extension DetailViewController: XYScrollViewDelegate {
 	}
 
 	func xyScrollViewDidScroll(scrollType: XYScrollType, topViewIndex: Int) {
-//		if scrollType == .Right {
-//		}
 	}
     
     func changeModelAndShowHudView() {
@@ -166,6 +169,18 @@ extension DetailViewController: XYScrollViewDelegate {
         let hudView = HudView.hudInView(view, animated: true)
         hudView.text = randomModel ? "随机模式" : "顺序模式"
         pointerView.changeRightLabelTextForRandomModel(randomModel)
+    }
+    
+    func speakText(text: String) {
+        if isPurchesed() {
+            let synthesizer = AVSpeechSynthesizer()
+            let utterance = AVSpeechUtterance(string: text)
+            utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+            synthesizer.speakUtterance(utterance)
+        } else {
+            presentViewController(NavigationController(rootViewController: BuyViewController()), animated: true, completion: nil)
+        }
+        
     }
 }
 
