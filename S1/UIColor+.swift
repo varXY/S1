@@ -22,6 +22,10 @@ extension UIColor {
     class func barBackgoundBlack() -> UIColor {
         return UIColor(red: 42/255, green: 44/255, blue: 56/255, alpha: 1.0)
     }
+    
+    class func selectedBackgroundPurple() -> UIColor {
+        return UIColor(red: 51/255, green: 59/255, blue: 79/255, alpha: 1.0)
+    }
 
 	class func stringRed() -> UIColor {
 		return UIColor(red: 220/255, green: 57/255, blue: 59/255, alpha: 1.0)

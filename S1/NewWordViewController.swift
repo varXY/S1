@@ -248,7 +248,7 @@ extension NewWordViewController: UITableViewDataSource, UITableViewDelegate {
 		cell.textLabel!.attributedText = attributedTitles(tapped: tapped)[indexPath.row]
 
 		cell.selectedBackgroundView = UIView()
-		cell.selectedBackgroundView!.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)
+		cell.selectedBackgroundView!.backgroundColor = UIColor.selectedBackgroundPurple()
 
 		return cell
 	}

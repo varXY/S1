@@ -200,7 +200,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 		cell.textLabel?.textColor = UIColor.stringRed()
 		cell.textLabel?.font = UIFont.defaultFont(17)
 		cell.selectedBackgroundView = UIView()
-		cell.selectedBackgroundView!.backgroundColor = UIColor(red: 51/255, green: 59/255, blue: 79/255, alpha: 1.0)
+		cell.selectedBackgroundView!.backgroundColor = UIColor.selectedBackgroundPurple()
 
 		return cell
 	}
