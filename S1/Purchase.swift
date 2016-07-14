@@ -42,10 +42,18 @@ extension Purchase where Self: BuyViewController {
 			}
 		})
 	}
+    
+    func canMakePayment() -> Bool {
+        return IAPHelper.canMakePayments()
+    }
 
 	func purchaseProduct(product: SKProduct) {
         SupportProducts.store.purchaseProduct(product)
 	}
+    
+    func restorePurchesedProduct() {
+        SupportProducts.store.restorePurchese()
+    }
 
 	func productPurchased(notification: NSNotification) {
         print(#function)

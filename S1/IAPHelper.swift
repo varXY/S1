@@ -41,9 +41,13 @@ public class IAPHelper : NSObject  {
 		let payment = SKPayment(product: product)
 		SKPaymentQueue.defaultQueue().addPayment(payment)
 	}
+    
+    public func restorePurchese() {
+        SKPaymentQueue.defaultQueue().restoreCompletedTransactions()
+    }
   
 	public func isProductPurchased(productIdentifier: ProductIdentifier) -> Bool {
-		return false
+		return purchasedProductIdentifiers.contains(productIdentifier)
 	}
   
 	public func restoreCompletedTransactions() {
@@ -114,6 +118,7 @@ extension IAPHelper: SKPaymentTransactionObserver, UserDefaults {
 	private func restoreTransaction(transaction: SKPaymentTransaction) {
 		let productIdentifier = transaction.originalTransaction?.payment.productIdentifier
 		print("restoreTransaction... \(productIdentifier)")
+        donePurchese()
 		provideContentForProductIdentifier(productIdentifier!)
 		SKPaymentQueue.defaultQueue().restoreCompletedTransactions()
 		SKPaymentQueue.defaultQueue().finishTransaction(transaction)
@@ -127,11 +132,13 @@ extension IAPHelper: SKPaymentTransactionObserver, UserDefaults {
 	}
 
 	private func failedTransaction(transaction: SKPaymentTransaction) {
-		print("failedTransaction...")
+        print("failedTransaction...")
+        NSNotificationCenter.defaultCenter().postNotificationName(IAPHelperProductPurchasedNotification, object: "fail")
+
 		if transaction.error?.code != SKErrorCode.PaymentCancelled.rawValue {
 			print("Transaction error: \(transaction.error!)")
 		}
-		SKPaymentQueue.defaultQueue().finishTransaction(transaction)
+        SKPaymentQueue.defaultQueue().finishTransaction(transaction)
 	}
 }
 

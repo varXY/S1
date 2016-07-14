@@ -10,6 +10,8 @@ import UIKit
 
 class BuyViewController: UIViewController, Purchase {
     
+    var purchesed = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.backgroundBlack()
@@ -31,22 +33,54 @@ class BuyViewController: UIViewController, Purchase {
         label.adjustsFontSizeToFitWidth = true
         view.addSubview(label)
         
-        let button = UIButton(type: .System)
-        button.frame = CGRectMake(100, label.frame.origin.y + label.frame.height, ScreenWidth - 200, 50)
-        button.setTitle("¥12.00", forState: .Normal)
-        button.tintColor = UIColor.statementYellow()
-        button.layer.cornerRadius = 5.0
-        button.layer.borderColor = UIColor.backgroundBlack_light().CGColor
-        button.layer.borderWidth = 2.0
-        button.addTarget(self, action: #selector(buy), forControlEvents: .TouchUpInside)
-        view.addSubview(button)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(quit), name: IAPHelperProductPurchasedNotification, object: nil)
+        print(canMakePayment())
+        if canMakePayment() {
+            let button = UIButton(type: .System)
+            button.frame = CGRectMake(100, label.frame.origin.y + label.frame.height, ScreenWidth - 200, 50)
+            button.setTitle("¥12.00", forState: .Normal)
+            button.tintColor = UIColor.statementYellow()
+            button.layer.cornerRadius = 5.0
+            button.layer.borderColor = UIColor.backgroundBlack_light().CGColor
+            button.layer.borderWidth = 2.0
+            button.addTarget(self, action: #selector(buy), forControlEvents: .TouchUpInside)
+            view.addSubview(button)
+            
+            let r_button = UIButton(type: .System)
+            r_button.frame = CGRectMake(100, ScreenHeight - 60, ScreenWidth - 200, 50)
+            r_button.setTitle("恢复购买", forState: .Normal)
+            r_button.tintColor = UIColor(red: 150/255, green: 153/255, blue: 172/255, alpha: 1.0)
+            r_button.addTarget(self, action: #selector(restore), forControlEvents: .TouchUpInside)
+            view.addSubview(r_button)
+            
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(donePurcheseAndQuit(_:)), name: IAPHelperProductPurchasedNotification, object: nil)
+        } else {
+            let textLabel = UILabel(frame: CGRectMake(0, label.frame.origin.y + label.frame.height, ScreenWidth, 50))
+            textLabel.textAlignment = .Center
+            textLabel.textColor = UIColor.buildInBlue()
+            textLabel.text = "你的设备无法进行购买操作"
+            textLabel.adjustsFontSizeToFitWidth = true
+            view.addSubview(label)
+        }
         
     }
     
     func buy() {
         connectToStore()
+    }
+    
+    func restore() {
+        restorePurchesedProduct()
+    }
+    
+    func donePurcheseAndQuit(notification: NSNotification) {
+        if purchesed { return }
+        purchesed = true
+        guard let object = notification.object as? String else { return }
+        print(object)
+        if object == "fail" { return }
+        let hudView = HudView.hudInView(view, animated: true)
+        hudView.text = "解锁成功！"
+        delay(seconds: 1.0) { self.quit() }
     }
     
     func quit() {
