@@ -22,15 +22,15 @@ class DetailViewController: UIViewController, UserDefaults {
 	var statusBarHidden = true
 	var randomModel = false
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
+    }
     
+    override var prefersStatusBarHidden: Bool {
+        return statusBarHidden
+    }
 
-	override func prefersStatusBarHidden() -> Bool {
-		return statusBarHidden
-	}
 
-	override func preferredStatusBarStyle() -> UIStatusBarStyle {
-		return .Default
-	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -44,18 +44,18 @@ class DetailViewController: UIViewController, UserDefaults {
 		xyScrollView.XYDelegate = self
 		view.addSubview(xyScrollView)
         
-		editButton = UIButton(type: .System)
-		editButton.frame = CGRectMake(ScreenWidth - 42, 12, 30, 30)
-		editButton.tintColor = UIColor.whiteColor()
-		editButton.setImage(UIImage(named: "EditIcon"), forState: .Normal)
-		editButton.addTarget(self, action: #selector(editButtonTouchDown), forControlEvents: .TouchDown)
-		editButton.addTarget(self, action: #selector(editButtonTouchUpOutside), forControlEvents: .TouchUpOutside)
-		editButton.addTarget(self, action: #selector(editButtonTapped), forControlEvents: .TouchUpInside)
-		editButton.exclusiveTouch = true
+		editButton = UIButton(type: .system)
+		editButton.frame = CGRect(x: ScreenWidth - 42, y: 12, width: 30, height: 30)
+		editButton.tintColor = UIColor.white
+		editButton.setImage(UIImage(named: "EditIcon"), for: UIControlState())
+		editButton.addTarget(self, action: #selector(editButtonTouchDown), for: .touchDown)
+		editButton.addTarget(self, action: #selector(editButtonTouchUpOutside), for: .touchUpOutside)
+		editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+		editButton.isExclusiveTouch = true
 		view.addSubview(editButton)
 	}
 
-	override func viewWillAppear(animated: Bool) {
+	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		statusBarHidden = true
 		setNeedsStatusBarAppearanceUpdate()
@@ -63,37 +63,37 @@ class DetailViewController: UIViewController, UserDefaults {
 	}
 
 	func setUpBars() {
-		navigationController?.navigationBarHidden = true
+		navigationController?.isNavigationBarHidden = true
 		navigationController?.toolbar.tintColor = UIColor.plainWhite()
 
 		let buttons = toolbarCustomButtons()
-		buttons[0].addTarget(self, action: #selector(backButtonTapped), forControlEvents: .TouchUpInside)
-		buttons[1].addTarget(self, action: #selector(nextButtonTapped), forControlEvents: .TouchUpInside)
-		buttons[2].addTarget(self, action: #selector(priviousButtonTapped), forControlEvents: .TouchUpInside)
+		buttons[0].addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+		buttons[1].addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+		buttons[2].addTarget(self, action: #selector(priviousButtonTapped), for: .touchUpInside)
 
-		let space = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+		let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
 
 		setToolbarItems([UIBarButtonItem(customView: buttons[0]), space, space, space, UIBarButtonItem(customView: buttons[1]), UIBarButtonItem(customView: buttons[2])], animated: true)
-		let rect = CGRectMake(0, 0, ScreenWidth, 49)
-		navigationController?.toolbar.setBackgroundImage(UIImage.imageWithColor(UIColor.clearColor(), rect: rect), forToolbarPosition: .Any, barMetrics: .Default)
-		navigationController?.toolbar.setShadowImage(UIImage.imageWithColor(UIColor.clearColor(), rect: CGRectMake(0, 0, 10, 10)), forToolbarPosition: .Any)
+		let rect = CGRect(x: 0, y: 0, width: ScreenWidth, height: 49)
+		navigationController?.toolbar.setBackgroundImage(UIImage.imageWithColor(UIColor.clear, rect: rect), forToolbarPosition: .any, barMetrics: .default)
+		navigationController?.toolbar.setShadowImage(UIImage.imageWithColor(UIColor.clear, rect: CGRect(x: 0, y: 0, width: 10, height: 10)), forToolbarPosition: .any)
 	}
 
 	func toolbarCustomButtons() -> [UIButton] {
 		let transforms = [
-			CGAffineTransformMakeRotation(CGFloat(90 * M_PI / 180)),
-			CGAffineTransformMakeRotation(CGFloat(0 * M_PI / 180)),
-			CGAffineTransformMakeRotation(CGFloat(180 * M_PI / 180))
+			CGAffineTransform(rotationAngle: CGFloat(90 * M_PI / 180)),
+			CGAffineTransform(rotationAngle: CGFloat(0 * M_PI / 180)),
+			CGAffineTransform(rotationAngle: CGFloat(180 * M_PI / 180))
 		]
 
 		let buttons: [UIButton] = transforms.map({
-			let button = UIButton(type: .System)
-			button.frame = CGRectMake(0, 0, 30, 30)
-			button.setImage(UIImage(named: "DirectionIcon")!, forState: .Normal)
+			let button = UIButton(type: .system)
+			button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+			button.setImage(UIImage(named: "DirectionIcon")!, for: UIControlState())
 			button.transform = $0
-			button.tintColor = UIColor.whiteColor()
+			button.tintColor = UIColor.white
 
-			button.exclusiveTouch = true
+			button.isExclusiveTouch = true
 			return button
 		})
 
@@ -101,66 +101,66 @@ class DetailViewController: UIViewController, UserDefaults {
 	}
 
 	func editButtonTouchDown() {
-		xyScrollView.userInteractionEnabled = false
+		xyScrollView.isUserInteractionEnabled = false
 	}
 
 	func editButtonTouchUpOutside() {
-		xyScrollView.userInteractionEnabled = true
+		xyScrollView.isUserInteractionEnabled = true
 	}
 
 	func editButtonTapped() {
         if isPurchesed() {
             let newWordVC = NewWordViewController()
-            newWordVC.statusBarStyle = .Default
+            newWordVC.statusBarStyle = .default
             newWordVC.dicForEditing = xyScrollView.dicFromIndex(xyScrollView.theTopIndex)
             newWordVC.delegate = self
-            presentViewController(NavigationController(rootViewController: newWordVC), animated: true, completion: nil)
+            present(NavigationController(rootViewController: newWordVC), animated: true, completion: nil)
         } else {
-            presentViewController(NavigationController(rootViewController: BuyViewController()), animated: true, completion: nil)
+            present(NavigationController(rootViewController: BuyViewController()), animated: true, completion: nil)
         }
         
-        xyScrollView.userInteractionEnabled = true
+        xyScrollView.isUserInteractionEnabled = true
 		
 	}
 
 	func backButtonTapped() {
-		navigationController?.popViewControllerAnimated(true)
+		let _ = navigationController?.popViewController(animated: true)
 	}
 
 	func nextButtonTapped() {
-		xyScrollView.scrolledType = .Down
-		xyScrollViewWillScroll(.Down, topViewIndex: 1)
+		xyScrollView.scrolledType = .down
+		xyScrollViewWillScroll(.down, topViewIndex: 1)
 		xyScrollView.moveContentViewToTop()
 	}
 
 	func priviousButtonTapped() {
-		xyScrollView.scrolledType = .Up
-		xyScrollViewWillScroll(.Up, topViewIndex: 1)
+		xyScrollView.scrolledType = .up
+		xyScrollViewWillScroll(.up, topViewIndex: 1)
 		xyScrollView.moveContentViewToTop()
 	}
 }
 
 extension DetailViewController: XYScrollViewDelegate {
 
-	func scrollTypeDidChange(type: XYScrollType) {
+	func scrollTypeDidChange(_ type: XYScrollType) {
 		pointerView.showPointer(type)
 	}
 
-	func xyScrollViewWillScroll(scrollType: XYScrollType, topViewIndex: Int) {
+	func xyScrollViewWillScroll(_ scrollType: XYScrollType, topViewIndex: Int) {
 		pointerView.hidePointersAndLabels()
 
 		switch scrollType {
-		case .Left:
+		case .left:
 			editButton.alpha = 0.0
-			navigationController?.popViewControllerAnimated(true)
-		case .Right:
+			let _ = navigationController?.popViewController(animated: true)
+		case .right:
             delay(seconds: 0.5, completion: { self.changeModelAndShowHudView() })
 		default:
 			break
 		}
 	}
 
-	func xyScrollViewDidScroll(scrollType: XYScrollType, topViewIndex: Int) {
+	func xyScrollViewDidScroll(_ scrollType: XYScrollType, topViewIndex: Int) {
 	}
     
     func changeModelAndShowHudView() {
@@ -171,14 +171,14 @@ extension DetailViewController: XYScrollViewDelegate {
         pointerView.changeRightLabelTextForRandomModel(randomModel)
     }
     
-    func speakText(text: String) {
+    func speakText(_ text: String) {
         if isPurchesed() {
             let synthesizer = AVSpeechSynthesizer()
             let utterance = AVSpeechUtterance(string: text)
             utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
-            synthesizer.speakUtterance(utterance)
+            synthesizer.speak(utterance)
         } else {
-            presentViewController(NavigationController(rootViewController: BuyViewController()), animated: true, completion: nil)
+            present(NavigationController(rootViewController: BuyViewController()), animated: true, completion: nil)
         }
         
     }
@@ -189,7 +189,7 @@ extension DetailViewController: NewWordViewControllerDelegate {
 	func didSaveNewWord() {
 	}
 
-	func doneEditingSwiftDic(dic: SwiftDic) {
+	func doneEditingSwiftDic(_ dic: SwiftDic) {
 		xyScrollView.changeDetailForContentView(xyScrollView.contentViews[1], dic: dic)
 	}
 }

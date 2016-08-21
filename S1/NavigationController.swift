@@ -10,9 +10,10 @@ import UIKit
 
 class NavigationController: UINavigationController {
 
-	override func preferredStatusBarStyle() -> UIStatusBarStyle {
-		return .LightContent
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+		return .lightContent
 	}
+    
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -21,11 +22,11 @@ class NavigationController: UINavigationController {
 			NSForegroundColorAttributeName: UIColor.commentGreen(),
 			NSFontAttributeName: UIFont.defaultFont(17)
 		]
-		navigationBar.tintColor = UIColor.whiteColor()
-		navigationBar.translucent = true
+		navigationBar.tintColor = UIColor.white
+		navigationBar.isTranslucent = true
 
-		let rect = CGRectMake(0, 0, self.view.frame.width, 64)
-		self.navigationBar.setBackgroundImage(UIImage.imageWithColor(UIColor.barBackgoundBlack(), rect: rect), forBarMetrics: UIBarMetrics.Default)
+		let rect = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 64)
+		self.navigationBar.setBackgroundImage(UIImage.imageWithColor(UIColor.barBackgoundBlack(), rect: rect), for: UIBarMetrics.default)
         
 //		self.navigationBar.shadowImage = UIImage.imageWithColor(UIColor.clearColor(), rect: CGRectMake(0, 0, 10, 10))
 	}

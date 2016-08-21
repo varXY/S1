@@ -10,17 +10,17 @@ import UIKit
 
 extension UIImage {
 
-	class func imageWithColor(color: UIColor, rect: CGRect) -> UIImage {
+	class func imageWithColor(_ color: UIColor, rect: CGRect) -> UIImage {
 		UIGraphicsBeginImageContext(rect.size)
 		let context = UIGraphicsGetCurrentContext()
 
-		CGContextSetFillColorWithColor(context, color.CGColor)
-		CGContextFillRect(context, rect)
+		context?.setFillColor(color.cgColor)
+		context?.fill(rect)
 
 		let image = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 
-		return image
+		return image!
 	}
 	
 }

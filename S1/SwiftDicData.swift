@@ -15,37 +15,37 @@ protocol SwiftDicData {
 	var managedContext: NSManagedObjectContext { get }
 
 	func allSwiftDics() -> [SwiftDic]
-	func savePreloadedwords(completion: () -> ())
+	func savePreloadedwords(_ completion: () -> ())
 
-	func wordsFromSection(section: Int) -> [String]
-	func detailOfWord(word: String) -> SwiftDic?
+	func wordsFromSection(_ section: Int) -> [String]
+	func detailOfWord(_ word: String) -> SwiftDic?
 
-	func saveSwiftDic(swiftDic: SwiftDic)
-	func editSwiftDic(word: String, edited: (SwiftDic) -> (SwiftDic))
+	func saveSwiftDic(_ swiftDic: SwiftDic)
+	func editSwiftDic(_ word: String, edited: (SwiftDic) -> (SwiftDic))
 
-	func deleteSwiftDic(word: String)
+	func deleteSwiftDic(_ word: String)
 }
 
 extension SwiftDicData {
 
 	var appDelegate: UIApplicationDelegate {
-		return UIApplication.sharedApplication().delegate as! AppDelegate
+		return UIApplication.shared.delegate as! AppDelegate
 	}
 
 	var managedContext: NSManagedObjectContext {
-		return (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+		return (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
 	}
 
 	func allSwiftDics() -> [SwiftDic] {
 		var swiftDics = [SwiftDic]()
 
-		let fetchRequest = NSFetchRequest(entityName: "SwiftDic")
-		fetchRequest.entity = NSEntityDescription.entityForName("SwiftDic", inManagedObjectContext: managedContext)
+		let fetchRequest = NSFetchRequest<SwiftDic>(entityName: "SwiftDic")
+		fetchRequest.entity = NSEntityDescription.entity(forEntityName: "SwiftDic", in: managedContext)
 
 		do {
-			if let dics = try managedContext.executeFetchRequest(fetchRequest) as? [SwiftDic] {
-				swiftDics = dics
-			}
+			let dics = try managedContext.fetch(fetchRequest)
+            swiftDics = dics
+			
 		} catch {
 			print("can't get preloaded dics")
 		}
@@ -53,14 +53,14 @@ extension SwiftDicData {
 		return swiftDics
 	}
 
-	func savePreloadedwords(completion: () -> ()) {
-		let fetchRequest = NSFetchRequest(entityName: "SwiftDic")
-		fetchRequest.entity = NSEntityDescription.entityForName("SwiftDic", inManagedObjectContext: managedContext)
+	func savePreloadedwords(_ completion: () -> ()) {
+		let fetchRequest = NSFetchRequest<SwiftDic>(entityName: "SwiftDic")
+		fetchRequest.entity = NSEntityDescription.entity(forEntityName: "SwiftDic", in: managedContext)
 
 		do {
-			let oldDics = try managedContext.executeFetchRequest(fetchRequest)
+			let oldDics = try managedContext.fetch(fetchRequest)
 			if oldDics.count != 0 {
-				oldDics.forEach({ managedContext.deleteObject($0 as! NSManagedObject) })
+				oldDics.forEach({ managedContext.delete($0 as NSManagedObject) })
 			}
 		} catch {
 			print("can't get old storys")
@@ -68,8 +68,8 @@ extension SwiftDicData {
 
 		let arrays = PreloadedWords().arrays
 		arrays.forEach({
-			let entity = NSEntityDescription.entityForName("SwiftDic", inManagedObjectContext: managedContext)
-			let dic = SwiftDic(entity: entity!, insertIntoManagedObjectContext: managedContext)
+			let entity = NSEntityDescription.entity(forEntityName: "SwiftDic", in: managedContext)
+			let dic = SwiftDic(entity: entity!, insertInto: managedContext)
 			dic.index = Int($0[0])! as NSNumber
 			dic.word = $0[1]
 			dic.meaning = $0[2]
@@ -85,36 +85,36 @@ extension SwiftDicData {
 		completion()
 	}
 
-	func wordsFromSection(section: Int) -> [String] {
+	func wordsFromSection(_ section: Int) -> [String] {
 		var words = [String]()
 
-		let fetchRequest = NSFetchRequest(entityName: "SwiftDic")
-		fetchRequest.entity = NSEntityDescription.entityForName("SwiftDic", inManagedObjectContext: managedContext)
+		let fetchRequest = NSFetchRequest<SwiftDic>(entityName: "SwiftDic")
+		fetchRequest.entity = NSEntityDescription.entity(forEntityName: "SwiftDic", in: managedContext)
 		fetchRequest.predicate = NSPredicate(format: "index == %f", Double(section))
 
 		do {
-			if let dics = try managedContext.executeFetchRequest(fetchRequest) as? [SwiftDic] {
-				words = dics.map({ $0.word! })
-			}
+			let dics = try managedContext.fetch(fetchRequest)
+            words = dics.map({ $0.word! })
+			
 		} catch {
 			print("can't get words")
 		}
 
 		if words.count == 0 { words = [""] }
-		return words.sort({ $0 < $1 })
+		return words.sorted(by: { $0 < $1 })
 	}
 
-	func detailOfWord(word: String) -> SwiftDic? {
+	func detailOfWord(_ word: String) -> SwiftDic? {
 		var swiftDic: SwiftDic?
 
-		let fetchRequest = NSFetchRequest(entityName: "SwiftDic")
-		fetchRequest.entity = NSEntityDescription.entityForName("SwiftDic", inManagedObjectContext: managedContext)
+		let fetchRequest = NSFetchRequest<SwiftDic>(entityName: "SwiftDic")
+		fetchRequest.entity = NSEntityDescription.entity(forEntityName: "SwiftDic", in: managedContext)
 		fetchRequest.predicate = NSPredicate(format: "word == %@", word)
 
 		do {
-			if let dics = try managedContext.executeFetchRequest(fetchRequest) as? [SwiftDic] {
-				swiftDic = dics.count == 0 ? nil : dics[0]
-			}
+			let dics = try managedContext.fetch(fetchRequest)
+            swiftDic = dics.count == 0 ? nil : dics[0]
+
 		} catch {
 			print("can't get word's detail")
 		}
@@ -122,9 +122,9 @@ extension SwiftDicData {
 		return swiftDic
 	}
 
-	func saveSwiftDic(swiftDic: SwiftDic) {
-		let entity = NSEntityDescription.entityForName("SwiftDic", inManagedObjectContext: managedContext)
-		let dic = SwiftDic(entity: entity!, insertIntoManagedObjectContext: managedContext)
+	func saveSwiftDic(_ swiftDic: SwiftDic) {
+		let entity = NSEntityDescription.entity(forEntityName: "SwiftDic", in: managedContext)
+		let dic = SwiftDic(entity: entity!, insertInto: managedContext)
 		dic.index = swiftDic.index
 		dic.word = swiftDic.word
 		dic.meaning = swiftDic.meaning
@@ -137,19 +137,19 @@ extension SwiftDicData {
 		}
 	}
 
-	func editSwiftDic(word: String, edited: (SwiftDic) -> (SwiftDic)) {
-		let fetchRequest = NSFetchRequest(entityName: "SwiftDic")
-		fetchRequest.entity = NSEntityDescription.entityForName("SwiftDic", inManagedObjectContext: managedContext)
+	func editSwiftDic(_ word: String, edited: (SwiftDic) -> (SwiftDic)) {
+		let fetchRequest = NSFetchRequest<SwiftDic>(entityName: "SwiftDic")
+		fetchRequest.entity = NSEntityDescription.entity(forEntityName: "SwiftDic", in: managedContext)
 		fetchRequest.predicate = NSPredicate(format: "word == %@", word)
 
 		do {
-			if let dics = try managedContext.executeFetchRequest(fetchRequest) as? [SwiftDic] {
-				let newDic = edited(dics[0])
-				dics[0].index = newDic.index
-				dics[0].word = newDic.word
-				dics[0].meaning = newDic.meaning
-				dics[0].code = newDic.code
-			}
+			let dics = try managedContext.fetch(fetchRequest)
+            let newDic = edited(dics[0])
+            dics[0].index = newDic.index
+            dics[0].word = newDic.word
+            dics[0].meaning = newDic.meaning
+            dics[0].code = newDic.code
+			
 		} catch {
 			print("can't get word's detail")
 		}
@@ -162,14 +162,15 @@ extension SwiftDicData {
 		}
 	}
 
-	func deleteSwiftDic(word: String) {
-		let fetchRequest = NSFetchRequest(entityName: "SwiftDic")
-		fetchRequest.entity = NSEntityDescription.entityForName("SwiftDic", inManagedObjectContext: managedContext)
+	func deleteSwiftDic(_ word: String) {
+        // write this way may not work in deleting
+		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "SwiftDic")
+		fetchRequest.entity = NSEntityDescription.entity(forEntityName: "SwiftDic", in: managedContext)
 		fetchRequest.predicate = NSPredicate(format: "word == %@", word)
 
 		do {
-			if let dics = try managedContext.executeFetchRequest(fetchRequest) as? [NSManagedObject] {
-				managedContext.deleteObject(dics[0])
+			if let dics = try managedContext.fetch(fetchRequest) as? [NSManagedObject] {
+				managedContext.delete(dics[0])
 			}
 		} catch {
 			print("can't get word for deleting")

@@ -10,12 +10,12 @@ import Foundation
 
 extension NSMutableString {
 
-	func rangesOfString(string: String) -> [NSRange] {
+	func rangesOfString(_ string: String) -> [NSRange] {
 		let ranges: [NSRange]
 
 		do {
 			let regex = try NSRegularExpression(pattern: string, options: [])
-			ranges = regex.matchesInString(self as String, options: [], range: NSMakeRange(0, (self as String).characters.count)).map {$0.range}
+			ranges = regex.matches(in: self as String, options: [], range: NSMakeRange(0, (self as String).characters.count)).map {$0.range}
 		} catch {
 			ranges = []
 		}
@@ -28,12 +28,12 @@ extension NSMutableString {
 
 extension String {
 
-	func rangesOfString(string: String) -> [NSRange] {
+	func rangesOfString(_ string: String) -> [NSRange] {
 		let ranges: [NSRange]
 
 		do {
 			let regex = try NSRegularExpression(pattern: string, options: [])
-			ranges = regex.matchesInString(self, options: [], range: NSMakeRange(0, self.characters.count)).map {$0.range}
+			ranges = regex.matches(in: self, options: [], range: NSMakeRange(0, self.characters.count)).map {$0.range}
 		} catch {
 			ranges = []
 		}
@@ -44,8 +44,8 @@ extension String {
 	func removeSelf() -> String {
 		var string = self
 
-		if let range = string.rangeOfString("self.") {
-			string.replaceRange(range, with: "")
+		if let range = string.range(of: "self.") {
+			string.replaceSubrange(range, with: "")
 		}
 		
 		return string
@@ -54,10 +54,10 @@ extension String {
 	func checkBrackets() -> String {
 		let result = self
 
-		let parts = result.componentsSeparatedByString("(")
+		let parts = result.components(separatedBy: "(")
 		if parts.count == 2 {
 			for part in parts {
-				if part.containsString(")") {
+				if part.contains(")") {
 					return parts[0]
 				}
 			}
@@ -86,7 +86,7 @@ extension String {
 
 		for chr in characters {
 			if marks.contains(String(chr)) {
-					result.replaceRange(result.rangeOfString(String(chr))!, with: "")
+					result.replaceSubrange(result.range(of: String(chr))!, with: "")
 			}
 		}
 
@@ -97,13 +97,13 @@ extension String {
 		let marks = ["(", ")", "[", "]", "!", "?", ",", ".", ":"]
 		var result = self
 
-		for (index, chr) in result.characters.enumerate() {
+		for (index, chr) in result.characters.enumerated() {
 			if marks.contains(String(chr)) {
 				if index >= result.characters.count - 2 {
 					result = String(result.characters.dropLast())
 				} else {
-					let range = Range<String.Index>(result.startIndex.advancedBy(index)..<result.startIndex.advancedBy(index + 1))
-					result.replaceRange(range, with: "")
+					let range = Range<String.Index>(result.index(result.startIndex, offsetBy: index)..<result.index(result.startIndex, offsetBy: index + 1))
+					result.replaceSubrange(range, with: "")
 				}
 			}
 		}

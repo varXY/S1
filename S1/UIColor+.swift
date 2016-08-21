@@ -56,7 +56,7 @@ extension UIColor {
 	}
 
 	class func plainWhite() -> UIColor {
-		return UIColor.whiteColor()
+		return UIColor.white
 	}
 
 

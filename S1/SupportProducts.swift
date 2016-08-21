@@ -21,6 +21,6 @@ public enum SupportProducts {
 	public static let store = IAPHelper(productIdentifiers: SupportProducts.productIdentifiers)
 }
 
-func resourceNameForProductIdentifier(productIdentifier: String) -> String? {
-	return productIdentifier.componentsSeparatedByString(".").last
+func resourceNameForProductIdentifier(_ productIdentifier: String) -> String? {
+	return productIdentifier.components(separatedBy: ".").last
 }

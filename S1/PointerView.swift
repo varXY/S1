@@ -13,26 +13,26 @@ struct Pointer {
 	let textPointer = ["-", "+", "×", "="]
 
 	let originCenters = [
-		CGPointMake(ScreenWidth / 2, 30 / 2 - 30),
-		CGPointMake(ScreenWidth / 2, ScreenHeight - (30 / 2) + 30),
-		CGPointMake(30 / 2 - 30, ScreenHeight / 2),
-		CGPointMake(ScreenWidth - (30 / 2) + 30, ScreenHeight / 2),
+		CGPoint(x: ScreenWidth / 2, y: 30 / 2 - 30),
+		CGPoint(x: ScreenWidth / 2, y: ScreenHeight - (30 / 2) + 30),
+		CGPoint(x: 30 / 2 - 30, y: ScreenHeight / 2),
+		CGPoint(x: ScreenWidth - (30 / 2) + 30, y: ScreenHeight / 2),
 	]
 
 	let toCenters = [
-		CGPointMake(ScreenWidth / 2, 30 / 2 + 5),
-		CGPointMake(ScreenWidth / 2, ScreenHeight - (30 / 2) - 6),
-		CGPointMake(30 / 2 + 4.5, ScreenHeight / 2),
-		CGPointMake(ScreenWidth - (30 / 2) - 4.5, ScreenHeight / 2),
+		CGPoint(x: ScreenWidth / 2, y: 30 / 2 + 5),
+		CGPoint(x: ScreenWidth / 2, y: ScreenHeight - (30 / 2) - 6),
+		CGPoint(x: 30 / 2 + 4.5, y: ScreenHeight / 2),
+		CGPoint(x: ScreenWidth - (30 / 2) - 4.5, y: ScreenHeight / 2),
 	]
 
-	func pointerLabel(type: XYScrollType) -> UILabel {
+	func pointerLabel(_ type: XYScrollType) -> UILabel {
 		let pointer = UILabel()
 		pointer.frame.size = CGSize(width: length, height: length)
 		pointer.center = toCenters[type.rawValue]
 		pointer.textColor = UIColor.stringRed()
 		pointer.text = textPointer[type.rawValue]
-		pointer.textAlignment = .Center
+		pointer.textAlignment = .center
 		pointer.font = UIFont.defaultFont(19)
 		return pointer
 	}
@@ -54,26 +54,26 @@ class PointerView: UIView {
 		let UD_size = CGSize(width: ScreenWidth - 30 * 2, height: 30)
 		let LR_size = CGSize(width: 30, height: ScreenHeight - 30 * 4)
 		let texts = ["前一个", "后一个", "返\n回", "随\n机\n浏\n览"]
-		func label(type: XYScrollType) -> UILabel {
+		func label(_ type: XYScrollType) -> UILabel {
 			let label = UILabel()
-			label.backgroundColor = UIColor.clearColor()
-			label.textAlignment = .Center
+			label.backgroundColor = UIColor.clear
+			label.textAlignment = .center
 			label.textColor = UIColor.statementYellow()
 			label.font = UIFont.defaultFont(15)
 			label.text = texts[type.rawValue]
 
 			switch type {
-			case .Up:
+			case .up:
 				label.frame.origin = CGPoint(x: 30, y: 30)
 				label.frame.size = UD_size
-			case .Down:
+			case .down:
 				label.frame.origin = CGPoint(x: 30, y: ScreenHeight - 60)
 				label.frame.size = UD_size
-			case .Left:
+			case .left:
 				label.frame.origin = CGPoint(x: 30, y: 60)
 				label.frame.size = LR_size
 				label.numberOfLines = 0
-			case .Right:
+			case .right:
 				label.frame.origin = CGPoint(x: ScreenWidth - 60, y: 60)
 				label.frame.size = LR_size
 				label.numberOfLines = 0
@@ -93,9 +93,9 @@ class PointerView: UIView {
 		backgroundColor = UIColor.backgroundBlack_light()
 		layer.cornerRadius = globalRadius
 		clipsToBounds = true
-		tintColor = UIColor.whiteColor()
+		tintColor = UIColor.white
 
-		let types = [XYScrollType.Up, XYScrollType.Down, XYScrollType.Left, XYScrollType.Right]
+		let types = [XYScrollType.up, XYScrollType.down, XYScrollType.left, XYScrollType.right]
 		pointers = types.map({ pointer.pointerLabel($0) })
 		pointers.forEach({ $0.alpha = 0.0; addSubview($0) })
 
@@ -104,9 +104,9 @@ class PointerView: UIView {
 
 	}
 
-	func showPointer(type: XYScrollType) {
+	func showPointer(_ type: XYScrollType) {
 		switch type {
-		case .Up, .Down, .Left, .Right:
+		case .up, .down, .left, .right:
 //			canHide = false
 			moveAndDone({
 				self.pointers[type.rawValue].alpha = 1.0
@@ -125,16 +125,16 @@ class PointerView: UIView {
 		}
 	}
 
-	func moveAndDone(move: () -> (), done: () -> ()) {
-		UIView.performSystemAnimation(.Delete, onViews: [], options: [], animations: { 
+	func moveAndDone(_ move: () -> (), done: () -> ()) {
+		UIView.perform(.delete, on: [], options: [], animations: { 
 			move()
 			}) { (compelete) in
 				done()
 		}
 	}
 
-	func move(animate: () -> ()) {
-		UIView.performSystemAnimation(.Delete, onViews: [], options: [], animations: { 
+	func move(_ animate: () -> ()) {
+		UIView.perform(.delete, on: [], options: [], animations: { 
 			animate()
 			}, completion: nil)
 	}
@@ -151,7 +151,7 @@ class PointerView: UIView {
 			UDLR_labels.forEach({ if $0.alpha == 1.0 { $0.alpha = 0.0 } })
 	}
 
-	func changeRightLabelTextForRandomModel(random: Bool) {
+	func changeRightLabelTextForRandomModel(_ random: Bool) {
 		UDLR_labels[3].text = random ? "顺\n序\n浏\n览" : "随\n机\n浏\n览"
 	}
 	

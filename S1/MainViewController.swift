@@ -11,8 +11,8 @@ import UIKit
 class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 
 	var tableView: UITableView!
-	var searchBar = UISearchBar(frame: CGRectMake(0, 0, 0, 44))
-	var curtainView = UIView(frame: CGRectMake(0, 0, ScreenWidth, 44))
+	var searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: 0, height: 44))
+	var curtainView = UIView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 44))
 
 	var resultsOnTable: [[String]]!
 
@@ -21,22 +21,23 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 //	var dics: [SwiftDic]!
 //	var dicIndex = 0
 
-	override func preferredStatusBarStyle() -> UIStatusBarStyle {
-		return .LightContent
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+		return .lightContent
 	}
+    
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = UIColor.backgroundBlack()
         
-		let titleLabel = UILabel(frame: CGRectMake(0, 0, ScreenWidth - 60, 44))
+		let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: ScreenWidth - 60, height: 44))
 		titleLabel.textColor = UIColor.commentGreen()
 		titleLabel.font = UIFont.defaultFont(17)
 		titleLabel.text = "// 开发常见词汇.swift"
 		let titleItem = UIBarButtonItem(customView: titleLabel)
 		navigationItem.leftBarButtonItem = titleItem
 
-		let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(addButtonTapped))
+		let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
 		navigationItem.rightBarButtonItem = addButton
         
         checkNewUser()
@@ -53,7 +54,7 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 
 	}
 
-	override func viewWillAppear(animated: Bool) {
+	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		navigationController?.setToolbarHidden(true, animated: true)
 
@@ -90,19 +91,19 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 		tableView = UITableView(frame: view.bounds)
 		tableView.dataSource = self
 		tableView.delegate = self
-		tableView.backgroundColor = UIColor.clearColor()
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 15)
+		tableView.backgroundColor = UIColor.clear
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         tableView.separatorColor = UIColor(red: 67/255, green: 69/255, blue: 81/255, alpha: 1.0)
 		tableView.sectionIndexColor = UIColor(red: 150/255, green: 153/255, blue: 172/255, alpha: 1.0)
-		tableView.sectionIndexBackgroundColor = UIColor.clearColor()
+		tableView.sectionIndexBackgroundColor = UIColor.clear
 		view.addSubview(tableView)
 
 		searchBar.placeholder = "搜索"
 		searchBar.tintColor = UIColor.plainWhite()
 		searchBar.barTintColor = UIColor.backgroundBlack_light()
-		UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).textColor = UIColor.whiteColor()
-		searchBar.searchBarStyle = .Minimal
-        searchBar.autoresizingMask = .FlexibleWidth
+		UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.white
+		searchBar.searchBarStyle = .minimal
+        searchBar.autoresizingMask = .flexibleWidth
 		searchBar.delegate = self
         
 		tableView.tableHeaderView = searchBar
@@ -115,7 +116,7 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 		var allResult = [[String]]()
 
 		System.ABC_XYZ.forEach({
-			let i = System.ABC_XYZ.indexOf($0)!
+			let i = System.ABC_XYZ.index(of: $0)!
 			let words = wordsFromSection(i)
 			if words != [""] { allResult.append(words) }
 		})
@@ -123,7 +124,7 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 		return allResult
 	}
 
-	func getResultsOnTable(searchString searchString: String?) {
+	func getResultsOnTable(searchString: String?) {
 		if resultsOnTable != nil { resultsOnTable.removeAll() }
 
 		if searchString == nil {
@@ -133,7 +134,7 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 		} else {
 			let index = firstCharacterToIndex(searchString!)
 			let sectionResults = AllResult().filter({ firstCharacterToIndex($0[0]) == index })
-			let finalResult = sectionResults.count != 0 ? sectionResults[0].filter({ $0.localizedCaseInsensitiveContainsString(searchString!) }) : ["无结果"]
+			let finalResult = sectionResults.count != 0 ? sectionResults[0].filter({ $0.localizedCaseInsensitiveContains(searchString!) }) : ["无结果"]
 			resultsOnTable = finalResult.count != 0 ? [finalResult] : [["无结果"]]
 		}
 
@@ -145,9 +146,9 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
             let newWordVC = NewWordViewController()
             newWordVC.delegate = self
             let navi = NavigationController(rootViewController: NewWordViewController())
-            presentViewController(navi, animated: true, completion: nil)
+            present(navi, animated: true, completion: nil)
         } else {
-            presentViewController(NavigationController(rootViewController: BuyViewController()), animated: true, completion: nil)
+            present(NavigationController(rootViewController: BuyViewController()), animated: true, completion: nil)
         }
 	}
 
@@ -155,11 +156,11 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 
 extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 
-	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+	func numberOfSections(in tableView: UITableView) -> Int {
 		return resultsOnTable.count
 	}
 
-	func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		if resultsOnTable[section].count != 0 {
 			let index = firstCharacterToIndex(resultsOnTable[section][0])
 			return " # " + System.ABC_XYZ[index]
@@ -168,8 +169,8 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 		}
 	}
 
-	func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		let label = UILabel(frame: CGRectMake(0, 0, 20, ScreenWidth))
+	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: ScreenWidth))
 		label.backgroundColor = UIColor.backgroundBlack_light()
 		label.textColor = UIColor.statementYellow()
 		label.font = UIFont.defaultFont(17)
@@ -184,17 +185,17 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 		return label
 	}
 
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return resultsOnTable[section].count
 	}
 
-	func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return 50
 	}
 
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		var cell: UITableViewCell! = tableView.dequeueReusableCellWithIdentifier("cell")
-		if cell == nil { cell = UITableViewCell(style: .Default, reuseIdentifier: "cell") }
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		var cell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: "cell")
+		if cell == nil { cell = UITableViewCell(style: .default, reuseIdentifier: "cell") }
 
 		cell.backgroundColor = UIColor.backgroundBlack()
 		cell.textLabel?.textColor = UIColor.stringRed()
@@ -205,66 +206,66 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 		return cell
 	}
 
-	func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+	func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 		cell.textLabel!.text = resultsOnTable[indexPath.section][indexPath.row]
 	}
 
-	func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-		let cell = tableView.cellForRowAtIndexPath(indexPath)
+	func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+		let cell = tableView.cellForRow(at: indexPath)
 		let noResult = cell?.textLabel?.text == "无结果" || cell?.textLabel?.text == " "
 		return noResult ? nil : indexPath
 	}
 
-	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.tableHeaderView?.addSubview(curtainView)
 
 		let detailVC = DetailViewController()
 		detailVC.resultsOnTable = resultsOnTable
 		detailVC.initTopDetailIndex = (indexPath.section, indexPath.row)
 		navigationController?.pushViewController(detailVC, animated: true)
-		tableView.deselectRowAtIndexPath(indexPath, animated: true)
+		tableView.deselectRow(at: indexPath, animated: true)
 	}
 
-	func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
+	func sectionIndexTitles(for tableView: UITableView) -> [String]? {
 		return resultsOnTable.map({ System.ABC_XYZ[firstCharacterToIndex($0[0])] })
 	}
 
-	func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+	func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
 		return isSearching == nil ? true : !isSearching
 	}
 
-	func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-		let alertController = UIAlertController(title: "提示", message: "删除后无法恢复，确定删除？", preferredStyle: .Alert)
-		let cancelAction = UIAlertAction(title: "取消", style: .Cancel) { (_) in
+	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+		let alertController = UIAlertController(title: "提示", message: "删除后无法恢复，确定删除？", preferredStyle: .alert)
+		let cancelAction = UIAlertAction(title: "取消", style: .cancel) { (_) in
 			tableView.setEditing(false, animated: true)
 		}
-		let okAction = UIAlertAction(title: "确定", style: .Default) { (_) in
-			let cell = tableView.cellForRowAtIndexPath(indexPath)!
+		let okAction = UIAlertAction(title: "确定", style: .default) { (_) in
+			let cell = tableView.cellForRow(at: indexPath)!
             self.deleteSwiftDic(cell.textLabel!.text!)
             let oldResults = self.resultsOnTable
             self.resultsOnTable = self.AllResult()
             
-            if self.resultsOnTable.count != oldResults.count {
-                let indexSet = NSIndexSet(index: indexPath.section)
-                tableView.deleteSections(indexSet, withRowAnimation: .Automatic)
+            if self.resultsOnTable.count != oldResults?.count {
+                let indexSet = IndexSet(integer: indexPath.section)
+                tableView.deleteSections(indexSet, with: .automatic)
             } else {
                 let indexPaths = [indexPath]
-                tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+                tableView.deleteRows(at: indexPaths, with: .automatic)
             }
 		}
 
 		alertController.addAction(cancelAction)
 		alertController.addAction(okAction)
-		presentViewController(alertController, animated: true, completion: nil)
+		present(alertController, animated: true, completion: nil)
 	}
 
 }
 
 extension MainViewController: UISearchBarDelegate {
 
-	func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
+	func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
 		isSearching = true
-		if navigationController?.navigationBarHidden == false {
+		if navigationController?.isNavigationBarHidden == false {
 			navigationController?.setNavigationBarHidden(true, animated: true)
 		}
 
@@ -273,7 +274,7 @@ extension MainViewController: UISearchBarDelegate {
 		return true
 	}
 
-	func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
 		isSearching = false
 		navigationController?.setNavigationBarHidden(false, animated: true)
 		searchBar.resignFirstResponder()
@@ -282,11 +283,11 @@ extension MainViewController: UISearchBarDelegate {
 		getResultsOnTable(searchString: nil)
 	}
 
-	func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		searchBar.resignFirstResponder()
 	}
 
-	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 		getResultsOnTable(searchString: searchBar.text)
 	}
 	
@@ -297,6 +298,6 @@ extension MainViewController: NewWordViewControllerDelegate {
 	func didSaveNewWord() {
 	}
 
-	func doneEditingSwiftDic(dic: SwiftDic) {
+	func doneEditingSwiftDic(_ dic: SwiftDic) {
 	}
 }

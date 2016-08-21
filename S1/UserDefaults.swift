@@ -15,10 +15,10 @@ struct UDKey {
 }
 
 protocol UserDefaults {
-	var userDefaults: NSUserDefaults { get }
+	var userDefaults: Foundation.UserDefaults { get }
 
 	func isPreloaded() -> Bool
-	func savePreloaded(loaded: Bool)
+	func savePreloaded(_ loaded: Bool)
     
     func isPurchesed() -> Bool
     func donePurchese()
@@ -28,25 +28,25 @@ protocol UserDefaults {
 
 extension UserDefaults {
 
-	var userDefaults: NSUserDefaults {
-		return NSUserDefaults.standardUserDefaults()
+	var userDefaults: Foundation.UserDefaults {
+		return Foundation.UserDefaults.standard
 	}
 
 	func isPreloaded() -> Bool {
-		guard let preloaded = userDefaults.valueForKey(UDKey.preloaded) as? Bool else {
+		guard let preloaded = userDefaults.value(forKey: UDKey.preloaded) as? Bool else {
 			savePreloaded(false)
 			return false
 		}
 		return preloaded
 	}
 
-	func savePreloaded(loaded: Bool) {
-		userDefaults.setBool(loaded, forKey: UDKey.preloaded)
+	func savePreloaded(_ loaded: Bool) {
+		userDefaults.set(loaded, forKey: UDKey.preloaded)
 		userDefaults.synchronize()
 	}
     
     func isPurchesed() -> Bool {
-        guard let purchesed = userDefaults.valueForKey(UDKey.purchesed) as? Bool else { return false }
+        guard let purchesed = userDefaults.value(forKey: UDKey.purchesed) as? Bool else { return false }
         return purchesed
     }
     
@@ -56,11 +56,11 @@ extension UserDefaults {
     }
     
     func checkNewUser() {
-        if userDefaults.valueForKey(UDKey.checked) == nil {
+        if userDefaults.value(forKey: UDKey.checked) == nil {
             if isPreloaded() == true {
                 donePurchese()
             }
-            userDefaults.setBool(true, forKey: UDKey.checked)
+            userDefaults.set(true, forKey: UDKey.checked)
         }
     }
     
