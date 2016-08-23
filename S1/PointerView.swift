@@ -125,7 +125,7 @@ class PointerView: UIView {
 		}
 	}
 
-	func moveAndDone(_ move: () -> (), done: () -> ()) {
+	func moveAndDone(_ move: @escaping () -> (), done: @escaping () -> ()) {
 		UIView.perform(.delete, on: [], options: [], animations: { 
 			move()
 			}) { (compelete) in
@@ -133,7 +133,7 @@ class PointerView: UIView {
 		}
 	}
 
-	func move(_ animate: () -> ()) {
+	func move(_ animate: @escaping () -> ()) {
 		UIView.perform(.delete, on: [], options: [], animations: { 
 			animate()
 			}, completion: nil)

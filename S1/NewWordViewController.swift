@@ -30,7 +30,7 @@ class NewWordViewController: UIViewController, SwiftDicData {
 		case word, meaning, example
 	}
 
-	private let rowHeight: CGFloat = 50
+	let rowHeight: CGFloat = 50
 
 	var textViewRects: [CGRect]!
 	var barButtonItem: UIBarButtonSystemItem!
@@ -317,8 +317,8 @@ extension NewWordViewController: UITextViewDelegate {
 			var text = textView.text
 			let ranges = text?.rangesOfString("\"")
 			for range in ranges! {
-				if range.location == 0 { text = String(text?.characters.dropFirst()) }
-				if range.location == text?.characters.count { text = String(text?.characters.dropLast()) }
+                if range.location == 0 { text = String(describing: text?.characters.dropFirst()) }
+				if range.location == text?.characters.count { text = String(describing: text?.characters.dropLast()) }
 			}
 			textView.text = text
 

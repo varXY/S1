@@ -11,16 +11,16 @@ import StoreKit
 public let IAPHelperProductPurchasedNotification = "IAPHelperProductPurchasedNotification"
 
 public typealias ProductIdentifier = String
-public typealias RequestProductsCompletionHandler = (success: Bool, products: [SKProduct]) -> ()
+public typealias RequestProductsCompletionHandler = (_ success: Bool, _ products: [SKProduct]) -> ()
 
 
 public class IAPHelper : NSObject  {
 
-	private let productIdentifiers: Set<ProductIdentifier>
-	private var purchasedProductIdentifiers = Set<ProductIdentifier>()
+	let productIdentifiers: Set<ProductIdentifier>
+	var purchasedProductIdentifiers = Set<ProductIdentifier>()
 
-	private var productsRequest: SKProductsRequest?
-	private var completionHandler: RequestProductsCompletionHandler?
+	var productsRequest: SKProductsRequest?
+	var completionHandler: RequestProductsCompletionHandler?
 
 
 	public init(productIdentifiers: Set<ProductIdentifier>) {
@@ -64,7 +64,7 @@ extension IAPHelper: SKProductsRequestDelegate {
 
 	public func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
 		print("Loaded list of products")
-		completionHandler!(success: true, products: response.products)
+		completionHandler!(true, response.products)
 		clearRequest()
 
 		for p in response.products {
@@ -74,7 +74,7 @@ extension IAPHelper: SKProductsRequestDelegate {
 
 	public func request(_ request: SKRequest, didFailWithError error: Error) {
 		print("Failed to load list of products.")
-		completionHandler!(success: false, products: [])
+		completionHandler!(false, [])
 		print("Error: \(error)")
 		clearRequest()
 	}

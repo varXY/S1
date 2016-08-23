@@ -53,7 +53,7 @@ class DetailViewController: UIViewController, UserDefaults {
 		editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
 		editButton.isExclusiveTouch = true
 		view.addSubview(editButton)
-	}
+    }
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)

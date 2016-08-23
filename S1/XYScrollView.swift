@@ -219,7 +219,7 @@ class XYScrollView: UIScrollView, SwiftDicData {
 
 	}
 
-	func animate(_ animations: () -> (), completion: (() -> ())?) {
+	func animate(_ animations: @escaping () -> (), completion: (() -> ())?) {
 		UIView.perform(.delete, on: [], options: [], animations: {
 			animations()
 			}) { (_) in

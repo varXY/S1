@@ -24,7 +24,7 @@ let globalRadius: CGFloat = ScreenHeight * 0.007
 
 
 // 延迟执行
-func delay(seconds: Double, completion: () -> ()) {
+func delay(seconds: Double, completion: @escaping () -> ()) {
 	let popTime = DispatchTime.now() + Double(Int64( Double(NSEC_PER_SEC) * seconds )) / Double(NSEC_PER_SEC)
 
 	DispatchQueue.main.asyncAfter(deadline: popTime) {

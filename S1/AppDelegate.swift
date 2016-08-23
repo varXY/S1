@@ -14,8 +14,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
 
+    func applicationDidFinishLaunching(_ application: UIApplication) {
 
-	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    }
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.backgroundColor = UIColor.backgroundBlack()
+        
+        let mainVC = MainViewController()
+        window?.rootViewController = NavigationController(rootViewController: mainVC)
+        window?.makeKeyAndVisible()
+        
+        return true
+    }
+
+	private func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window?.backgroundColor = UIColor.backgroundBlack()
 
@@ -62,8 +76,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	        try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
 	    } catch {
 	        var dict = [String: AnyObject]()
-	        dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
-	        dict[NSLocalizedFailureReasonErrorKey] = failureReason
+	        dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data" as AnyObject
+	        dict[NSLocalizedFailureReasonErrorKey] = failureReason as AnyObject
 
 	        dict[NSUnderlyingErrorKey] = error as NSError
 	        let wrappedError = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)

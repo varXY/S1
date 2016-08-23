@@ -51,6 +51,7 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 		} else {
 			setUpUI()
 		}
+        
 
 	}
 
