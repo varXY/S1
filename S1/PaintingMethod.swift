@@ -9,33 +9,36 @@
 import UIKit
 
 let initAttributes = [
-	NSForegroundColorAttributeName: UIColor.plainWhite(),
+	NSForegroundColorAttributeName: UIColor.plainWhite,
 	NSFontAttributeName: UIFont.defaultFont(17)
 ]
 
 let keywordAttributes = [
-	NSForegroundColorAttributeName: UIColor.keywordPurple()
+	NSForegroundColorAttributeName: UIColor.keywordPurple
 ]
 
 let buildInAttributes = [
-	NSForegroundColorAttributeName: UIColor.buildInBlue()
+	NSForegroundColorAttributeName: UIColor.buildInBlue
 ]
 
 let numberAttributes = [
-	NSForegroundColorAttributeName: UIColor.numberPurple()
+	NSForegroundColorAttributeName: UIColor.numberPurple
 ]
 
 let stringAttributes = [
-	NSForegroundColorAttributeName: UIColor.stringRed()
+	NSForegroundColorAttributeName: UIColor.stringRed
 ]
 
 let whiteAttributes = [
-	NSForegroundColorAttributeName: UIColor.plainWhite()
+	NSForegroundColorAttributeName: UIColor.plainWhite
 ]
 
 let commnetGreenAttribute = [
-	NSForegroundColorAttributeName: UIColor.commentGreen()
+	NSForegroundColorAttributeName: UIColor.commentGreen
 ]
+
+
+
 
 func stringToAttributedString(_ string: String) -> NSMutableAttributedString {
 	let step_0 = paintKeywordPurple(NSMutableAttributedString(string: string, attributes: initAttributes))
@@ -45,6 +48,7 @@ func stringToAttributedString(_ string: String) -> NSMutableAttributedString {
 	let step_4 = paintCommentGreen(step_3)
 	return step_4
 }
+
 
 func paintKeywordPurple(_ text: NSMutableAttributedString) -> NSMutableAttributedString {
 	var ranges = [NSRange]()
@@ -69,6 +73,7 @@ func paintKeywordPurple(_ text: NSMutableAttributedString) -> NSMutableAttribute
 
 	return result
 }
+
 
 func paintNumberPurple(_ text: NSMutableAttributedString) -> NSMutableAttributedString {
 
@@ -95,6 +100,7 @@ func paintNumberPurple(_ text: NSMutableAttributedString) -> NSMutableAttributed
 	return result
 }
 
+
 func paintBuildInBlue(_ text: NSMutableAttributedString) -> NSMutableAttributedString {
 	var ranges = [NSRange]()
 
@@ -119,6 +125,7 @@ func paintBuildInBlue(_ text: NSMutableAttributedString) -> NSMutableAttributedS
 	return result
 }
 
+
 func paintStringRed(_ text: NSMutableAttributedString) -> NSMutableAttributedString {
 	let ranges = text.mutableString.rangesOfString("\"")
 
@@ -136,6 +143,7 @@ func paintStringRed(_ text: NSMutableAttributedString) -> NSMutableAttributedStr
 
 	return result
 }
+
 
 func paintCommentGreen(_ text: NSMutableAttributedString) -> NSMutableAttributedString {
 	let sentences = text.mutableString.components(separatedBy: "\n\n")

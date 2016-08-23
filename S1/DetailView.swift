@@ -22,7 +22,7 @@ class DetailView: UIView, UserDefaults {
 
 	init(swiftDic: SwiftDic) {
 		super.init(frame: ScreenBounds)
-		backgroundColor = UIColor.backgroundBlack()
+		backgroundColor = UIColor.backgroundBlack
 		layer.cornerRadius = globalRadius
 		clipsToBounds = true
 		setupLabels(swiftDic)
@@ -41,40 +41,40 @@ class DetailView: UIView, UserDefaults {
 		titleLabel = UILabel(frame: CGRect(x: 10, y: 0, width: ScreenWidth - 50, height: 60))
 		titleLabel.text = swiftDic.word
 		titleLabel.font = UIFont.defaultFont(20)
-		titleLabel.textColor = UIColor.stringRed()
+		titleLabel.textColor = UIColor.stringRed
 		addSubview(titleLabel)
 
 		let upCommentLabel = UILabel(frame: CGRect(x: 10, y: titleLabel.frame.height, width: ScreenWidth - 20, height: 40))
 		upCommentLabel.text = "/*"
 		upCommentLabel.font = UIFont.defaultFont(17)
-		upCommentLabel.textColor = UIColor.commentGreen()
+		upCommentLabel.textColor = UIColor.commentGreen
 		addSubview(upCommentLabel)
 
 		meaningLabel = UILabel(frame: CGRect(x: 30, y: upCommentLabel.frame.origin.y + upCommentLabel.frame.height, width: ScreenWidth - 40, height: 80))
 		meaningLabel.numberOfLines = 0
 		meaningLabel.text = swiftDic.meaning
 		meaningLabel.font = findAdaptiveFontWithName("Menlo-Regular", labelText: swiftDic.meaning!, labelSize: meaningLabel.frame.size, minimumSize: 10)
-		meaningLabel.textColor = UIColor.commentGreen()
+		meaningLabel.textColor = UIColor.commentGreen
 		meaningLabel.sizeToFit()
 		addSubview(meaningLabel)
 
 		let downCommentLabel = UILabel(frame: CGRect(x: 10, y: meaningLabel.frame.origin.y + meaningLabel.frame.height, width: ScreenWidth - 20, height: 40))
 		downCommentLabel.text = "*/"
 		downCommentLabel.font = UIFont.defaultFont(17)
-		downCommentLabel.textColor = UIColor.commentGreen()
+		downCommentLabel.textColor = UIColor.commentGreen
 		addSubview(downCommentLabel)
 
 		let exampleCommentLabel = UILabel(frame: CGRect(x: 10, y: downCommentLabel.frame.origin.y + downCommentLabel.frame.height, width: ScreenWidth - 20, height: 40))
 		exampleCommentLabel.text = "// MARK: 示例"
 		exampleCommentLabel.font = UIFont.defaultFont(17)
-		exampleCommentLabel.textColor = UIColor.commentGreen()
+		exampleCommentLabel.textColor = UIColor.commentGreen
 		addSubview(exampleCommentLabel)
 
 		let y = exampleCommentLabel.frame.origin.y + exampleCommentLabel.frame.height + 10
 
 		exampleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: ScreenWidth * 10, height: ScreenHeight - y - 30))
 		exampleLabel.numberOfLines = 0
-		exampleLabel.textColor = UIColor.plainWhite()
+		exampleLabel.textColor = UIColor.plainWhite
 		exampleLabel.attributedText = stringToAttributedString(swiftDic.code!)
 		exampleLabel.font = findAdaptiveFontWithName("Menlo-Regular", labelText: swiftDic.code!, labelSize: exampleLabel.frame.size, minimumSize: 10)
 		exampleLabel.sizeToFit()

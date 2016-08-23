@@ -8,8 +8,10 @@
 
 import Foundation
 
+
 extension NSMutableString {
 
+    
 	func rangesOfString(_ string: String) -> [NSRange] {
 		let ranges: [NSRange]
 
@@ -23,11 +25,15 @@ extension NSMutableString {
 		return ranges
 	}
 
+    
 }
+
+
 
 
 extension String {
 
+    
 	func rangesOfString(_ string: String) -> [NSRange] {
 		let ranges: [NSRange]
 
@@ -41,6 +47,7 @@ extension String {
 		return ranges
 	}
 
+    
 	func removeSelf() -> String {
 		var string = self
 
@@ -51,6 +58,7 @@ extension String {
 		return string
 	}
 
+    
 	func checkBrackets() -> String {
 		let result = self
 
@@ -66,6 +74,7 @@ extension String {
 		return result
 	}
 
+    
 //	public func rangesOfString(searchString:String, options: NSStringCompareOptions = [], searchRange:Range<Index>? = nil ) -> [Range<Index>] {
 //		if let range = rangeOfString(searchString, options: options, range:searchRange) {
 //
@@ -76,10 +85,12 @@ extension String {
 //		}
 //	}
 
+    
 	func isUppercaseWord() -> Bool {
 		return System.ABC_XYZ.contains(String(characters.prefix(1)))
 	}
 
+    
 	func removeMarks() -> String {
 		let marks = ["(", ")", "[", "]", "!", "?", ",", ".", ":", " ", "<", ">"]
 		var result = self
@@ -93,6 +104,7 @@ extension String {
 		return result
 	}
 
+    
 	func removeMarks_1() -> String {
 		let marks = ["(", ")", "[", "]", "!", "?", ",", ".", ":"]
 		var result = self
@@ -111,4 +123,5 @@ extension String {
 		return result
 	}
 
+    
 }

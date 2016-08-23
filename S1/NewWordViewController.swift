@@ -41,13 +41,14 @@ class NewWordViewController: UIViewController, SwiftDicData {
 		return statusBarStyle ?? .lightContent
 	}
     
+    
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.backgroundColor = UIColor.backgroundBlack()
+		view.backgroundColor = UIColor.backgroundBlack
 
 		let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: ScreenWidth - 60, height: 44))
-		titleLabel.textColor = UIColor.commentGreen()
+		titleLabel.textColor = UIColor.commentGreen
 		titleLabel.font = UIFont.defaultFont(17)
 		titleLabel.text = dicForEditing == nil ? "// 添加新词.swift" : "// 编辑词语.swift"
 		let titleItem = UIBarButtonItem(customView: titleLabel)
@@ -99,12 +100,13 @@ class NewWordViewController: UIViewController, SwiftDicData {
 			tableView.addSubview(textView)
 
 			if dicForEditing != nil {
-				textView.attributedText! = stringToAttributedString(initTexts[index])
-
-				if index != 2 {
-					let text = "\"" + initTexts[index] + "\""
-					textView.attributedText = stringToAttributedString(text)
-				}
+				if index == 2 {
+                    textView.attributedText! = stringToAttributedString(initTexts[index])
+                } else {
+                    let text = "\"" + initTexts[index] + "\""
+                    textView.text = text
+                    textView.textColor = UIColor.stringRed
+                }
 			}
 
 			return textView
@@ -112,6 +114,7 @@ class NewWordViewController: UIViewController, SwiftDicData {
 
 	}
 
+    
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		if dicForEditing == nil {
@@ -219,14 +222,17 @@ class NewWordViewController: UIViewController, SwiftDicData {
 
 extension NewWordViewController: UITableViewDataSource, UITableViewDelegate {
 
+    
 	func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
 	}
 
+    
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return 7
 	}
 
+    
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		switch (indexPath as NSIndexPath).row {
 		case 3: return textViewRects[1].height
@@ -235,10 +241,11 @@ extension NewWordViewController: UITableViewDataSource, UITableViewDelegate {
 		}
 	}
 
+    
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
-		cell.backgroundColor = UIColor.backgroundBlack()
-		cell.textLabel?.textColor = UIColor.plainWhite()
+		cell.backgroundColor = UIColor.backgroundBlack
+		cell.textLabel?.textColor = UIColor.plainWhite
 		cell.textLabel?.font = UIFont.defaultFont(17)
 
 		var tapped = dicForEditing != nil
@@ -249,11 +256,12 @@ extension NewWordViewController: UITableViewDataSource, UITableViewDelegate {
 		cell.textLabel!.attributedText = attributedTitles(tapped: tapped)[(indexPath as NSIndexPath).row]
 
 		cell.selectedBackgroundView = UIView()
-		cell.selectedBackgroundView!.backgroundColor = UIColor.selectedBackgroundPurple()
+		cell.selectedBackgroundView!.backgroundColor = UIColor.selectedBackgroundPurple
 
 		return cell
 	}
 
+    
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
 		if barButtonItem != .done { setBarButtonItem(.done) }
@@ -270,6 +278,7 @@ extension NewWordViewController: UITableViewDataSource, UITableViewDelegate {
 			let indexPath = IndexPath(row: 2, section: 0)
 			let cell = tableView.cellForRow(at: indexPath)
 			cell?.textLabel!.attributedText = attributedTitles(tapped: true)[2]
+            
 			scrollToPositionForEditing(.meaning)
 			textViews[1].becomeFirstResponder()
 
@@ -277,6 +286,7 @@ extension NewWordViewController: UITableViewDataSource, UITableViewDelegate {
 			let indexPath = IndexPath(row: 4, section: 0)
 			let cell = tableView.cellForRow(at: indexPath)
 			cell?.textLabel!.attributedText = attributedTitles(tapped: true)[4]
+            
 			scrollToPositionForEditing(.example)
 			textViews[2].becomeFirstResponder()
 
@@ -286,6 +296,7 @@ extension NewWordViewController: UITableViewDataSource, UITableViewDelegate {
 		tableView.deselectRow(at: indexPath, animated: true)
 	}
 
+    
 	func scrollToPositionForEditing(_ positionType: VisblePosition) {
 		var y: CGFloat
 
@@ -308,19 +319,26 @@ extension NewWordViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension NewWordViewController: UITextViewDelegate {
 
+    
 	func textViewDidBeginEditing(_ textView: UITextView) {
 		textView.isUserInteractionEnabled = true
 		textView.textColor = UIColor.white
 
 		switch textView {
 		case textViews[0], textViews[1]:
-			var text = textView.text
-			let ranges = text?.rangesOfString("\"")
-			for range in ranges! {
-                if range.location == 0 { text = String(describing: text?.characters.dropFirst()) }
-				if range.location == text?.characters.count { text = String(describing: text?.characters.dropLast()) }
+			let ranges = textView.text.rangesOfString("\"")
+            
+			for range in ranges {
+                if range.location == 0 {
+                    let chr = textView.text.characters.dropFirst(1)
+                    textView.text = String(chr)
+                }
+                
+				if range.location == textView.text.characters.count {
+                    let chr = textView.text.characters.dropLast(1)
+                    textView.text = String(chr)
+                }
 			}
-			textView.text = text
 
 		default:
 			break
@@ -328,6 +346,7 @@ extension NewWordViewController: UITextViewDelegate {
 
 	}
 
+    
 	func textViewDidChange(_ textView: UITextView) {
 		switch textView {
 		case textViews[0]:
@@ -344,15 +363,17 @@ extension NewWordViewController: UITextViewDelegate {
 
 	}
 
+    
 	func textViewDidEndEditing(_ textView: UITextView) {
 		textView.isUserInteractionEnabled = false
 
 		switch textView {
 		case textViews[0], textViews[1]:
 			let oldText = textView.text
+            
 			if oldText != "" {
 				textView.text = "\"" + oldText! + "\""
-				textView.textColor = UIColor.stringRed()
+				textView.textColor = UIColor.stringRed
 			} else {
 				textView.text = ""
 				let index = textViews.index(of: textView)! + 1
@@ -376,6 +397,8 @@ extension NewWordViewController: UITextViewDelegate {
 			break
 		}
 	}
+    
+    
 }
 
 

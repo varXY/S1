@@ -32,6 +32,8 @@ extension UserDefaults {
 		return Foundation.UserDefaults.standard
 	}
 
+    
+    
 	func isPreloaded() -> Bool {
 		guard let preloaded = userDefaults.value(forKey: UDKey.preloaded) as? Bool else {
 			savePreloaded(false)
@@ -39,21 +41,25 @@ extension UserDefaults {
 		}
 		return preloaded
 	}
+    
 
 	func savePreloaded(_ loaded: Bool) {
 		userDefaults.set(loaded, forKey: UDKey.preloaded)
 		userDefaults.synchronize()
 	}
     
+    
     func isPurchesed() -> Bool {
         guard let purchesed = userDefaults.value(forKey: UDKey.purchesed) as? Bool else { return false }
         return purchesed
     }
     
+    
     func donePurchese() {
         userDefaults.setValue(true, forKey: UDKey.purchesed)
         userDefaults.synchronize()
     }
+    
     
     func checkNewUser() {
         if userDefaults.value(forKey: UDKey.checked) == nil {
@@ -63,5 +69,6 @@ extension UserDefaults {
             userDefaults.set(true, forKey: UDKey.checked)
         }
     }
+    
     
 }

@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 
+
 class DetailViewController: UIViewController, UserDefaults {
 
 	var pointerView: PointerView!
@@ -55,6 +56,7 @@ class DetailViewController: UIViewController, UserDefaults {
 		view.addSubview(editButton)
     }
 
+    
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		statusBarHidden = true
@@ -62,9 +64,10 @@ class DetailViewController: UIViewController, UserDefaults {
 		navigationController?.setToolbarHidden(false, animated: true)
 	}
 
+    
 	func setUpBars() {
 		navigationController?.isNavigationBarHidden = true
-		navigationController?.toolbar.tintColor = UIColor.plainWhite()
+		navigationController?.toolbar.tintColor = UIColor.plainWhite
 
 		let buttons = toolbarCustomButtons()
 		buttons[0].addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
@@ -79,6 +82,7 @@ class DetailViewController: UIViewController, UserDefaults {
 		navigationController?.toolbar.setShadowImage(UIImage.imageWithColor(UIColor.clear, rect: CGRect(x: 0, y: 0, width: 10, height: 10)), forToolbarPosition: .any)
 	}
 
+    
 	func toolbarCustomButtons() -> [UIButton] {
 		let transforms = [
 			CGAffineTransform(rotationAngle: CGFloat(90 * M_PI / 180)),
@@ -100,14 +104,17 @@ class DetailViewController: UIViewController, UserDefaults {
 		return buttons
 	}
 
+    
 	func editButtonTouchDown() {
 		xyScrollView.isUserInteractionEnabled = false
 	}
 
+    
 	func editButtonTouchUpOutside() {
 		xyScrollView.isUserInteractionEnabled = true
 	}
 
+    
 	func editButtonTapped() {
         if isPurchesed() {
             let newWordVC = NewWordViewController()
@@ -123,29 +130,38 @@ class DetailViewController: UIViewController, UserDefaults {
 		
 	}
 
+    
 	func backButtonTapped() {
 		let _ = navigationController?.popViewController(animated: true)
 	}
 
+    
 	func nextButtonTapped() {
 		xyScrollView.scrolledType = .down
 		xyScrollViewWillScroll(.down, topViewIndex: 1)
 		xyScrollView.moveContentViewToTop()
 	}
 
+    
 	func priviousButtonTapped() {
 		xyScrollView.scrolledType = .up
 		xyScrollViewWillScroll(.up, topViewIndex: 1)
 		xyScrollView.moveContentViewToTop()
 	}
+    
+    
 }
+
+
 
 extension DetailViewController: XYScrollViewDelegate {
 
+    
 	func scrollTypeDidChange(_ type: XYScrollType) {
 		pointerView.showPointer(type)
 	}
 
+    
 	func xyScrollViewWillScroll(_ scrollType: XYScrollType, topViewIndex: Int) {
 		pointerView.hidePointersAndLabels()
 
@@ -160,8 +176,10 @@ extension DetailViewController: XYScrollViewDelegate {
 		}
 	}
 
+    
 	func xyScrollViewDidScroll(_ scrollType: XYScrollType, topViewIndex: Int) {
 	}
+    
     
     func changeModelAndShowHudView() {
         randomModel = !randomModel
@@ -170,6 +188,7 @@ extension DetailViewController: XYScrollViewDelegate {
         hudView.text = randomModel ? "随机模式" : "顺序模式"
         pointerView.changeRightLabelTextForRandomModel(randomModel)
     }
+    
     
     func speakText(_ text: String) {
         if isPurchesed() {
@@ -182,14 +201,22 @@ extension DetailViewController: XYScrollViewDelegate {
         }
         
     }
+    
+    
 }
+
+
 
 extension DetailViewController: NewWordViewControllerDelegate {
 
+    
 	func didSaveNewWord() {
 	}
 
+    
 	func doneEditingSwiftDic(_ dic: SwiftDic) {
 		xyScrollView.changeDetailForContentView(xyScrollView.contentViews[1], dic: dic)
 	}
+    
+    
 }

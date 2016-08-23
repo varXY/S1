@@ -28,10 +28,10 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.backgroundColor = UIColor.backgroundBlack()
-        
+		view.backgroundColor = UIColor.backgroundBlack
+                
 		let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: ScreenWidth - 60, height: 44))
-		titleLabel.textColor = UIColor.commentGreen()
+		titleLabel.textColor = UIColor.commentGreen
 		titleLabel.font = UIFont.defaultFont(17)
 		titleLabel.text = "// 开发常见词汇.swift"
 		let titleItem = UIBarButtonItem(customView: titleLabel)
@@ -100,8 +100,8 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 		view.addSubview(tableView)
 
 		searchBar.placeholder = "搜索"
-		searchBar.tintColor = UIColor.plainWhite()
-		searchBar.barTintColor = UIColor.backgroundBlack_light()
+		searchBar.tintColor = UIColor.plainWhite
+		searchBar.barTintColor = UIColor.backgroundBlack_light
 		UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.white
 		searchBar.searchBarStyle = .minimal
         searchBar.autoresizingMask = .flexibleWidth
@@ -110,7 +110,7 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 		tableView.tableHeaderView = searchBar
 		tableView.contentOffset.y = searchBar.frame.height
 
-		curtainView.backgroundColor = UIColor.backgroundBlack()
+		curtainView.backgroundColor = UIColor.backgroundBlack
 	}
 
 	func AllResult() -> [[String]] {
@@ -172,8 +172,8 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: ScreenWidth))
-		label.backgroundColor = UIColor.backgroundBlack_light()
-		label.textColor = UIColor.statementYellow()
+		label.backgroundColor = UIColor.backgroundBlack_light
+		label.textColor = UIColor.statementYellow
 		label.font = UIFont.defaultFont(17)
 
 		if resultsOnTable[section].count != 0 {
@@ -198,11 +198,11 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 		var cell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: "cell")
 		if cell == nil { cell = UITableViewCell(style: .default, reuseIdentifier: "cell") }
 
-		cell.backgroundColor = UIColor.backgroundBlack()
-		cell.textLabel?.textColor = UIColor.stringRed()
+		cell.backgroundColor = UIColor.backgroundBlack
+		cell.textLabel?.textColor = UIColor.stringRed
 		cell.textLabel?.font = UIFont.defaultFont(17)
 		cell.selectedBackgroundView = UIView()
-		cell.selectedBackgroundView!.backgroundColor = UIColor.selectedBackgroundPurple()
+		cell.selectedBackgroundView!.backgroundColor = UIColor.selectedBackgroundPurple
 
 		return cell
 	}

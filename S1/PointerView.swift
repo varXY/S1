@@ -30,7 +30,7 @@ struct Pointer {
 		let pointer = UILabel()
 		pointer.frame.size = CGSize(width: length, height: length)
 		pointer.center = toCenters[type.rawValue]
-		pointer.textColor = UIColor.stringRed()
+		pointer.textColor = UIColor.stringRed
 		pointer.text = textPointer[type.rawValue]
 		pointer.textAlignment = .center
 		pointer.font = UIFont.defaultFont(19)
@@ -58,7 +58,7 @@ class PointerView: UIView {
 			let label = UILabel()
 			label.backgroundColor = UIColor.clear
 			label.textAlignment = .center
-			label.textColor = UIColor.statementYellow()
+			label.textColor = UIColor.statementYellow
 			label.font = UIFont.defaultFont(15)
 			label.text = texts[type.rawValue]
 
@@ -90,7 +90,7 @@ class PointerView: UIView {
 
 	init() {
 		super.init(frame: ScreenBounds)
-		backgroundColor = UIColor.backgroundBlack_light()
+		backgroundColor = UIColor.backgroundBlack_light
 		layer.cornerRadius = globalRadius
 		clipsToBounds = true
 		tintColor = UIColor.white

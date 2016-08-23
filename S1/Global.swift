@@ -32,6 +32,7 @@ func delay(seconds: Double, completion: @escaping () -> ()) {
 	}
 }
 
+
 func firstCharacterToIndex(_ word: String) -> Int {
     if word == "" { return 27 }
     let catalog: String! = String(word.characters.first!).uppercased()
@@ -44,6 +45,7 @@ func firstCharacterToIndex(_ word: String) -> Int {
     
     return newIndex
 }
+
 
 func findAdaptiveFontWithName(_ fontName: String, labelText: String, labelSize: CGSize, minimumSize: CGFloat) -> UIFont {
 	var tempFont = UIFont()

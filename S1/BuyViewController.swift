@@ -14,10 +14,10 @@ class BuyViewController: UIViewController, Purchase {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.backgroundBlack()
+        view.backgroundColor = UIColor.backgroundBlack
         
         let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: ScreenWidth - 60, height: 44))
-        titleLabel.textColor = UIColor.commentGreen()
+        titleLabel.textColor = UIColor.commentGreen
         titleLabel.font = UIFont.defaultFont(17)
         titleLabel.text = "// 解锁全部功能.swift"
         let titleItem = UIBarButtonItem(customView: titleLabel)
@@ -28,7 +28,7 @@ class BuyViewController: UIViewController, Purchase {
         
         let label = UILabel(frame: CGRect(x: 0, y: ScreenHeight / 2 - 70, width: ScreenWidth, height: 70))
         label.textAlignment = .center
-        label.textColor = UIColor.stringRed()
+        label.textColor = UIColor.stringRed
         label.text = "一次性解锁添加、编辑、朗读单词功能"
         label.adjustsFontSizeToFitWidth = true
         view.addSubview(label)
@@ -38,9 +38,9 @@ class BuyViewController: UIViewController, Purchase {
             let button = UIButton(type: .system)
             button.frame = CGRect(x: 100, y: label.frame.origin.y + label.frame.height, width: ScreenWidth - 200, height: 50)
             button.setTitle("¥12.00", for: UIControlState())
-            button.tintColor = UIColor.statementYellow()
+            button.tintColor = UIColor.statementYellow
             button.layer.cornerRadius = 5.0
-            button.layer.borderColor = UIColor.backgroundBlack_light().cgColor
+            button.layer.borderColor = UIColor.backgroundBlack_light.cgColor
             button.layer.borderWidth = 2.0
             button.addTarget(self, action: #selector(buy), for: .touchUpInside)
             view.addSubview(button)
@@ -56,7 +56,7 @@ class BuyViewController: UIViewController, Purchase {
         } else {
             let textLabel = UILabel(frame: CGRect(x: 0, y: label.frame.origin.y + label.frame.height, width: ScreenWidth, height: 50))
             textLabel.textAlignment = .center
-            textLabel.textColor = UIColor.buildInBlue()
+            textLabel.textColor = UIColor.buildInBlue
             textLabel.text = "你的设备无法进行购买操作"
             textLabel.adjustsFontSizeToFitWidth = true
             view.addSubview(label)

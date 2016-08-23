@@ -56,7 +56,7 @@ struct System {
 
 		"#column", "#file", "#function", "#line", "#selector",
 
-		"@objc"
+		"@objc", "@NSManaged"
 
 	]
 
