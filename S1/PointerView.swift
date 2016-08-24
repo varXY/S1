@@ -8,7 +8,9 @@
 
 import UIKit
 
+
 struct Pointer {
+    
 	let length: CGFloat = 30
 	let textPointer = ["-", "+", "×", "="]
 
@@ -26,6 +28,8 @@ struct Pointer {
 		CGPoint(x: ScreenWidth - (30 / 2) - 4.5, y: ScreenHeight / 2),
 	]
 
+    
+    
 	func pointerLabel(_ type: XYScrollType) -> UILabel {
 		let pointer = UILabel()
 		pointer.frame.size = CGSize(width: length, height: length)
@@ -36,13 +40,20 @@ struct Pointer {
 		pointer.font = UIFont.defaultFont(19)
 		return pointer
 	}
+    
+    
 }
+
+
 
 class PointerView: UIView {
 
 	var pointers = [UILabel]()
 	var UDLR_labels = [UILabel]()
 	var blankViews: [UIView]!
+    
+    let pointer = Pointer()
+    var canHide = true
 
 	var lastUpdateText: String! {
 		didSet {
@@ -85,8 +96,7 @@ class PointerView: UIView {
 		}
 	}
 
-	let pointer = Pointer()
-	var canHide = true
+	
 
 	init() {
 		super.init(frame: ScreenBounds)
@@ -104,6 +114,7 @@ class PointerView: UIView {
 
 	}
 
+    
 	func showPointer(_ type: XYScrollType) {
 		switch type {
 		case .up, .down, .left, .right:
@@ -125,6 +136,7 @@ class PointerView: UIView {
 		}
 	}
 
+    
 	func moveAndDone(_ move: @escaping () -> (), done: @escaping () -> ()) {
 		UIView.perform(.delete, on: [], options: [], animations: { 
 			move()
@@ -133,12 +145,14 @@ class PointerView: UIView {
 		}
 	}
 
+    
 	func move(_ animate: @escaping () -> ()) {
 		UIView.perform(.delete, on: [], options: [], animations: { 
 			animate()
 			}, completion: nil)
 	}
 
+    
 	func hidePointersAndLabels() {
 			pointers.forEach({
 				if $0.alpha == 1.0 { $0.alpha = 0.0 }
@@ -151,6 +165,7 @@ class PointerView: UIView {
 			UDLR_labels.forEach({ if $0.alpha == 1.0 { $0.alpha = 0.0 } })
 	}
 
+    
 	func changeRightLabelTextForRandomModel(_ random: Bool) {
 		UDLR_labels[3].text = random ? "顺\n序\n浏\n览" : "随\n机\n浏\n览"
 	}
@@ -159,4 +174,6 @@ class PointerView: UIView {
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
+    
+    
 }

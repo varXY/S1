@@ -32,9 +32,6 @@
 		316BB8381CF54427006D6D2A /* NewWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316BB8371CF54427006D6D2A /* NewWordViewController.swift */; };
 		31CA0BDE1CF7CA9F0015B401 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CA0BDD1CF7CA9F0015B401 /* UIImage+.swift */; };
 		31E980B51CFD0BF600770760 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 31E980B41CFD0BF600770760 /* InfoPlist.strings */; };
-		31FE26531CFA65C600EA5D18 /* SingleViewCoreData.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 31FE26501CFA65C600EA5D18 /* SingleViewCoreData.sqlite */; };
-		31FE26541CFA65C600EA5D18 /* SingleViewCoreData.sqlite-shm in Resources */ = {isa = PBXBuildFile; fileRef = 31FE26511CFA65C600EA5D18 /* SingleViewCoreData.sqlite-shm */; };
-		31FE26551CFA65C600EA5D18 /* SingleViewCoreData.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 31FE26521CFA65C600EA5D18 /* SingleViewCoreData.sqlite-wal */; };
 		31FE265B1CFA745C00EA5D18 /* PreloadedWords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FE265A1CFA745C00EA5D18 /* PreloadedWords.swift */; };
 		31FE265D1CFA76E300EA5D18 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FE265C1CFA76E300EA5D18 /* UserDefaults.swift */; };
 		31FE265F1CFAC60800EA5D18 /* HudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FE265E1CFAC60800EA5D18 /* HudView.swift */; };
@@ -72,9 +69,6 @@
 		316BB8371CF54427006D6D2A /* NewWordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewWordViewController.swift; sourceTree = "<group>"; };
 		31CA0BDD1CF7CA9F0015B401 /* UIImage+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		31E980B41CFD0BF600770760 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
-		31FE26501CFA65C600EA5D18 /* SingleViewCoreData.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = SingleViewCoreData.sqlite; sourceTree = "<group>"; };
-		31FE26511CFA65C600EA5D18 /* SingleViewCoreData.sqlite-shm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SingleViewCoreData.sqlite-shm"; sourceTree = "<group>"; };
-		31FE26521CFA65C600EA5D18 /* SingleViewCoreData.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SingleViewCoreData.sqlite-wal"; sourceTree = "<group>"; };
 		31FE265A1CFA745C00EA5D18 /* PreloadedWords.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreloadedWords.swift; sourceTree = "<group>"; };
 		31FE265C1CFA76E300EA5D18 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		31FE265E1CFAC60800EA5D18 /* HudView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HudView.swift; sourceTree = "<group>"; };
@@ -138,9 +132,6 @@
 				3136BAE11CF443D20000F0E0 /* S1.xcdatamodeld */,
 				3136BAEF1CF446B20000F0E0 /* SwiftDic+CoreDataProperties.swift */,
 				3136BAF01CF446B20000F0E0 /* SwiftDic.swift */,
-				31FE26501CFA65C600EA5D18 /* SingleViewCoreData.sqlite */,
-				31FE26511CFA65C600EA5D18 /* SingleViewCoreData.sqlite-shm */,
-				31FE26521CFA65C600EA5D18 /* SingleViewCoreData.sqlite-wal */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -281,10 +272,7 @@
 				3136BAE81CF443D20000F0E0 /* LaunchScreen.storyboard in Resources */,
 				31E980B51CFD0BF600770760 /* InfoPlist.strings in Resources */,
 				316BAE5B1CFE5A21004ADC94 /* S_words.txt in Resources */,
-				31FE26531CFA65C600EA5D18 /* SingleViewCoreData.sqlite in Resources */,
-				31FE26551CFA65C600EA5D18 /* SingleViewCoreData.sqlite-wal in Resources */,
 				316BB82B1CF52536006D6D2A /* Menlo.ttc in Resources */,
-				31FE26541CFA65C600EA5D18 /* SingleViewCoreData.sqlite-shm in Resources */,
 				3136BAE51CF443D20000F0E0 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

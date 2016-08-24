@@ -8,9 +8,11 @@
 
 import UIKit
 
+
 extension UIFont {
 
 	class func defaultFont(_ size: CGFloat) -> UIFont {
 		return UIFont(name: "Menlo-Regular", size: size)!
 	}
+    
 }

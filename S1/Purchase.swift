@@ -9,14 +9,18 @@
 import UIKit
 import StoreKit
 
+
 protocol Purchase: UserDefaults {
 	func connectToStore()
 	func purchaseProduct(_ product: SKProduct)
 	func productPurchased(_ notification: Notification)
 }
 
+
+
 extension Purchase where Self: BuyViewController {
 
+    
 	func connectToStore() {
 		let indicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
 		indicator.startAnimating()
@@ -43,19 +47,25 @@ extension Purchase where Self: BuyViewController {
 		})
 	}
     
+    
     func canMakePayment() -> Bool {
         return IAPHelper.canMakePayments()
     }
 
+    
 	func purchaseProduct(_ product: SKProduct) {
         SupportProducts.store.purchaseProduct(product)
 	}
+    
     
     func restorePurchesedProduct() {
         SupportProducts.store.restorePurchese()
     }
 
+    
 	func productPurchased(_ notification: Notification) {
         print(#function)
 	}
+    
+    
 }

@@ -9,10 +9,13 @@
 import UIKit
 import CoreData
 
+
 protocol NewWordViewControllerDelegate: class {
 	func doneEditingSwiftDic(_ dic: SwiftDic)
 	func didSaveNewWord()
 }
+
+
 
 class NewWordViewController: UIViewController, SwiftDicData {
 
@@ -129,12 +132,14 @@ class NewWordViewController: UIViewController, SwiftDicData {
 
 	}
 
+    
 	func setBarButtonItem(_ item: UIBarButtonSystemItem) {
 		barButtonItem = item
 		let button = UIBarButtonItem(barButtonSystemItem: barButtonItem, target: self, action: #selector(barButtonTapped))
 		navigationItem.rightBarButtonItem = button
 	}
 
+    
 	func barButtonTapped() {
 		var editing = false
 		for textView in textViews {
@@ -159,6 +164,7 @@ class NewWordViewController: UIViewController, SwiftDicData {
 		}
 	}
 
+    
 	func saveContentAndDismissVC() {
 
 		let word = String((textViews[0].text.characters.dropFirst()).dropLast())
@@ -203,6 +209,7 @@ class NewWordViewController: UIViewController, SwiftDicData {
 
 	}
 
+    
 	func attributedTitles(tapped: Bool) -> [NSMutableAttributedString] {
 		let titleName = dicForEditing != nil ? "WordForEditing" : "NewWord"
 		let titles = [
@@ -217,7 +224,10 @@ class NewWordViewController: UIViewController, SwiftDicData {
 
 		return titles
 	}
+    
+    
 }
+
 
 
 extension NewWordViewController: UITableViewDataSource, UITableViewDelegate {
@@ -264,9 +274,11 @@ extension NewWordViewController: UITableViewDataSource, UITableViewDelegate {
     
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-		if barButtonItem != .done { setBarButtonItem(.done) }
+		if barButtonItem != .done && (indexPath.row != 0 && indexPath.row != 6) {
+            setBarButtonItem(.done)
+        }
 
-		switch (indexPath as NSIndexPath).row {
+		switch indexPath.row {
 		case 1:
 			let cell = tableView.cellForRow(at: indexPath)
 			cell?.textLabel!.attributedText = attributedTitles(tapped: true)[1]
@@ -293,6 +305,7 @@ extension NewWordViewController: UITableViewDataSource, UITableViewDelegate {
 		default:
 			break
 		}
+        
 		tableView.deselectRow(at: indexPath, animated: true)
 	}
 
@@ -316,6 +329,8 @@ extension NewWordViewController: UITableViewDataSource, UITableViewDelegate {
 	}
 
 }
+
+
 
 extension NewWordViewController: UITextViewDelegate {
 

@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 public enum SupportProducts {
 
 	private static let Prefix = "xiaoyao.com.SwiftDict."
@@ -20,6 +21,7 @@ public enum SupportProducts {
 
 	public static let store = IAPHelper(productIdentifiers: SupportProducts.productIdentifiers)
 }
+
 
 func resourceNameForProductIdentifier(_ productIdentifier: String) -> String? {
 	return productIdentifier.components(separatedBy: ".").last

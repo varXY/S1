@@ -10,9 +10,12 @@ import UIKit
 import AVFoundation
 import CoreData
 
+
 @objc enum XYScrollType: Int {
 	case up, down, left, right, notScrollYet
 }
+
+
 
 @objc protocol XYScrollViewDelegate: class {
 	func xyScrollViewDidScroll(_ scrollType: XYScrollType, topViewIndex: Int)
@@ -22,6 +25,8 @@ import CoreData
 	func scrollTypeDidChange(_ type: XYScrollType)
     func speakText(_ text: String)
 }
+
+
 
 class XYScrollView: UIScrollView, SwiftDicData {
 
@@ -58,6 +63,8 @@ class XYScrollView: UIScrollView, SwiftDicData {
 
 	var animateTime: Double = 0.4
 
+    
+    
 	init(allResult: [[String]], topDetailIndex: (Int, Int), random: Bool) {
 		super.init(frame: ScreenBounds)
 		backgroundColor = UIColor.clear
@@ -91,12 +98,14 @@ class XYScrollView: UIScrollView, SwiftDicData {
 
 	}
 
+    
 //	func loadOtherTwo() {
 //		let dics = threeDic(theTopIndex)
 //		contentViews[0].addSubview(DetailView(swiftDic: dics[0]))
 //		contentViews[2].addSubview(DetailView(swiftDic: dics[2]))
 //	}
 
+    
 	func commonSetUp(_ scrollView: UIScrollView) {
 		scrollView.layer.cornerRadius = globalRadius
 		scrollView.clipsToBounds = true
@@ -108,11 +117,13 @@ class XYScrollView: UIScrollView, SwiftDicData {
 		scrollView.decelerationRate = UIScrollViewDecelerationRateFast
 	}
 
+    
 	func threeDic(_ topIndex: (Int, Int)) -> [SwiftDic] {
 		let indexes = !randomModel ? [previousIndex(topIndex), topIndex, nextIndex(topIndex)] : randomThreeIndex(topIndex)
 		return indexes.map({ dicFromIndex($0) })
 	}
 
+    
 	func dicFromIndex(_ index: (Int, Int)) -> SwiftDic {
 		let word = allResults[index.0][index.1]
 
@@ -125,6 +136,7 @@ class XYScrollView: UIScrollView, SwiftDicData {
 		return detailOfWord(word) == nil ? test_0 : detailOfWord(word)!
 	}
 
+    
 	func previousIndex(_ topIndex: (Int, Int)) -> (Int, Int) {
 		if topIndex.1 == 0 {
 			return topIndex.0 != 0 ? (topIndex.0 - 1, allResults[topIndex.0 - 1].count - 1) : (allResults.count - 1, allResults.last!.count - 1)
@@ -133,6 +145,7 @@ class XYScrollView: UIScrollView, SwiftDicData {
 		}
 	}
 
+    
 	func nextIndex(_ topIndex: (Int, Int)) -> (Int, Int) {
 		if topIndex.1 == allResults[topIndex.0].count - 1 {
 			return topIndex.0 != allResults.count - 1 ? (topIndex.0 + 1, 0) : (0, 0)
@@ -141,6 +154,7 @@ class XYScrollView: UIScrollView, SwiftDicData {
 		}
 	}
 
+    
 	func randomThreeIndex(_ topIndex: (Int, Int)) -> [(Int, Int)] {
 		var results = [(Int, Int)]()
 
@@ -159,8 +173,6 @@ class XYScrollView: UIScrollView, SwiftDicData {
 	}
 
 	
-
-
 	func moveContentViewToTop() {
 		switch scrolledType {
 		case .up:
@@ -219,6 +231,7 @@ class XYScrollView: UIScrollView, SwiftDicData {
 
 	}
 
+    
 	func animate(_ animations: @escaping () -> (), completion: (() -> ())?) {
 		UIView.perform(.delete, on: [], options: [], animations: {
 			animations()
@@ -227,27 +240,33 @@ class XYScrollView: UIScrollView, SwiftDicData {
 		}
 	}
 
+    
 	func changeDetailForContentView(_ contentView: UIScrollView, dic: SwiftDic) {
 		if let detailView = contentView.subviews[0] as? DetailView {
 			detailView.reloadDetail(dic)
 		}
 	}
 
+    
 	func hideDetailTitle(_ contentView: UIScrollView) {
 		if let detailView = contentView.subviews[0] as? DetailView {
 			detailView.titleLabel.text = ""
 		}
 	}
 
+    
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 
+    
 }
+
 
 
 extension XYScrollView: UIScrollViewDelegate {
 
+    
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		if scrollView != self {
 			if scrollView.contentOffset.y > TriggerDistance {
@@ -269,6 +288,7 @@ extension XYScrollView: UIScrollViewDelegate {
 
 	}
 
+    
 	func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
 		XYDelegate?.xyScrollViewWillScroll?(scrolledType, topViewIndex: topViewIndex)
 		moveContentViewToTop()
@@ -277,13 +297,19 @@ extension XYScrollView: UIScrollViewDelegate {
 //		scrolledType = .NotScrollYet
 	}
 
+    
 }
 
+
+
 extension XYScrollView: DetailViewDelegate {
+    
     
     func shouldSpeakText(_ text: String) {
         XYDelegate?.speakText(text)
     }
+    
+    
 }
 
 

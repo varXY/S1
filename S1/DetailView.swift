@@ -8,9 +8,12 @@
 
 import UIKit
 
+
 protocol DetailViewDelegate: class{
     func shouldSpeakText(_ text: String)
 }
+
+
 
 class DetailView: UIView, UserDefaults {
 
@@ -20,6 +23,8 @@ class DetailView: UIView, UserDefaults {
     
     weak var delegate: DetailViewDelegate?
 
+    
+    
 	init(swiftDic: SwiftDic) {
 		super.init(frame: ScreenBounds)
 		backgroundColor = UIColor.backgroundBlack
@@ -32,11 +37,13 @@ class DetailView: UIView, UserDefaults {
         addSubview(speechButton)
 	}
 
+    
 	func reloadDetail(_ swiftDic: SwiftDic) {
         subviews.forEach({ if !$0.isKind(of: UIButton.self) { $0.removeFromSuperview() } })
 		setupLabels(swiftDic)
 	}
 
+    
 	func setupLabels(_ swiftDic: SwiftDic) {
 		titleLabel = UILabel(frame: CGRect(x: 10, y: 0, width: ScreenWidth - 50, height: 60))
 		titleLabel.text = swiftDic.word
@@ -86,11 +93,15 @@ class DetailView: UIView, UserDefaults {
 		addSubview(scrollView)
 	}
     
+    
     func speak() {
         delegate?.shouldSpeakText(titleLabel.text!)
     }
 	
+    
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
+    
+    
 }

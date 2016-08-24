@@ -8,9 +8,13 @@
 
 import UIKit
 
+
 class HudView: UIView {
+    
 	var text = ""
 
+    
+    
 	class func hudInView(_ view: UIView, animated: Bool) -> HudView {
 		let hudView = HudView(frame: view.bounds)
 		hudView.isOpaque = false
@@ -28,6 +32,7 @@ class HudView: UIView {
 		return hudView
 	}
 
+    
 	override func draw(_ rect: CGRect) {
 		let boxWidth: CGFloat = 130
 		let boxHeight: CGFloat = 130
@@ -45,6 +50,7 @@ class HudView: UIView {
 		text.draw(at: textPoint, withAttributes: attribs)
 	}
 
+    
 	func showAnimated(_ animated: Bool) {
 		if animated {
 			alpha = 0
@@ -56,6 +62,7 @@ class HudView: UIView {
 		}
 	}
 
+    
 	func disappear(_ animated: Bool, done: (() -> ())) {
 		if animated {
 			UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: UIViewAnimationOptions(rawValue: 0), animations: { () -> Void in
@@ -66,5 +73,7 @@ class HudView: UIView {
 			})
 		}
 	}
+    
+    
 }
 

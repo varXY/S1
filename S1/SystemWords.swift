@@ -22,7 +22,7 @@ struct System {
 
 		"class", "case", "continue", "catch",
 
-		"deinit", "default", "do", "dynamic", "dynamicType", "didSet",
+		"deinit", "default", "do", "dynamic", "didSet",
 
 		"enum", "extension", "else",
 
@@ -38,7 +38,7 @@ struct System {
 
 		"new", "none", "nonmutating", "nil",
 
-		"operator", "optional", "override",
+		"operator", "optional", "override", "open",
 
 		"protocol", "postfix", "precedence", "prefix", "public", "private",
 
@@ -46,7 +46,7 @@ struct System {
 
 		"static", "struct", "subscript", "switch", "super", "self", "Self", "set",
 
-		"typealias", "try", "Type", "true",
+		"typealias", "try", "Type", "true", "throws",
 
 		"unowned", "unowned(safe)", "unowned(unsafe)",
 
@@ -64,21 +64,25 @@ struct System {
 
 		"Array", "AnyObject",
 
-		"Bool",
+		"Bool", "Bundle",
 
 		"CGRect", "CGSize", "CGPoint", "CGAffineTransform", "CGFloat",
 
-		"Double",
+		"Double", "Data",
+		
+		"Error",
 
 		"Float",
 
 		"Int", "Int8", "Int16", "Int32", "Int64", "UInt",
 
-		"NSString", "NSNumber", "NSDate", "NSData", "NSError", "NSRange", "NSObject", "NSBundle", "NSTimeInterval", "NSURL", "NSArray",
+		"NSString", "NSNumber", "NSDate", "NSData", "NSError", "NSRange", "NSObject", "NSBundle", "NSURL", "NSArray",
 
 		"print", 
 
 		"Set", "String",
+		
+        "TimeInterval",
 		
 		"Void",
 
@@ -111,7 +115,7 @@ struct System {
 
 	// MARK: Value type check
 	static let chrAfterValueType = [
-		" ", ")", ",", "\n", "?", "!", "]", "<", ">", "("
+		" ", ")", ",", "\n", "?", "!", "]", "<", ">", "(", "."
 	]
 
 	static let chrShouldNotBeforeValueType = [

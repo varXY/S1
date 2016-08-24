@@ -76,7 +76,6 @@ func paintKeywordPurple(_ text: NSMutableAttributedString) -> NSMutableAttribute
 
 
 func paintNumberPurple(_ text: NSMutableAttributedString) -> NSMutableAttributedString {
-
 	var ranges = [NSRange]()
 
 	System.numbers.forEach { (number) in

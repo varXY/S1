@@ -8,11 +8,14 @@
 
 import Foundation
 
+
 struct UDKey {
 	static let preloaded = "SwiftDicPreloaded"
     static let purchesed = "Purchesed"
     static let checked = "Checked"
 }
+
+
 
 protocol UserDefaults {
 	var userDefaults: Foundation.UserDefaults { get }
@@ -25,6 +28,8 @@ protocol UserDefaults {
     
     func checkNewUser()
 }
+
+
 
 extension UserDefaults {
 

@@ -8,9 +8,12 @@
 
 import UIKit
 
+
 class BuyViewController: UIViewController, Purchase {
     
     var purchesed = false
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +36,6 @@ class BuyViewController: UIViewController, Purchase {
         label.adjustsFontSizeToFitWidth = true
         view.addSubview(label)
         
-        print(canMakePayment())
         if canMakePayment() {
             let button = UIButton(type: .system)
             button.frame = CGRect(x: 100, y: label.frame.origin.y + label.frame.height, width: ScreenWidth - 200, height: 50)
@@ -64,13 +66,16 @@ class BuyViewController: UIViewController, Purchase {
         
     }
     
+    
     func buy() {
         connectToStore()
     }
     
+    
     func restore() {
         restorePurchesedProduct()
     }
+    
     
     func donePurcheseAndQuit(_ notification: Notification) {
         if purchesed { return }
@@ -83,7 +88,10 @@ class BuyViewController: UIViewController, Purchase {
         delay(seconds: 1.0) { self.quit() }
     }
     
+    
     func quit() {
         dismiss(animated: true, completion: nil)
     }
+    
+    
 }

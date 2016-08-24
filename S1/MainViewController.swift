@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 
 	var tableView: UITableView!
@@ -26,6 +27,7 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 	}
     
 
+    
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = UIColor.backgroundBlack
@@ -52,9 +54,9 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 			setUpUI()
 		}
         
-
 	}
 
+    
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		navigationController?.setToolbarHidden(true, animated: true)
@@ -69,13 +71,15 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 		curtainView.removeFromSuperview()
 	}
 
+    
 //	override func viewDidAppear(animated: Bool) {
 //		super.viewDidAppear(animated)
 //		dics = allSwiftDics()
 //		let timer = NSTimer(timeInterval: 0.8, target: self, selector: #selector(printDics), userInfo: nil, repeats: true)
 //		NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
 //	}
-//
+
+    
 //	func printDics() {
 //		if dicIndex < dics.count {
 //			let array = [String(dics[dicIndex].index!), dics[dicIndex].word!, dics[dicIndex].meaning!, dics[dicIndex].code!]
@@ -86,6 +90,7 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 //		}
 //	}
 
+    
 	func setUpUI() {
 		resultsOnTable = AllResult()
 
@@ -113,6 +118,7 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 		curtainView.backgroundColor = UIColor.backgroundBlack
 	}
 
+    
 	func AllResult() -> [[String]] {
 		var allResult = [[String]]()
 
@@ -125,6 +131,7 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 		return allResult
 	}
 
+    
 	func getResultsOnTable(searchString: String?) {
 		if resultsOnTable != nil { resultsOnTable.removeAll() }
 
@@ -142,6 +149,7 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 		if tableView != nil { tableView.reloadData() }
 	}
 
+    
 	func addButtonTapped() {
         if isPurchesed() {
             let newWordVC = NewWordViewController()
@@ -153,14 +161,20 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
         }
 	}
 
+    
 }
+
+
+
 
 extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 
+    
 	func numberOfSections(in tableView: UITableView) -> Int {
 		return resultsOnTable.count
 	}
 
+    
 	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		if resultsOnTable[section].count != 0 {
 			let index = firstCharacterToIndex(resultsOnTable[section][0])
@@ -170,6 +184,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 		}
 	}
 
+    
 	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: ScreenWidth))
 		label.backgroundColor = UIColor.backgroundBlack_light
@@ -186,14 +201,17 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 		return label
 	}
 
+    
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return resultsOnTable[section].count
 	}
 
+    
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return 50
 	}
 
+    
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		var cell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: "cell")
 		if cell == nil { cell = UITableViewCell(style: .default, reuseIdentifier: "cell") }
@@ -207,16 +225,19 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 		return cell
 	}
 
+    
 	func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 		cell.textLabel!.text = resultsOnTable[indexPath.section][indexPath.row]
 	}
 
+    
 	func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
 		let cell = tableView.cellForRow(at: indexPath)
 		let noResult = cell?.textLabel?.text == "无结果" || cell?.textLabel?.text == " "
 		return noResult ? nil : indexPath
 	}
 
+    
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.tableHeaderView?.addSubview(curtainView)
 
@@ -227,14 +248,17 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 		tableView.deselectRow(at: indexPath, animated: true)
 	}
 
+    
 	func sectionIndexTitles(for tableView: UITableView) -> [String]? {
 		return resultsOnTable.map({ System.ABC_XYZ[firstCharacterToIndex($0[0])] })
 	}
 
+    
 	func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
 		return isSearching == nil ? true : !isSearching
 	}
 
+    
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
 		let alertController = UIAlertController(title: "提示", message: "删除后无法恢复，确定删除？", preferredStyle: .alert)
 		let cancelAction = UIAlertAction(title: "取消", style: .cancel) { (_) in
@@ -260,10 +284,15 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 		present(alertController, animated: true, completion: nil)
 	}
 
+    
 }
+
+
+
 
 extension MainViewController: UISearchBarDelegate {
 
+    
 	func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
 		isSearching = true
 		if navigationController?.isNavigationBarHidden == false {
@@ -275,6 +304,7 @@ extension MainViewController: UISearchBarDelegate {
 		return true
 	}
 
+    
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
 		isSearching = false
 		navigationController?.setNavigationBarHidden(false, animated: true)
@@ -284,21 +314,31 @@ extension MainViewController: UISearchBarDelegate {
 		getResultsOnTable(searchString: nil)
 	}
 
+    
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		searchBar.resignFirstResponder()
 	}
 
+    
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 		getResultsOnTable(searchString: searchBar.text)
 	}
+    
 	
 }
 
+
+
+
 extension MainViewController: NewWordViewControllerDelegate {
 
+    
 	func didSaveNewWord() {
 	}
 
+    
 	func doneEditingSwiftDic(_ dic: SwiftDic) {
 	}
+    
+    
 }

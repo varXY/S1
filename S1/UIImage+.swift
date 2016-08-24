@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 extension UIImage {
 
 	class func imageWithColor(_ color: UIColor, rect: CGRect) -> UIImage {
