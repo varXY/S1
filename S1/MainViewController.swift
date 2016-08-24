@@ -14,6 +14,7 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 	var tableView: UITableView!
 	var searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: 0, height: 44))
 	var curtainView = UIView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 44))
+    var resetButton: UIButton!
 
 	var resultsOnTable: [[String]]!
 
@@ -100,10 +101,11 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 		tableView.backgroundColor = UIColor.clear
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         tableView.separatorColor = UIColor(red: 67/255, green: 69/255, blue: 81/255, alpha: 1.0)
-		tableView.sectionIndexColor = UIColor(red: 150/255, green: 153/255, blue: 172/255, alpha: 1.0)
+		tableView.sectionIndexColor = UIColor.buttonBlack
 		tableView.sectionIndexBackgroundColor = UIColor.clear
 		view.addSubview(tableView)
 
+        
 		searchBar.placeholder = "搜索"
 		searchBar.tintColor = UIColor.plainWhite
 		searchBar.barTintColor = UIColor.backgroundBlack_light
@@ -114,6 +116,17 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
         
 		tableView.tableHeaderView = searchBar
 		tableView.contentOffset.y = searchBar.frame.height
+        
+        
+        resetButton = UIButton(type: .system)
+        resetButton.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: 50)
+        resetButton.setTitle("重置内容", for: .normal)
+        resetButton.tintColor = UIColor.statementYellow
+        resetButton.backgroundColor = UIColor.backgroundBlack_light
+        resetButton.addTarget(self, action: #selector(resetButtonTapped), for: .touchUpInside)
+        
+        tableView.tableFooterView = resetButton
+        
 
 		curtainView.backgroundColor = UIColor.backgroundBlack
 	}
@@ -160,6 +173,21 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
             present(NavigationController(rootViewController: BuyViewController()), animated: true, completion: nil)
         }
 	}
+    
+    
+    func resetButtonTapped() {
+        let alertController = UIAlertController(title: "重置", message: "重置将抹去所有编辑和修改，但能获得开发者的最近更新，确认重置内容？", preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        let confirm = UIAlertAction(title: "确认", style: .default) { (_) in
+            self.savePreloadedwords({ 
+                self.getResultsOnTable(searchString: nil)
+            })
+        }
+        
+        alertController.addAction(cancel)
+        alertController.addAction(confirm)
+        present(alertController, animated: true, completion: nil)
+    }
 
     
 }
@@ -260,7 +288,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 
     
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-		let alertController = UIAlertController(title: "提示", message: "删除后无法恢复，确定删除？", preferredStyle: .alert)
+		let alertController = UIAlertController(title: "提示", message: "自定义内容删除后无法恢复，确定删除？", preferredStyle: .alert)
 		let cancelAction = UIAlertAction(title: "取消", style: .cancel) { (_) in
 			tableView.setEditing(false, animated: true)
 		}
@@ -295,6 +323,7 @@ extension MainViewController: UISearchBarDelegate {
     
 	func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
 		isSearching = true
+        tableView.tableFooterView = nil
 		if navigationController?.isNavigationBarHidden == false {
 			navigationController?.setNavigationBarHidden(true, animated: true)
 		}
@@ -307,6 +336,7 @@ extension MainViewController: UISearchBarDelegate {
     
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
 		isSearching = false
+        tableView.tableFooterView = resetButton
 		navigationController?.setNavigationBarHidden(false, animated: true)
 		searchBar.resignFirstResponder()
 		searchBar.setShowsCancelButton(false, animated: true)

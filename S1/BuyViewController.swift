@@ -50,7 +50,7 @@ class BuyViewController: UIViewController, Purchase {
             let r_button = UIButton(type: .system)
             r_button.frame = CGRect(x: 100, y: ScreenHeight - 60, width: ScreenWidth - 200, height: 50)
             r_button.setTitle("恢复购买", for: UIControlState())
-            r_button.tintColor = UIColor(red: 150/255, green: 153/255, blue: 172/255, alpha: 1.0)
+            r_button.tintColor = UIColor.buttonBlack
             r_button.addTarget(self, action: #selector(restore), for: .touchUpInside)
             view.addSubview(r_button)
             

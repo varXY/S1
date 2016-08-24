@@ -19,6 +19,10 @@ extension UIColor {
 		return UIColor(red: 44/255, green: 46/255, blue: 59/255, alpha: 1.0)
 	}
     
+    open class var buttonBlack: UIColor {
+        return UIColor(red: 150/255, green: 153/255, blue: 172/255, alpha: 1.0)
+    }
+    
     open class var barBackgoundBlack: UIColor {
         return UIColor(red: 42/255, green: 44/255, blue: 56/255, alpha: 1.0)
     }

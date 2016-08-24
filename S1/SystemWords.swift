@@ -42,7 +42,7 @@ struct System {
 
 		"protocol", "postfix", "precedence", "prefix", "public", "private",
 
-		"return", "rightset",
+		"return", "rightset", "repeat",
 
 		"static", "struct", "subscript", "switch", "super", "self", "Self", "set",
 
