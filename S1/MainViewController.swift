@@ -45,7 +45,7 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
         
         checkNewUser()
 
-//		let isNotFirstTime = isPreloaded() ? true : true
+//		let isNotFirstTime = true
 		let isNotFirstTime = isPreloaded()
 		print(isNotFirstTime)
 		if isNotFirstTime == false {
@@ -73,17 +73,18 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
 	}
 
     
-//	override func viewDidAppear(animated: Bool) {
+//	override func viewDidAppear(_ animated: Bool) {
 //		super.viewDidAppear(animated)
 //		dics = allSwiftDics()
-//		let timer = NSTimer(timeInterval: 0.8, target: self, selector: #selector(printDics), userInfo: nil, repeats: true)
-//		NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
+//		let timer = Timer(timeInterval: 0.8, target: self, selector: #selector(printDics), userInfo: nil, repeats: true)
+//		RunLoop.main.add(timer, forMode: RunLoopMode.defaultRunLoopMode)
 //	}
-
-    
+//
+//    
 //	func printDics() {
 //		if dicIndex < dics.count {
-//			let array = [String(dics[dicIndex].index!), dics[dicIndex].word!, dics[dicIndex].meaning!, dics[dicIndex].code!]
+//            let index = String(describing: dics[dicIndex].index!)
+//			let array = [index, dics[dicIndex].word!, dics[dicIndex].meaning!, dics[dicIndex].code!]
 //			print(array, separator: "", terminator: ", ")
 //			dicIndex += 1
 //		} else {
@@ -121,7 +122,7 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
         resetButton = UIButton(type: .system)
         resetButton.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: 50)
         resetButton.setTitle("重置内容", for: .normal)
-        resetButton.tintColor = UIColor.statementYellow
+        resetButton.tintColor = UIColor.buttonBlack
         resetButton.backgroundColor = UIColor.backgroundBlack_light
         resetButton.addTarget(self, action: #selector(resetButtonTapped), for: .touchUpInside)
         
@@ -176,7 +177,7 @@ class MainViewController: UIViewController, SwiftDicData, UserDefaults {
     
     
     func resetButtonTapped() {
-        let alertController = UIAlertController(title: "重置", message: "重置将抹去所有编辑和修改，但能获得开发者的最近更新，确认重置内容？", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "重置", message: "重置将抹去所有编辑和修改，但能获得开发者的最近更新（版本升级后），确认重置内容？", preferredStyle: .alert)
         let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         let confirm = UIAlertAction(title: "确认", style: .default) { (_) in
             self.savePreloadedwords({ 

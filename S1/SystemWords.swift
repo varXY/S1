@@ -74,7 +74,7 @@ struct System {
 
 		"Float",
 
-		"Int", "Int8", "Int16", "Int32", "Int64", "UInt",
+		"Int", "Int8", "Int16", "Int32", "Int64",
 
 		"NSString", "NSNumber", "NSDate", "NSData", "NSError", "NSRange", "NSObject", "NSBundle", "NSURL", "NSArray",
 
@@ -83,6 +83,8 @@ struct System {
 		"Set", "String",
 		
         "TimeInterval",
+        
+        "UInt", "UInt8",
 		
 		"Void",
 

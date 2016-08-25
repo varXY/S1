@@ -32,7 +32,7 @@ class BuyViewController: UIViewController, Purchase {
         let label = UILabel(frame: CGRect(x: 0, y: ScreenHeight / 2 - 70, width: ScreenWidth, height: 70))
         label.textAlignment = .center
         label.textColor = UIColor.stringRed
-        label.text = "一次性解锁添加、编辑、朗读单词功能"
+        label.text = "解锁添加、编辑、朗读单词功能"
         label.adjustsFontSizeToFitWidth = true
         view.addSubview(label)
         
