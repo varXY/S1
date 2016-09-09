@@ -159,8 +159,8 @@ class XYScrollView: UIScrollView, SwiftDicData {
 		var results = [(Int, Int)]()
 
 		repeat {
-			let i_0 = Int(arc4random()) % allResults.count
-			let i_1 = Int(arc4random()) % allResults[i_0].count
+			let i_0 = Int(arc4random_uniform(UInt32(allResults.count)))
+			let i_1 = Int(arc4random_uniform(UInt32(allResults[i_0].count)))
 			if i_0 != topIndex.0 && i_1 != topIndex.1 {
 				results.append((i_0, i_1))
 			}

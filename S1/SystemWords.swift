@@ -36,7 +36,7 @@ struct System {
 
 		"mutating",
 
-		"new", "none", "nonmutating", "nil",
+		"new", "nonmutating", "nil",
 
 		"operator", "optional", "override", "open",
 

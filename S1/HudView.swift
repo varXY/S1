@@ -63,7 +63,7 @@ class HudView: UIView {
 	}
 
     
-	func disappear(_ animated: Bool, done: (() -> ())) {
+	func disappear(_ animated: Bool, done: @escaping (() -> ())) {
 		if animated {
 			UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: UIViewAnimationOptions(rawValue: 0), animations: { () -> Void in
 				self.alpha = 0

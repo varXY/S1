@@ -33,7 +33,7 @@ public class IAPHelper : NSObject  {
 	}
 
     
-	public func requestProductsWithCompletionHandler(_ handler: RequestProductsCompletionHandler) {
+	public func requestProductsWithCompletionHandler(_ handler: @escaping RequestProductsCompletionHandler) {
 		completionHandler = handler
 		productsRequest = SKProductsRequest(productIdentifiers: productIdentifiers)
 		productsRequest?.delegate = self
